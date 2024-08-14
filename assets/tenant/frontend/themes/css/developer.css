@@ -1,0 +1,138 @@
+.faqArea-global .input-form input{
+    background: #F9F9F9;
+    height: 50px;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 300;
+    position: relative;
+    border: 0;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+.faqArea-global .input-form input::placeholder{ color: var(--paragraph-color);}
+
+
+.faqArea-global .input-form textarea {
+    height: 150px;
+    box-shadow: none;
+}
+.faqArea-global .input-form textarea:focus{
+    box-shadow: none;
+}
+
+.singleGallery-global .caption h2 .image-popup {
+    color: #fff;
+}
+
+.selectTag .listItem:hover a {
+    background: var(--main-color-one);
+    color: #fff;
+    border: 1px solid transparent;
+}
+
+.header-info-right ul.user-account {
+    margin-right: 30px;
+    margin-bottom: 11px;
+}
+
+
+
+/*Sohan Css*/
+.alert-danger .close{
+    display: none;
+}
+
+
+.dashboard-right .parent .table-responsive {
+    overflow: unset;
+}
+
+.author-content img{
+    border-radius: 50%;
+}
+
+.client1Img img {
+    min-height: 42px;
+    border-radius: 50%;
+    width: 40px;
+}
+.donation_countdown {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+.donation_countdown .nx-singular-countdown-item {
+    background: var(--main-color-one);
+    display: inline-block;
+    text-align: center;
+    height: 102px;
+    width: 102px;
+    padding: 14px 10px;
+}
+
+.donation_countdown .nx-singular-countdown-item  .wrapper {
+    font-family: var(--heading-font);
+    font-size: 16px;
+    margin-bottom: 0;
+    color: #ffffff;
+    font-weight: 500;
+}
+.donation_countdown .nx-singular-countdown-item  .wrapper .time {
+    font-family: var(--heading-font);
+    font-size: 20px;
+    color: #ffffff;
+    font-weight: 600;
+    margin-bottom: 9px;
+    display: block;
+}
+.donation_countdown .nx-singular-countdown-item  .wrapper .label {
+    font-family: var(--heading-font);
+    font-size: 16px;
+    margin-bottom: 0;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+
+.payment-gateway-list .single-gateway-item {
+    display: inline-block;
+    position: relative;
+    width: 111px;
+    border: 1px solid #E5E5E5;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    border-radius: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    padding: 5px 20px;
+}
+
+.payment-gateway-list .single-gateway-item img {
+    padding: 0;
+    display: block;
+    text-align: center;
+    margin-right: 0;
+    width: auto;
+    height: auto;
+    margin: auto;
+    max-width: 70px;
+}
+
+.input-form.input-form2 input#check {
+    width: 18px;
+    margin: 0px;
+}
+
+.input-form.input-form2.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.input-form.input-form2 label {
+    margin: 0px;
+}
+

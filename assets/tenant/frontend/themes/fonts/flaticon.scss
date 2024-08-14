@@ -1,0 +1,117 @@
+$flaticon-font: "flaticon";
+
+@font-face {
+    font-family: $flaticon-font;
+    src: url("./flaticon.ttf?821dfeecc7317c8396f5c19c3f4d534b") format("truetype"),
+url("./flaticon.woff?821dfeecc7317c8396f5c19c3f4d534b") format("woff"),
+url("./flaticon.woff2?821dfeecc7317c8396f5c19c3f4d534b") format("woff2"),
+url("./flaticon.eot?821dfeecc7317c8396f5c19c3f4d534b#iefix") format("embedded-opentype"),
+url("./flaticon.svg?821dfeecc7317c8396f5c19c3f4d534b#flaticon") format("svg");
+}
+
+i[class^="flaticon-"]:before, i[class*=" flaticon-"]:before {
+    font-family: flaticon !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+$flaticon-map: (
+    "search-interface-symbol": "\f101",
+    "shopping-cart": "\f102",
+    "compare": "\f103",
+    "user": "\f104",
+    "arrow": "\f105",
+    "like": "\f106",
+    "product": "\f107",
+    "eyeglasses": "\f108",
+    "high-heel": "\f109",
+    "bags": "\f10a",
+    "saturn": "\f10b",
+    "nanotechnology": "\f10c",
+    "shoes": "\f10d",
+    "shirt": "\f10e",
+    "backpack": "\f10f",
+    "truck": "\f110",
+    "best": "\f111",
+    "customer-support": "\f112",
+    "hand": "\f113",
+    "mail": "\f114",
+    "telephone": "\f115",
+    "location": "\f116",
+    "bin": "\f117",
+);
+
+.flaticon-search-interface-symbol:before {
+    content: map-get($flaticon-map, "search-interface-symbol");
+}
+.flaticon-shopping-cart:before {
+    content: map-get($flaticon-map, "shopping-cart");
+}
+.flaticon-compare:before {
+    content: map-get($flaticon-map, "compare");
+}
+.flaticon-user:before {
+    content: map-get($flaticon-map, "user");
+}
+.flaticon-arrow:before {
+    content: map-get($flaticon-map, "arrow");
+}
+.flaticon-like:before {
+    content: map-get($flaticon-map, "like");
+}
+.flaticon-product:before {
+    content: map-get($flaticon-map, "product");
+}
+.flaticon-eyeglasses:before {
+    content: map-get($flaticon-map, "eyeglasses");
+}
+.flaticon-high-heel:before {
+    content: map-get($flaticon-map, "high-heel");
+}
+.flaticon-bags:before {
+    content: map-get($flaticon-map, "bags");
+}
+.flaticon-saturn:before {
+    content: map-get($flaticon-map, "saturn");
+}
+.flaticon-nanotechnology:before {
+    content: map-get($flaticon-map, "nanotechnology");
+}
+.flaticon-shoes:before {
+    content: map-get($flaticon-map, "shoes");
+}
+.flaticon-shirt:before {
+    content: map-get($flaticon-map, "shirt");
+}
+.flaticon-backpack:before {
+    content: map-get($flaticon-map, "backpack");
+}
+.flaticon-truck:before {
+    content: map-get($flaticon-map, "truck");
+}
+.flaticon-best:before {
+    content: map-get($flaticon-map, "best");
+}
+.flaticon-customer-support:before {
+    content: map-get($flaticon-map, "customer-support");
+}
+.flaticon-hand:before {
+    content: map-get($flaticon-map, "hand");
+}
+.flaticon-mail:before {
+    content: map-get($flaticon-map, "mail");
+}
+.flaticon-telephone:before {
+    content: map-get($flaticon-map, "telephone");
+}
+.flaticon-location:before {
+    content: map-get($flaticon-map, "location");
+}
+.flaticon-bin:before {
+    content: map-get($flaticon-map, "bin");
+}

@@ -1,0 +1,1 @@
+<button data-bs-target="#{{$target}}" data-id="{{$dataid ?? ''}}" data-account="{{$account ?? ''}}" data-payment="{{$payment ?? ''}}" data-bs-toggle="modal" class="mb-3 mr-1 btn-sm btn btn-{{$type ?? 'primary'}} {{$extra ?? ''}}" >{{$slot ?? ''}}</button>

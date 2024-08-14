@@ -1,0 +1,13 @@
+{
+    "name": "Knowledgebase",
+    "alias": "knowledgebase",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Knowledgebase\\Providers\\KnowledgebaseServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

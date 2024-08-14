@@ -1,0 +1,121 @@
+/* dark mode support for admin panel */
+.content-wrapper {
+    background-color: #262a40;
+}
+.page-title,
+a,
+p,
+span,
+.card .card-title,
+.form-group label,
+.breadcrumb .breadcrumb-item.active,
+.breadcrumb .breadcrumb-item.active::before,
+small.info-text
+{
+    color: #fff;
+}
+
+.card {
+    background: #14182e;
+}
+.form-control,.form-control:focus {
+    background-color: #262a40;
+    border-color: transparent;
+    color: #fff;
+}
+
+.slider:before {
+    background-color: #262a40;
+}
+
+.slider {
+    background-color: #474b64;
+}
+.modal-content {
+    background-color: #1a1a20;
+    border-color: transparent;
+}
+
+.modal-header ,
+.navbar .navbar-menu-wrapper .navbar-nav .nav-item.nav-profile .nav-link .nav-profile-text p{
+    color: #fff !important;
+}
+
+select.form-control,select.form-control:focus {
+    border-color: transparent;
+    outline: transparent;
+}
+.table > :not(:last-child) > :last-child > *, .jsgrid .jsgrid-table > :not(:last-child) > :last-child > * {
+    border-bottom-color: #62697a;
+}
+.table {
+    color: #fff;
+}
+.table > :not(caption) > * > * {
+    border-color: #818181;
+}
+
+.footer {
+    background: #15182e;
+    color: #fff;
+    border-top: 1px solid #646464;
+}
+
+.navbar .navbar-menu-wrapper {
+    color: #fff;
+}
+
+.navbar {
+    background-color: #15182e;
+}
+
+.dropdown-menu.navbar-dropdown {
+    background-color: #262a40;
+}
+
+.dropdown-item {
+    color: #fff;
+}
+
+.dropdown-divider {
+    border-top-color: #5a5a5a;
+}
+
+.navbar .navbar-menu-wrapper .navbar-nav .nav-item.dropdown .dropdown-menu.navbar-dropdown .dropdown-item i {
+    color: #fff;
+}
+.modal-header .btn-close {
+    background-color: #fff;
+}
+.dropzone-form-wrapper form {
+    background-color: #1a1a20 !important;
+    color: #fff;
+}
+
+.dropzone-form-wrapper form span.xg-accept-files {
+    color: #fff !important;
+}
+.media-uploader-image-info {
+    color: #fff;
+}
+.navbar .navbar-brand-wrapper {
+    background: #15182e;
+}
+
+.sidebar {
+    background: #15182e;
+}
+
+.sidebar .nav .nav-item .nav-link .menu-title {
+    color: #fff;
+}
+.sidebar .nav .nav-item:hover,
+.sidebar .nav .nav-item.active{
+    background: #262a40;
+}
+.sidebar .nav .nav-item .nav-link:hover .menu-title {
+    color: #ab68f1;
+}
+.spectrum_color_picker {
+    border: 5px solid #e2e2e2;
+}

@@ -1,0 +1,13 @@
+{
+    "name": "TwoFactorAuthentication",
+    "alias": "twofactorauthentication",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\TwoFactorAuthentication\\Providers\\TwoFactorAuthenticationServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

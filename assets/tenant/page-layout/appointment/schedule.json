@@ -1,0 +1,125 @@
+{
+  "data":
+  [
+    {
+      "id": 1,
+      "day_id": 2,
+      "time": "8:00 AM - 8:30 AM",
+      "allow_multiple": null,
+      "status": 1,
+      "created_at": "2023-05-21 15:42:14",
+      "updated_at": "2023-05-21 15:42:14",
+      "day_type": "1"
+    },
+    {
+      "id": 2,
+      "day_id": 2,
+      "time": "8:50 AM - 10:40 AM",
+      "allow_multiple": null,
+      "status": 1,
+      "created_at": "2023-05-21 15:42:24",
+      "updated_at": "2023-05-21 15:42:24",
+      "day_type": "1"
+    },
+    {
+      "id": 3,
+      "day_id": 3,
+      "time": "8:20 AM - 9:00 AM",
+      "allow_multiple": null,
+      "status": 1,
+      "created_at": "2023-05-21 15:42:32",
+      "updated_at": "2023-05-21 15:42:32",
+      "day_type": "1"
+    },
+    {
+      "id": 4,
+      "day_id": 4,
+      "time": "8:50 AM - 9:10 AM",
+      "allow_multiple": null,
+      "status": 1,
+      "created_at": "2023-05-21 15:42:41",
+      "updated_at": "2023-05-21 15:42:41",
+      "day_type": "1"
+    },
+    {
+      "id": 5,
+      "day_id": 5,
+      "time": "10:40 AM - 11:00 AM",
+      "allow_multiple": null,
+      "status": 1,
+      "created_at": "2023-05-21 15:42:50",
+      "updated_at": "2023-05-21 15:42:50",
+      "day_type": "1"
+    },
+    {
+      "id": 6,
+      "day_id": 6,
+      "time": "11:00 AM - 3:10 PM",
+      "allow_multiple": null,
+      "status": 1,
+      "created_at": "2023-05-21 15:43:05",
+      "updated_at": "2023-05-21 15:43:05",
+      "day_type": "2"
+    },
+    {
+      "id": 7,
+      "day_id": 7,
+      "time": "2:50 PM - 9:20 PM",
+      "allow_multiple": "on",
+      "status": 1,
+      "created_at": "2023-05-21 15:43:15",
+      "updated_at": "2023-05-21 15:43:15",
+      "day_type": "1"
+    },
+    {
+      "id": 8,
+      "day_id": 7,
+      "time": "12:50 PM - 1:00 PM",
+      "allow_multiple": null,
+      "status": 1,
+      "created_at": "2023-05-24 13:03:37",
+      "updated_at": "2023-05-24 13:03:37",
+      "day_type": "2"
+    },
+    {
+      "id": 9,
+      "day_id": 7,
+      "time": "7:00 PM - 8:00 PM",
+      "allow_multiple": null,
+      "status": 1,
+      "created_at": "2023-05-24 13:05:31",
+      "updated_at": "2023-05-24 13:17:19",
+      "day_type": "3"
+    },
+    {
+      "id": 10,
+      "day_id": 7,
+      "time": "9:00 PM - 9:30 PM",
+      "allow_multiple": null,
+      "status": 1,
+      "created_at": "2023-05-24 13:18:06",
+      "updated_at": "2023-05-24 13:18:06",
+      "day_type": "3"
+    },
+    {
+      "id": 11,
+      "day_id": 6,
+      "time": "8:50 PM - 9:20 PM",
+      "allow_multiple": null,
+      "status": 1,
+      "created_at": "2023-05-24 14:00:12",
+      "updated_at": "2023-05-24 14:00:12",
+      "day_type": "3"
+    },
+    {
+      "id": 12,
+      "day_id": 4,
+      "time": "11:00 AM - 11:00 AM",
+      "allow_multiple": null,
+      "status": 1,
+      "created_at": "2023-05-27 15:14:52",
+      "updated_at": "2023-05-27 15:14:52",
+      "day_type": "4"
+    }
+  ]
+}

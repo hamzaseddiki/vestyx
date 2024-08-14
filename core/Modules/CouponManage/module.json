@@ -1,0 +1,13 @@
+{
+    "name": "CouponManage",
+    "alias": "couponmanage",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\CouponManage\\Providers\\CouponManageServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

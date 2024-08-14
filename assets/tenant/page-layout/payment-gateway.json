@@ -1,0 +1,269 @@
+{
+  "data":
+  [
+    {
+      "id": 14,
+      "name": "paypal",
+      "image": "152",
+      "description": "if your currency is not available in paypal, it will convert you currency value to USD value based on your currency exchange rate.",
+      "status": 1,
+      "test_mode": 1,
+      "credentials": "{\"sandbox_client_id\":\"AUP7AuZMwJbkee-2OmsSZrU-ID1XUJYE-YB-2JOrxeKV-q9ZJZYmsr-UoKuJn4kwyCv5ak26lrZyb-gb\",\"sandbox_client_secret\":\"EEIxCuVnbgING9EyzcF2q-gpacLneVbngQtJ1mbx-42Lbq-6Uf6PEjgzF7HEayNsI4IFmB9_CZkECc3y\",\"sandbox_app_id\":\"641651651958\",\"live_client_id\":null,\"live_client_secret\":null,\"live_app_id\":\"641651651958\"}",
+      "created_at": "2023-05-21 15:40:11",
+      "updated_at": "2023-05-21 15:40:11"
+    },
+    {
+      "id": 15,
+      "name": "paytm",
+      "image": "433",
+      "description": "if your currency is not available in paytm, it will convert you currency value to INR value based on your currency exchange rate.",
+      "status": 1,
+      "test_mode": 1,
+      "credentials": "{\"merchant_key\":\"dv0XtmsPYpewNag&\",\"merchant_mid\":\"Digita57697814558795\",\"merchant_website\":\"WEBSTAGING\",\"channel\":null,\"industry_type\":null}",
+      "created_at": "2023-05-21 15:40:11",
+      "updated_at": "2023-05-21 15:40:11"
+    },
+    {
+      "id": 16,
+      "name": "stripe",
+      "image": "423",
+      "description": "",
+      "status": 1,
+      "test_mode": 1,
+      "credentials": "{\"public_key\":\"pk_test_51GwS1SEmGOuJLTMsIeYKFtfAT3o3Fc6IOC7wyFmmxA2FIFQ3ZigJ2z1s4ZOweKQKlhaQr1blTH9y6HR2PMjtq1Rx00vqE8LO0x\",\"secret_key\":\"sk_test_51GwS1SEmGOuJLTMs2vhSliTwAGkOt4fKJMBrxzTXeCJoLrRu8HFf4I0C5QuyE3l3bQHBJm3c0qFmeVjd0V9nFb6Z00VrWDJ9Uw\"}",
+      "created_at": "2023-05-21 15:40:11",
+      "updated_at": "2023-05-25 18:58:51"
+    },
+    {
+      "id": 17,
+      "name": "razorpay",
+      "image": "431",
+      "description": "if your currency is not available in Razorpay, it will convert you currency value to INR value based on your currency exchange rate.",
+      "status": 1,
+      "test_mode": 1,
+      "credentials": "{\"api_key\":\"rzp_test_SXk7LZqsBPpAkj\",\"api_secret\":\"Nenvq0aYArtYBDOGgmMH7JNv\"}",
+      "created_at": "2023-05-21 15:40:11",
+      "updated_at": "2023-05-21 15:40:11"
+    },
+    {
+      "id": 18,
+      "name": "paystack",
+      "image": "430",
+      "description": "if your currency is not available in Paystack, it will convert you currency value to NGN value based on your currency exchange rate.",
+      "status": 1,
+      "test_mode": 1,
+      "credentials": "{\"public_key\":\"pk_test_0a2cea63c4a34691fae697fb8f6b72a856e96e12\",\"secret_key\":\"sk_test_bfb4d04c41f8bcfa9fb6dac84eeb6ea54e1a93b4\",\"merchant_email\":\"testdoc2021@gmail.com\"}",
+      "created_at": "2023-05-21 15:40:11",
+      "updated_at": "2023-05-21 15:40:11"
+    },
+    {
+      "id": 19,
+      "name": "mollie",
+      "image": "432",
+      "description": "if your currency is not available in mollie, it will convert you currency value to USD value based on your currency exchange rate.",
+      "status": 1,
+      "test_mode": 1,
+      "credentials": "{\"public_key\":\"test_fVk76gNbAp6ryrtRjfAVvzjxSHxC2v\"}",
+      "created_at": "2023-05-21 15:40:11",
+      "updated_at": "2023-05-21 15:40:11"
+    },
+    {
+      "id": 20,
+      "name": "flutterwave",
+      "image": "422",
+      "description": "if your currency is not available in flutterwave, it will convert you currency value to USD value based on your currency exchange rate.",
+      "status": 1,
+      "test_mode": 1,
+      "credentials": "{\"public_key\":\"FLWPUBK_TEST-86cce2ec43c63e09a517290a8347fcab-X\",\"secret_key\":\"FLWSECK_TEST-d37a42d8917db84f1b2f47c125252d0a-X\",\"secret_hash\":\"tenancy\"}",
+      "created_at": "2023-05-21 15:40:11",
+      "updated_at": "2023-05-21 15:40:11"
+    },
+    {
+      "id": 21,
+      "name": "midtrans",
+      "image": "425",
+      "description": "",
+      "status": 1,
+      "test_mode": 1,
+      "credentials": "{\"merchant_id\":\"G770543580\",\"server_key\":\"SB-Mid-server-9z5jztsHyYxEdSs7DgkNg2on\",\"client_key\":\"SB-Mid-client-iDuy-jKdZHkLjL_I\"}",
+      "created_at": "2023-05-21 15:40:11",
+      "updated_at": "2023-05-21 15:40:11"
+    },
+    {
+      "id": 22,
+      "name": "payfast",
+      "image": "426",
+      "description": "",
+      "status": 1,
+      "test_mode": 1,
+      "credentials": "{\"merchant_id\":\"10024000\",\"merchant_key\":\"77jcu5v4ufdod\",\"passphrase\":\"testpayfastsohan\",\"itn_url\":null}",
+      "created_at": "2023-05-21 15:40:11",
+      "updated_at": "2023-05-21 15:40:11"
+    },
+    {
+      "id": 23,
+      "name": "cashfree",
+      "image": "427",
+      "description": "",
+      "status": 1,
+      "test_mode": 1,
+      "credentials": "{\"app_id\":\"94527832f47d6e74fa6ca5e3c72549\",\"secret_key\":\"ec6a3222018c676e95436b2e26e89c1ec6be2830\"}",
+      "created_at": "2023-05-21 15:40:11",
+      "updated_at": "2023-05-21 15:40:11"
+    },
+    {
+      "id": 24,
+      "name": "instamojo",
+      "image": "428",
+      "description": "",
+      "status": 1,
+      "test_mode": 1,
+      "credentials": "{\"client_id\":\"test_nhpJ3RvWObd3uryoIYF0gjKby5NB5xu6S9Z\",\"client_secret\":\"test_iZusG4P35maQVPTfqutbCc6UEbba3iesbCbrYM7zOtDaJUdbPz76QOnBcDgblC53YBEgsymqn2sx3NVEPbl3b5coA3uLqV1ikxKquOeXSWr8Ruy7eaKUMX1yBbm\",\"username\":null,\"password\":null}",
+      "created_at": "2023-05-21 15:40:11",
+      "updated_at": "2023-05-21 15:40:11"
+    },
+    {
+      "id": 25,
+      "name": "marcadopago",
+      "image": "424",
+      "description": "",
+      "status": 1,
+      "test_mode": 1,
+      "credentials": "{\"client_id\":\"TEST-0a3cc78a-57bf-4556-9dbe-2afa06347769\",\"client_secret\":\"TEST-4644184554273630-070813-7d817e2ca1576e75884001d0755f8a7a-786499991\"}",
+      "created_at": "2023-05-21 15:40:11",
+      "updated_at": "2023-05-21 15:40:11"
+    },
+    {
+      "id": 26,
+      "name": "squareup",
+      "image": "419",
+      "description": "",
+      "status": 1,
+      "test_mode": 1,
+      "credentials": "{\"access_token\":\"EAAAEOuLQObrVwJvCvoio3H13b8Ssqz1ighmTBKZvIENW9qxirHGHkqsGcPBC1uN\",\"location_id\":\"LE9C12TNM5HAS\"}",
+      "created_at": "2023-05-21 15:40:11",
+      "updated_at": "2023-05-21 15:40:11"
+    },
+    {
+      "id": 27,
+      "name": "cinetpay",
+      "image": "418",
+      "description": "",
+      "status": 1,
+      "test_mode": 1,
+      "credentials": "{\"api_key\":\"12912847765bc0db748fdd44.40081707\",\"site_id\":\"445160\"}",
+      "created_at": "2023-05-21 15:40:11",
+      "updated_at": "2023-05-21 15:40:11"
+    },
+    {
+      "id": 29,
+      "name": "billplz",
+      "image": "417",
+      "description": "",
+      "status": 1,
+      "test_mode": 1,
+      "credentials": "{\"key\":\"b2ead199-e6f3-4420-ae5c-c94f1b1e8ed6\",\"version\":\"v4\",\"x_signature\":null,\"collection_name\":\"kjj5ya006\"}",
+      "created_at": "2023-05-21 15:40:11",
+      "updated_at": "2023-05-21 15:40:11"
+    },
+    {
+      "id": 30,
+      "name": "zitopay",
+      "image": "416",
+      "description": "",
+      "status": 1,
+      "test_mode": 1,
+      "credentials": "{\"username\":\"dvrobin4\"}",
+      "created_at": "2023-05-21 15:40:11",
+      "updated_at": "2023-05-21 15:40:11"
+    },
+    {
+      "id": 31,
+      "name": "manual_payment_",
+      "image": "531",
+      "description": "",
+      "status": 1,
+      "test_mode": 1,
+      "credentials": "{\"name\":\"Manual Payment\",\"description\":\"You need to pay through bank and add the attachment here.\"}",
+      "created_at": "2023-05-21 15:40:11",
+      "updated_at": "2023-05-25 13:15:32"
+    },
+    {
+      "id": 32,
+      "name": "toyyibpay",
+      "image": "534",
+      "description": "",
+      "status": 1,
+      "test_mode": 1,
+      "credentials": "{\"user_secret_key\":\"wnbtrqle-9t9l-m02j-e2bz-iaj2tkp52sfo\",\"category_code\":\"0m0j9yc4\"}",
+      "created_at": "2023-05-21 15:40:11",
+      "updated_at": "2023-05-25 13:15:47"
+    },
+    {
+      "id": 33,
+      "name": "pagali",
+      "image": "533",
+      "description": "",
+      "status": 1,
+      "test_mode": 1,
+      "credentials": "{\"page_id\":null,\"entity_id\":null}",
+      "created_at": "2023-05-21 15:40:11",
+      "updated_at": "2023-05-25 13:15:57"
+    },
+    {
+      "id": 34,
+      "name": "authorizenet",
+      "image": "532",
+      "description": "",
+      "status": 1,
+      "test_mode": 1,
+      "credentials": "{\"merchant_login_id\":\"2e8yjNL89kV2\",\"merchant_transaction_id\":\"65968Gb3DU2ntX2v\"}",
+      "created_at": "2023-05-21 15:40:11",
+      "updated_at": "2023-05-25 13:16:06"
+    },
+    {
+      "id": 35,
+      "name": "sitesway",
+      "image": "530",
+      "description": "",
+      "status": 1,
+      "test_mode": 1,
+      "credentials": "{\"brand_id\":null,\"api_key\":null}",
+      "created_at": "2023-05-21 15:40:11",
+      "updated_at": "2023-05-25 13:16:15"
+    },
+    {
+      "id": 36,
+      "name": "bank_transfer",
+      "image": "420",
+      "description": "",
+      "status": 1,
+      "test_mode": 1,
+      "credentials": "{\"name\":\"Bank Transfer\",\"description\":\"You need to pay through bank and add the attachment here.\"}",
+      "created_at": "2023-05-21 15:40:11",
+      "updated_at": "2023-05-21 15:40:11"
+    },
+    {
+      "id": 37,
+      "name": "paytabs",
+      "image": "535",
+      "description": "",
+      "status": 1,
+      "test_mode": 1,
+      "credentials": "{\"profile_id\":\"96698\",\"region\":\"GLOBAL\",\"server_key\":\"SKJNDNRHM2-JDKTZDDH2N-H9HLMJNJ2L\"}",
+      "created_at": "2023-05-21 15:40:11",
+      "updated_at": "2023-05-25 13:17:13"
+    },
+    {
+      "id": 38,
+      "name": "kineticpay",
+      "image": "535",
+      "description": "",
+      "status": 1,
+      "test_mode": 1,
+      "credentials": "{\"merchant_key\":\"96698\"}",
+      "created_at": "2023-05-21 15:40:11",
+      "updated_at": "2023-05-25 13:17:13"
+    }
+  ]
+}

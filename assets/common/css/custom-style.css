@@ -1,0 +1,110 @@
+.themePreview img{
+    width: 100%;
+    margin-bottom: 30px;
+}
+.themePreview{
+
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 25px;
+    -webkit-box-shadow: 0 3px 20px 12px rgba(45, 23, 191, 0.09);
+    box-shadow: 0 3px 20px 12px rgba(45, 23, 191, 0.09);
+    -webkit-transition: all linear 0.3s;
+    /*transition: all linear 0.3s;*/
+    border-radius: 7px;
+}
+.themePreview .bg {
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    -webkit-transition: all linear 2s;
+    transition: all linear 2s;
+}
+.themePreview:hover .bg {
+    background-position: bottom center;
+}
+
+/*linking */
+.themeLink {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background:#0e0e0fb0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 10px;
+    padding-bottom: 5px;
+    border-radius: 0 0 4px 4px;
+    transition: .4s;
+}
+.themePreview:hover .themeLink{
+    background: #b66dff;
+}
+.themeName{
+    color: #fff;
+    font-size: 1.125rem;
+    margin-bottom: 5px;
+}
+.active-btn {
+    color: #fff;
+    background: none;
+    font-size: 16px;
+    border: 1px solid #fff;
+    padding: 6px 16px;
+    border-radius: 30px;
+    text-decoration: none;
+    margin-bottom: 5px;
+}
+.active-btn:focus {border: 1px solid #fff;}
+.active-btn:hover{
+    color: #fff;
+}
+
+
+.themeInfo{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(76, 241, 76, 0.81);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 10px;
+    padding-bottom: 5px;
+    border-radius: 0 0 4px 4px;
+    transition: .4s;
+}
+
+/*external plugin badge css*/
+.sidebar .nav .nav-item.plugin-menu:before {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    content: "\f6a4";
+    z-index: 9;
+    left: 5px;
+    font-family: "Material Design Icons";
+    top: 15px;
+    background-color: #d286ff;
+    line-height: 20px;
+    text-align: center;
+    color: #fff;
+    border-radius: 2px;
+}
+
+.sidebar .nav .nav-item.plugin-menu {
+    position: relative;
+}
+
+.modal-success-msg{
+    background: rgba(76, 241, 76, 0.81);
+}
+
+.modalPreviewImg img{width: 100%}
+.previewActive{background: rgb(235 97 73); border: 0}

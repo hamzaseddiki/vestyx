@@ -1,0 +1,37 @@
+.simpleContact.simpleContact_Custom {
+    background: unset;
+    z-index: 2;
+}
+.section-tittle .tittle::after {
+    visibility: hidden;
+}
+.section-tittle .tittle::before {
+    visibility: hidden;
+}
+.theme-4 .section-tittle .tittle::before {
+    position: absolute;
+    content: "";
+    background-image: url(../img/icon/support-ticketing-tittleShape.svg);
+    background-repeat: no-repeat;
+    width: 32px;
+    height: 100%;
+    top: -7px;
+    right: -55px;
+    background-position: 0 0;
+    background-size: contain;
+    visibility: visible;
+}
+
+.theme-4 .section-tittle .tittle::after {
+    position: absolute;
+    content: "";
+    background-image: url(..img/icon/support-ticketing-tittleShape2.svg);
+    background-repeat: no-repeat;
+    width: 28px;
+    height: 100%;
+    top: -15px;
+    left: -28px;
+    background-position: 0 0;
+    background-size: contain;
+    visibility: visible;
+}

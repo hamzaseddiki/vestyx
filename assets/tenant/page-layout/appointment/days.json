@@ -1,0 +1,61 @@
+{
+  "data":
+  [
+    {
+      "id": 1,
+      "day": "{\"en_US\":\"Thursday\"}",
+      "key": "Thursday",
+      "status": 1,
+      "created_at": "2023-05-21 15:41:17",
+      "updated_at": "2023-05-24 13:16:45"
+    },
+    {
+      "id": 2,
+      "day": "{\"en_US\":\"Wednesday\"}",
+      "key": "Wednesday",
+      "status": 1,
+      "created_at": "2023-05-21 15:41:21",
+      "updated_at": "2023-05-21 15:41:21"
+    },
+    {
+      "id": 3,
+      "day": "{\"en_US\":\"Saturday\"}",
+      "key": "Saturday",
+      "status": 1,
+      "created_at": "2023-05-21 15:41:24",
+      "updated_at": "2023-05-21 15:41:24"
+    },
+    {
+      "id": 4,
+      "day": "{\"en_US\":\"Sunday\"}",
+      "key": "Sunday",
+      "status": 1,
+      "created_at": "2023-05-21 15:41:34",
+      "updated_at": "2023-05-21 15:41:34"
+    },
+    {
+      "id": 5,
+      "day": "{\"en_US\":\"Monday\"}",
+      "key": "Monday",
+      "status": 1,
+      "created_at": "2023-05-21 15:41:40",
+      "updated_at": "2023-05-21 15:41:40"
+    },
+    {
+      "id": 6,
+      "day": "{\"en_US\":\"Tuesday\"}",
+      "key": "Tuesday",
+      "status": 1,
+      "created_at": "2023-05-21 15:41:51",
+      "updated_at": "2023-05-21 15:41:51"
+    },
+    {
+      "id": 7,
+      "day": "{\"en_US\":\"Friday\"}",
+      "key": "Friday",
+      "status": 1,
+      "created_at": "2023-05-21 15:41:57",
+      "updated_at": "2023-05-21 15:41:57"
+    }
+  ]
+}
