@@ -28,5 +28,6 @@
     "User": true,
     "NewsLetter": true,
     "HotelBooking": false,
-    "Restaurant": false
+    "Restaurant": false,
+    "ChargilyPayPaymentMethod": true
 }

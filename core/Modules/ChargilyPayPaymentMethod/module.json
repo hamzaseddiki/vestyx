@@ -1,0 +1,13 @@
+{
+    "name": "ChargilyPayPaymentMethod",
+    "alias": "chargilypaypaymentmethod",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\ChargilyPayPaymentMethod\\Providers\\ChargilyPayPaymentMethodServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
