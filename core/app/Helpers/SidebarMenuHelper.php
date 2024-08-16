@@ -13,7 +13,7 @@ use function __;
 class SidebarMenuHelper
 {
 
-    public function render_sidebar_menus() : string
+    public function render_sidebar_menus(): string
     {
         $menu_instance = new \App\Helpers\MenuWithPermission();
 
@@ -27,7 +27,7 @@ class SidebarMenuHelper
 
         $admin = \Auth::guard('admin')->user();
 
-        if ($admin->hasRole('Super Admin')){
+        if ($admin->hasRole('Super Admin')) {
             $this->admin_manage_menus($menu_instance);
             $this->users_manage_menus($menu_instance);
         }
@@ -53,12 +53,11 @@ class SidebarMenuHelper
         $this->appearance_settings_menus($menu_instance);
 
         // External Menu Render
-        foreach (getAllExternalMenu() as $externalMenu)
-        {
-            foreach ($externalMenu as $individual_menu_item){
+        foreach (getAllExternalMenu() as $externalMenu) {
+            foreach ($externalMenu as $individual_menu_item) {
                 $convert_to_array = (array) $individual_menu_item;
                 $routeName = $convert_to_array['route'];
-                if (isset($routeName) && !empty($routeName) && Route::has($routeName)){
+                if (isset($routeName) && !empty($routeName) && Route::has($routeName)) {
                     $menu_instance->add_menu_item($convert_to_array['id'], $convert_to_array);
                 }
             }
@@ -73,19 +72,19 @@ class SidebarMenuHelper
             'route' => 'landlord.admin.languages',
             'label' => __('Languages'),
             'parent' => null,
-            'permissions' => ['language-list','language-create','language-edit','language-delete'],
+            'permissions' => ['language-list', 'language-create', 'language-edit', 'language-delete'],
             'icon' => 'mdi mdi-language-css3',
         ]);
         return $menu_instance->render_menu_items();
     }
 
-    private function pages_settings_menus(MenuWithPermission $menu_instance) : void
+    private function pages_settings_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('pages-settings-menu-items', [
             'route' => '#',
             'label' => __('Pages'),
             'parent' => null,
-            'permissions' => ['page-list','page-create','page-edit','page-delete'],
+            'permissions' => ['page-list', 'page-create', 'page-edit', 'page-delete'],
             'icon' => 'mdi mdi-file',
         ]);
         $menu_instance->add_menu_item('pages-settings-all-page-settings', [
@@ -108,7 +107,7 @@ class SidebarMenuHelper
             'route' => '#',
             'label' => __('Wallet Manage'),
             'parent' => null,
-            'permissions' => ['wallet-list','wallet-history'],
+            'permissions' => ['wallet-list', 'wallet-history'],
             'icon' => 'mdi mdi-cash-register',
         ]);
         $menu_instance->add_menu_item('wallet-manage-settings-list-menu-items', [
@@ -162,13 +161,13 @@ class SidebarMenuHelper
         ]);
     }
 
-    private function price_plan_settings_menus(MenuWithPermission $menu_instance) : void
+    private function price_plan_settings_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('price-plan-settings-menu-items', [
             'route' => '#',
             'label' => __('Price Plan'),
             'parent' => null,
-            'permissions' => ['price-plan-list','price-plan-create','price-plan-edit','price-plan-delete'],
+            'permissions' => ['price-plan-list', 'price-plan-create', 'price-plan-edit', 'price-plan-delete'],
             'icon' => 'mdi mdi-cash-multiple',
         ]);
         $menu_instance->add_menu_item('price-plan-settings-all-page-settings', [
@@ -193,7 +192,7 @@ class SidebarMenuHelper
     }
 
 
-    private function page_builder_seeder_settings_menus(MenuWithPermission $menu_instance) : void
+    private function page_builder_seeder_settings_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('home-pages-seeder-settings', [
             'route' => '#',
@@ -216,9 +215,8 @@ class SidebarMenuHelper
             'parent' => 'home-pages-seeder-settings',
             'permissions' => [],
         ]);
-
     }
-    private function seeder_settings_menus(MenuWithPermission $menu_instance) : void
+    private function seeder_settings_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('seeder-settings', [
             'route' => '#',
@@ -346,18 +344,17 @@ class SidebarMenuHelper
             'parent' => 'seeder-settings',
             'permissions' => [],
         ]);
-
     }
 
 
 
-    private function newsletter_settings_menus(MenuWithPermission $menu_instance) : void
+    private function newsletter_settings_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('newsletter', [
             'route' => '#',
             'label' => __('Newsletter Manage'),
             'parent' => null,
-            'permissions' => ['newsletter-list','newsletter-create','newsletter-edit','newsletter-delete'],
+            'permissions' => ['newsletter-list', 'newsletter-create', 'newsletter-edit', 'newsletter-delete'],
             'icon' => 'mdi mdi-newspaper',
         ]);
 
@@ -376,15 +373,24 @@ class SidebarMenuHelper
         ]);
     }
 
-    private function order_manage_settings_menus(MenuWithPermission $menu_instance) : void
+    private function order_manage_settings_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('order-manage-settings-menu-items', [
             'route' => '#',
             'label' => __('Package Order Manage'),
             'parent' => null,
-            'permissions' => ['package-order-all-order','package-order-pending-order','package-order-pending-order',
-                'package-order-progress-order','package-order-complete-order','package-order-success-order-page','package-order-cancel-order-page',
-                'package-order-order-page-manage','package-order-order-report','package-order-payment-logs','package-order-payment-report'
+            'permissions' => [
+                'package-order-all-order',
+                'package-order-pending-order',
+                'package-order-pending-order',
+                'package-order-progress-order',
+                'package-order-complete-order',
+                'package-order-success-order-page',
+                'package-order-cancel-order-page',
+                'package-order-order-page-manage',
+                'package-order-order-report',
+                'package-order-payment-logs',
+                'package-order-payment-report'
             ],
             'icon' => 'mdi mdi-cash-multiple',
         ]);
@@ -416,7 +422,7 @@ class SidebarMenuHelper
             'route' => 'landlord.admin.package.order.success.page',
             'label' => __('Success Order Page'),
             'parent' => 'order-manage-settings-menu-items',
-            'permissions' => [ 'package-order-success-order-page'],
+            'permissions' => ['package-order-success-order-page'],
         ]);
         $menu_instance->add_menu_item('order-manage-cancel-page-settings-new-page-settings', [
             'route' => 'landlord.admin.package.order.cancel.page',
@@ -429,7 +435,7 @@ class SidebarMenuHelper
             'route' => 'landlord.admin.package.order.report',
             'label' => __('Order Report'),
             'parent' => 'order-manage-settings-menu-items',
-            'permissions' => [ 'package-order-order-report'],
+            'permissions' => ['package-order-order-report'],
         ]);
         $menu_instance->add_menu_item('order-manage-payment-log-settings-new-page-settings', [
             'route' => 'landlord.admin.payment.logs',
@@ -445,7 +451,7 @@ class SidebarMenuHelper
         ]);
     }
 
-    private function custom_domain_settings_menus(MenuWithPermission $menu_instance) : void
+    private function custom_domain_settings_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('custom-domain-settings-menu-items', [
             'route' => '#',
@@ -474,28 +480,27 @@ class SidebarMenuHelper
             'parent' => 'custom-domain-settings-menu-items',
             'permissions' => [],
         ]);
-
     }
 
-    private function testimonial_settings_menus(MenuWithPermission $menu_instance) : void
+    private function testimonial_settings_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('testimonial', [
             'route' => 'landlord.admin.testimonial',
             'label' => __('Testimonial'),
             'parent' => null,
-            'permissions' => ['testimonial-list', 'testimonial-create','testimonial-edit','testimonial-delete'],
+            'permissions' => ['testimonial-list', 'testimonial-create', 'testimonial-edit', 'testimonial-delete'],
             'icon' => 'mdi mdi-format-quote-close',
         ]);
     }
 
 
-    private function blog_settings_menus(MenuWithPermission $menu_instance) : void
+    private function blog_settings_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('blog-settings-menu-items', [
             'route' => '#',
             'label' => __('Blogs'),
             'parent' => null,
-            'permissions' => ['blog-list','blog-create','blog-edit','blog-delete','blog-settings'],
+            'permissions' => ['blog-list', 'blog-create', 'blog-edit', 'blog-delete', 'blog-settings'],
             'icon' => 'mdi mdi-blogger',
         ]);
 
@@ -526,16 +531,15 @@ class SidebarMenuHelper
             'parent' => 'blog-settings-menu-items',
             'permissions' => ['blog-settings'],
         ]);
-
     }
 
-    private function support_ticket_settings_menus(MenuWithPermission $menu_instance) : void
+    private function support_ticket_settings_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('support-tickets-settings-menu-items', [
             'route' => '#',
             'label' => __('Support Tickets'),
             'parent' => null,
-            'permissions' => ['support-ticket-list','support-ticket-create','support-ticket-edit','support-ticket-delete',],
+            'permissions' => ['support-ticket-list', 'support-ticket-create', 'support-ticket-edit', 'support-ticket-delete',],
             'icon' => 'mdi mdi-folder-outline',
         ]);
 
@@ -557,7 +561,7 @@ class SidebarMenuHelper
             'route' => 'landlord.admin.support.ticket.department',
             'label' => __('Departments'),
             'parent' => 'support-tickets-settings-menu-items',
-            'permissions' => ['support-ticket-department-list','support-ticket-department-create','support-ticket-department-edit','support-ticket-department-delete',],
+            'permissions' => ['support-ticket-department-list', 'support-ticket-department-create', 'support-ticket-department-edit', 'support-ticket-department-delete',],
         ]);
 
         $menu_instance->add_menu_item('support-ticket-settings-setting', [
@@ -568,13 +572,13 @@ class SidebarMenuHelper
         ]);
     }
 
-    private function all_notification_settings_menus(MenuWithPermission $menu_instance) : void
+    private function all_notification_settings_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('notifications', [
             'route' => 'landlord.admin.notification.all',
             'label' => __('Notifications'),
             'parent' => null,
-            'permissions' => [ 'notification-list'],
+            'permissions' => ['notification-list'],
             'icon' => 'mdi mdi-bell',
         ]);
 
@@ -582,7 +586,7 @@ class SidebarMenuHelper
             'route' => 'landlord.admin.notification.all',
             'label' => __('All Notifications'),
             'parent' => 'notifications',
-            'permissions' => [ 'notification-list'],
+            'permissions' => ['notification-list'],
             'icon' => '',
         ]);
 
@@ -608,30 +612,30 @@ class SidebarMenuHelper
         ]);
     }
 
-    private function brands_settings_menus(MenuWithPermission $menu_instance) : void
+    private function brands_settings_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('brands', [
             'route' => 'landlord.admin.brands',
             'label' => __('Brands'),
             'parent' => null,
-            'permissions' => [ 'brand-list','brand-create','brand-edit','brand-delete'],
+            'permissions' => ['brand-list', 'brand-create', 'brand-edit', 'brand-delete'],
             'icon' => 'mdi mdi-slack',
         ]);
     }
 
-    private function coupon_settings_menus(MenuWithPermission $menu_instance) : void
+    private function coupon_settings_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('coupons', [
             'route' => 'landlord.admin.coupons',
             'label' => __('Coupons'),
             'parent' => null,
-            'permissions' => [ 'coupon-list','coupon-create','coupon-edit','coupon-delete'],
+            'permissions' => ['coupon-list', 'coupon-create', 'coupon-edit', 'coupon-delete'],
             'icon' => 'mdi mdi-file',
         ]);
     }
 
 
-    private function form_builder_settings_menus(MenuWithPermission $menu_instance) : void
+    private function form_builder_settings_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('form-builder-settings-menu-items', [
             'route' => '#',
@@ -647,17 +651,24 @@ class SidebarMenuHelper
             'parent' => 'form-builder-settings-menu-items',
             'permissions' => ['form-builder'],
         ]);
-
     }
 
-    private function appearance_settings_menus(MenuWithPermission $menu_instance) : void
+    private function appearance_settings_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('appearance-settings-menu-items', [
             'route' => '#',
             'label' => __('Appearance Settings'),
             'parent' => null,
-            'permissions' => ['appearance-widget-builder','appearance-menu-manage','appearance-country-list','appearance-404-settings'
-                ,'appearance-topbar-settings','appearance-email-template','appearance-login-register-settings','appearance-maintenance-settings'],
+            'permissions' => [
+                'appearance-widget-builder',
+                'appearance-menu-manage',
+                'appearance-country-list',
+                'appearance-404-settings',
+                'appearance-topbar-settings',
+                'appearance-email-template',
+                'appearance-login-register-settings',
+                'appearance-maintenance-settings'
+            ],
             'icon' => 'mdi mdi-folder-outline',
         ]);
 
@@ -716,21 +727,30 @@ class SidebarMenuHelper
             'parent' => 'appearance-settings-menu-items',
             'permissions' => ['appearance-maintenance-settings'],
         ]);
-
-
-
     }
 
-    private function general_settings_menus(MenuWithPermission $menu_instance) : void
+    private function general_settings_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('general-settings-menu-items', [
             'route' => '#',
             'label' => __('General Settings'),
             'parent' => null,
-            'permissions' => ['general-settings-page-settings','general-settings-site-identity','general-settings-basic-settings','general-settings-color-settings',
-                'general-settings-typography-settings','general-settings-seo-settings','general-settings-payment-settings','general-settings-third-party-script-settings',
-                'general-settings-smtp-settings','general-settings-custom-css-settings','general-settings-custom-js-settings','general-settings-database-upgrade-settings',
-                'general-settings-cache-clear-settings','general-settings-license-settings'],
+            'permissions' => [
+                'general-settings-page-settings',
+                'general-settings-site-identity',
+                'general-settings-basic-settings',
+                'general-settings-color-settings',
+                'general-settings-typography-settings',
+                'general-settings-seo-settings',
+                'general-settings-payment-settings',
+                'general-settings-third-party-script-settings',
+                'general-settings-smtp-settings',
+                'general-settings-custom-css-settings',
+                'general-settings-custom-js-settings',
+                'general-settings-database-upgrade-settings',
+                'general-settings-cache-clear-settings',
+                'general-settings-license-settings'
+            ],
             'icon' => 'mdi mdi-settings',
         ]);
         $menu_instance->add_menu_item('general-settings-page-settings', [
@@ -839,7 +859,7 @@ class SidebarMenuHelper
         ]);
     }
 
-    private function users_manage_menus(MenuWithPermission $menu_instance) : void
+    private function users_manage_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('users-manage-settings-menu-items', [
             'route' => '#',
@@ -869,7 +889,7 @@ class SidebarMenuHelper
         ]);
     }
 
-    private function users_website_issues_manage_menus(MenuWithPermission $menu_instance) : void
+    private function users_website_issues_manage_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('users-website-issues-manage-settings-menu-items', [
             'route' => '#',
@@ -898,10 +918,9 @@ class SidebarMenuHelper
             'parent' => 'users-website-issues-manage-settings-menu-items',
             'permissions' => [],
         ]);
-
     }
 
-    private function payment_gateway_manage_menus(MenuWithPermission $menu_instance) : void
+    private function payment_gateway_manage_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('payment_gateway-manage-settings-menu-items', [
             'route' => '#',
@@ -1084,10 +1103,15 @@ class SidebarMenuHelper
             'parent' => 'payment_gateway-manage-settings-menu-items',
             'permissions' => [],
         ]);
-
+        $menu_instance->add_menu_item('chargilypay-settings-list-menu-items', [
+            'route' => 'landlord.admin.payment.chargilypay.settings',
+            'label' => __('chargilypay'),
+            'parent' => 'payment_gateway-manage-settings-menu-items',
+            'permissions' => [],
+        ]);
     }
 
-    private function admin_manage_menus(MenuWithPermission $menu_instance) : void
+    private function admin_manage_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('admin-manage-settings-menu-items', [
             'route' => '#',
@@ -1118,21 +1142,21 @@ class SidebarMenuHelper
 
 
     /* tenent menu */
-    public function render_tenant_sidebar_menus() : string
+    public function render_tenant_sidebar_menus(): string
     {
         $menu_instance = new \App\Helpers\MenuWithPermission();
         $admin = \Auth::guard('admin')->user();
 
         $current_tenant_payment_data = tenant()->payment_log()?->first() ?? null;
 
-        if(is_null($current_tenant_payment_data)){
+        if (is_null($current_tenant_payment_data)) {
             return '';
         }
 
         $current_tenant_payment_data = $current_tenant_payment_data->payment_status == 'complete' || $current_tenant_payment_data->payment_status == 'pending'
-        && $current_tenant_payment_data->status == 'trial' ? $current_tenant_payment_data : [];
+            && $current_tenant_payment_data->status == 'trial' ? $current_tenant_payment_data : [];
 
-        if(!empty($current_tenant_payment_data)) {
+        if (!empty($current_tenant_payment_data)) {
             $package = $current_tenant_payment_data->package ?? [];
 
             if (!empty($package)) {
@@ -1142,7 +1166,7 @@ class SidebarMenuHelper
                 $check_all_feature = $all_features->pluck('feature_name')->toArray();
 
 
-                if (in_array('dashboard',$check_all_feature)) {
+                if (in_array('dashboard', $check_all_feature)) {
                     $menu_instance->add_menu_item('tenant-dashboard-menu', [
                         'route' => 'tenant.admin.dashboard',
                         'label' => __('Dashboard'),
@@ -1153,14 +1177,14 @@ class SidebarMenuHelper
                 }
 
 
-                if (in_array('admin',$check_all_feature)) {
+                if (in_array('admin', $check_all_feature)) {
                     if ($admin->hasRole('Super Admin')) {
                         $this->tenant_admin_manage_menus($menu_instance);
                     }
                 }
 
 
-                if (in_array('user',$check_all_feature)) {
+                if (in_array('user', $check_all_feature)) {
                     if ($admin->hasRole('Super Admin')) {
                         $this->tenant_users_manage_menus($menu_instance);
                     }
@@ -1170,14 +1194,12 @@ class SidebarMenuHelper
                 $check_ecommerce_feature = $all_features->pluck('feature_name')->toArray();
 
 
-                if (in_array('eCommerce',$check_ecommerce_feature)) {
-                    if (isPluginActive('Product'))
-                    {
+                if (in_array('eCommerce', $check_ecommerce_feature)) {
+                    if (isPluginActive('Product')) {
                         $this->tenant_order_manage_settings_menus($menu_instance);
                     }
 
-                    if (isPluginActive('Badge'))
-                    {
+                    if (isPluginActive('Badge')) {
                         $this->tenant_badge_settings_menus($menu_instance);
                     }
 
@@ -1188,33 +1210,28 @@ class SidebarMenuHelper
                         $this->tenant_shipping_settings_menus($menu_instance);
                     }
 
-                    if (isPluginActive('CouponManage'))
-                    {
+                    if (isPluginActive('CouponManage')) {
                         $this->tenant_coupon_settings_menus($menu_instance);
                     }
 
-                    if (isPluginActive('Attributes'))
-                    {
+                    if (isPluginActive('Attributes')) {
                         $this->tenant_attribute_settings_menus($menu_instance);
                     }
 
-                    if (isPluginActive('Product'))
-                    {
-                        if (in_array('product',$check_ecommerce_feature)) {
+                    if (isPluginActive('Product')) {
+                        if (in_array('product', $check_ecommerce_feature)) {
                             $this->tenant_product_settings_menus($menu_instance);
                         }
                     }
 
-                    if (isPluginActive('Inventory'))
-                    {
-                        if (in_array('inventory',$check_ecommerce_feature)) {
+                    if (isPluginActive('Inventory')) {
+                        if (in_array('inventory', $check_ecommerce_feature)) {
                             $this->tenant_inventory_settings_menus($menu_instance);
                         }
                     }
 
-                    if (isPluginActive('Campaign'))
-                    {
-                        if (in_array('campaign',$check_ecommerce_feature)) {
+                    if (isPluginActive('Campaign')) {
+                        if (in_array('campaign', $check_ecommerce_feature)) {
                             $this->tenant_campaign_settings_menus($menu_instance);
                         }
                     }
@@ -1256,48 +1273,48 @@ class SidebarMenuHelper
                 }
 
 
-                if (in_array('brand',$check_all_feature)) {
+                if (in_array('brand', $check_all_feature)) {
                     $this->tenant_brands_settings_menus($menu_instance);
                 }
 
 
-                if (in_array('custom_domain',$check_all_feature)) {
+                if (in_array('custom_domain', $check_all_feature)) {
                     $this->tenant_custom_domain_request_settings_menus($menu_instance);
                 }
 
 
-                if (in_array('testimonial',$check_all_feature)) {
+                if (in_array('testimonial', $check_all_feature)) {
                     $this->tenant_testimonial_settings_menus($menu_instance);
                 }
 
 
-                if (in_array('form_builder',$check_all_feature)) {
+                if (in_array('form_builder', $check_all_feature)) {
                     $this->tenant_form_builder_settings_menus($menu_instance);
                 }
 
 
-                if (in_array('own_order_manage',$check_all_feature)) {
+                if (in_array('own_order_manage', $check_all_feature)) {
                     if ($admin->hasRole('Super Admin')) {
                         $this->tenant_payment_manage_menus($menu_instance);
                     }
                 }
 
-                if (in_array('page',$check_all_feature)) {
+                if (in_array('page', $check_all_feature)) {
                     $this->tenant_pages_settings_menus($menu_instance);
                 }
 
 
                 if (isPluginActive('Portfolio')) {
-                    if (in_array('portfolio',$check_all_feature)) {
+                    if (in_array('portfolio', $check_all_feature)) {
                         $this->tenant_porfolio_settings_menu($menu_instance);
                     }
                 }
 
-                if (in_array('blog',$check_all_feature)) {
+                if (in_array('blog', $check_all_feature)) {
                     $this->tenant_blog_settings_menus($menu_instance);
                 }
 
-                if (in_array('advertisement',$check_all_feature)) {
+                if (in_array('advertisement', $check_all_feature)) {
                     $this->tenant_advertisement_settings_menus($menu_instance);
                 }
 
@@ -1313,53 +1330,52 @@ class SidebarMenuHelper
                     }
                 }
 
-                if(isPluginActive('NewsLetter')){
-                    if (in_array('newsletter',$check_all_feature)) {
+                if (isPluginActive('NewsLetter')) {
+                    if (in_array('newsletter', $check_all_feature)) {
                         $this->tenant_newsletter_settings_menus($menu_instance);
                     }
                 }
 
 
-                if (in_array('faq',$check_all_feature)) {
+                if (in_array('faq', $check_all_feature)) {
                     $this->tenant_faq_settings($menu_instance);
                 }
 
-                if (in_array('wedding_price_plan',$check_all_feature)) {
+                if (in_array('wedding_price_plan', $check_all_feature)) {
                     $this->tenant_wedding_price_plan_settings($menu_instance);
                 }
 
 
-                if (in_array('gallery',$check_all_feature)) {
+                if (in_array('gallery', $check_all_feature)) {
                     $this->tenant_image_gallery($menu_instance);
                 }
 
                 // External Menu Render
-                foreach (getAllExternalMenu() as $externalMenu)
-                {
-                    foreach ($externalMenu as $individual_menu_item){
+                foreach (getAllExternalMenu() as $externalMenu) {
+                    foreach ($externalMenu as $individual_menu_item) {
                         $convert_to_array = (array) $individual_menu_item;
                         $routeName = $convert_to_array['route'];
-                        if (isset($routeName) && !empty($routeName) && Route::has($routeName)){
+                        if (isset($routeName) && !empty($routeName) && Route::has($routeName)) {
                             $menu_instance->add_menu_item($convert_to_array['id'], $convert_to_array);
                         }
                     }
                 }
 
-                if (in_array('appearance_settings',$check_all_feature)) {
+                if (in_array('appearance_settings', $check_all_feature)) {
                     $this->tenant_appearance_settings_menus($menu_instance);
                 }
 
-                if (in_array('general_settings',$check_all_feature)) {
+                if (in_array('general_settings', $check_all_feature)) {
                     $this->tenant_general_settings_menus($menu_instance);
                 }
 
-                if (in_array('payment_gateways',$check_all_feature)) {
+                if (in_array('payment_gateways', $check_all_feature)) {
                     $this->tenant_payment_gateway_manage_menus($menu_instance);
                 }
 
 
 
-                if (in_array('language',$check_all_feature)) {
+                if (in_array('language', $check_all_feature)) {
                     $menu_instance->add_menu_item('tenant-languages', [
                         'route' => 'tenant.admin.languages',
                         'label' => __('Languages'),
@@ -1368,7 +1384,6 @@ class SidebarMenuHelper
                         'icon' => 'mdi mdi-polymer ',
                     ]);
                 }
-
             }
         }
 
@@ -1381,7 +1396,7 @@ class SidebarMenuHelper
             'route' => '#',
             'label' => __('Donations'),
             'parent' => null,
-            'permissions' => ['donation-list','donation-create','donation-edit','donation-delete'],
+            'permissions' => ['donation-list', 'donation-create', 'donation-edit', 'donation-delete'],
             'icon' => 'mdi mdi-cash-multiple',
         ]);
 
@@ -1511,7 +1526,6 @@ class SidebarMenuHelper
             'parent' => 'event-settings-menu-items',
             'permissions' => [],
         ]);
-
     }
 
     private function tenant_job_settings_menus(MenuWithPermission $menu_instance): void
@@ -1573,8 +1587,6 @@ class SidebarMenuHelper
             'parent' => 'job-settings-menu-items',
             'permissions' => [],
         ]);
-
-
     }
 
     private function tenant_appointment_settings_menus(MenuWithPermission $menu_instance): void
@@ -1583,8 +1595,18 @@ class SidebarMenuHelper
             'route' => '#',
             'label' => __('Appointment'),
             'parent' => null,
-            'permissions' => ['appointment-list','sub-appointment-list','appointment-category-list','appointment-sub-category-list','appointment-day-type',
-                'appointment-days','appointment-schedule','appointment-payment-log','appointment-report','appointment-settings'],
+            'permissions' => [
+                'appointment-list',
+                'sub-appointment-list',
+                'appointment-category-list',
+                'appointment-sub-category-list',
+                'appointment-day-type',
+                'appointment-days',
+                'appointment-schedule',
+                'appointment-payment-log',
+                'appointment-report',
+                'appointment-settings'
+            ],
             'icon' => 'mdi mdi-cash-multiple',
         ]);
 
@@ -1659,7 +1681,6 @@ class SidebarMenuHelper
             'parent' => 'appointment-settings-menu-items',
             'permissions' => ['appointment-settings'],
         ]);
-
     }
 
     public function tenant_porfolio_settings_menu(MenuWithPermission $menu_instance): void
@@ -1726,13 +1747,13 @@ class SidebarMenuHelper
         ]);
     }
 
-    private function tenant_newsletter_settings_menus(MenuWithPermission $menu_instance) : void
+    private function tenant_newsletter_settings_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('newsletter', [
             'route' => '#',
             'label' => __('Newsletter Manage'),
             'parent' => null,
-            'permissions' => ['newsletter-list','newsletter-create','newsletter-edit','newsletter-delete'],
+            'permissions' => ['newsletter-list', 'newsletter-create', 'newsletter-edit', 'newsletter-delete'],
             'icon' => 'mdi mdi-newspaper',
         ]);
 
@@ -1827,13 +1848,13 @@ class SidebarMenuHelper
         ]);
     }
 
-    private function tenant_services_settings_menus(MenuWithPermission $menu_instance) : void
+    private function tenant_services_settings_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('services-settings-menu-items', [
             'route' => '#',
             'label' => __('Services'),
             'parent' => null,
-            'permissions' => ['service-list','service-create','service-edit','service-delete'],
+            'permissions' => ['service-list', 'service-create', 'service-edit', 'service-delete'],
             'icon' => 'mdi mdi-file',
         ]);
         $menu_instance->add_menu_item('services-settings-all-page-settings', [
@@ -1855,16 +1876,15 @@ class SidebarMenuHelper
             'parent' => 'services-settings-menu-items',
             'permissions' => ['service-category-list'],
         ]);
-
     }
 
-    private function tenant_pages_settings_menus(MenuWithPermission $menu_instance) : void
+    private function tenant_pages_settings_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('pages-settings-menu-items', [
             'route' => '#',
             'label' => __('Pages'),
             'parent' => null,
-            'permissions' => ['page-list','page-create','page-edit','page-delete'],
+            'permissions' => ['page-list', 'page-create', 'page-edit', 'page-delete'],
             'icon' => 'mdi mdi-file',
         ]);
         $menu_instance->add_menu_item('pages-settings-all-page-settings', [
@@ -1881,24 +1901,24 @@ class SidebarMenuHelper
         ]);
     }
 
-    private function tenant_brands_settings_menus(MenuWithPermission $menu_instance) : void
+    private function tenant_brands_settings_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('brands', [
             'route' => 'tenant.admin.brands',
             'label' => __('Brands'),
             'parent' => null,
-            'permissions' => [ 'brand-list','brand-create','brand-edit','brand-delete'],
+            'permissions' => ['brand-list', 'brand-create', 'brand-edit', 'brand-delete'],
             'icon' => 'mdi mdi-slack',
         ]);
     }
 
-    private function tenant_blog_settings_menus(MenuWithPermission $menu_instance) : void
+    private function tenant_blog_settings_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('blog-settings-menu-items', [
             'route' => '#',
             'label' => __('Blogs'),
             'parent' => null,
-            'permissions' => ['blog-list','blog-create','blog-edit','blog-delete','blog-settings'],
+            'permissions' => ['blog-list', 'blog-create', 'blog-edit', 'blog-delete', 'blog-settings'],
             'icon' => 'mdi mdi-blogger',
         ]);
 
@@ -1929,16 +1949,15 @@ class SidebarMenuHelper
             'parent' => 'blog-settings-menu-items',
             'permissions' => ['blog-settings'],
         ]);
-
     }
 
-    private function tenant_advertisement_settings_menus(MenuWithPermission $menu_instance) : void
+    private function tenant_advertisement_settings_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('advertisement-settings-menu-items', [
             'route' => '#',
             'label' => __('Advertisement'),
             'parent' => null,
-            'permissions' => ['advertisement-list','advertisement-create','advertisement-edit','advertisement-delete','advertisement-settings'],
+            'permissions' => ['advertisement-list', 'advertisement-create', 'advertisement-edit', 'advertisement-delete', 'advertisement-settings'],
             'icon' => 'mdi mdi-blogger',
         ]);
 
@@ -1955,27 +1974,26 @@ class SidebarMenuHelper
             'parent' => 'advertisement-settings-menu-items',
             'permissions' => ['advertisement-create'],
         ]);
-
     }
 
-    private function tenant_testimonial_settings_menus(MenuWithPermission $menu_instance) : void
+    private function tenant_testimonial_settings_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('testimonial', [
             'route' => 'tenant.admin.testimonial',
             'label' => __('Testimonial'),
             'parent' => null,
-            'permissions' => ['testimonial-list', 'testimonial-create','testimonial-edit','testimonial-delete'],
+            'permissions' => ['testimonial-list', 'testimonial-create', 'testimonial-edit', 'testimonial-delete'],
             'icon' => 'mdi mdi-format-quote-close',
         ]);
     }
 
-    private function tenant_support_ticket_settings_menus(MenuWithPermission $menu_instance) : void
+    private function tenant_support_ticket_settings_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('support-tickets-settings-menu-items', [
             'route' => '#',
             'label' => __('Support Tickets'),
             'parent' => null,
-            'permissions' => ['support-ticket-list','support-ticket-create','support-ticket-edit','support-ticket-delete',],
+            'permissions' => ['support-ticket-list', 'support-ticket-create', 'support-ticket-edit', 'support-ticket-delete',],
             'icon' => 'mdi mdi-folder-outline',
         ]);
 
@@ -1997,7 +2015,7 @@ class SidebarMenuHelper
             'route' => 'tenant.admin.support.ticket.department',
             'label' => __('Departments'),
             'parent' => 'support-tickets-settings-menu-items',
-            'permissions' => ['support-ticket-department-list','support-ticket-department-create','support-ticket-department-edit','support-ticket-department-delete',],
+            'permissions' => ['support-ticket-department-list', 'support-ticket-department-create', 'support-ticket-department-edit', 'support-ticket-department-delete',],
         ]);
 
         $menu_instance->add_menu_item('support-ticket-settings-setting', [
@@ -2008,7 +2026,7 @@ class SidebarMenuHelper
         ]);
     }
 
-    private function tenant_form_builder_settings_menus(MenuWithPermission $menu_instance) : void
+    private function tenant_form_builder_settings_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('form-builder-settings-menu-items', [
             'route' => '#',
@@ -2033,13 +2051,13 @@ class SidebarMenuHelper
         ]);
     }
 
-    private function tenant_appearance_settings_menus(MenuWithPermission $menu_instance) : void
+    private function tenant_appearance_settings_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('appearance-settings-menu-items', [
             'route' => '#',
             'label' => __('Appearance Settings'),
             'parent' => null,
-            'permissions' => ['menu-manage','topbar-manage','widget-builder','other-settings'],
+            'permissions' => ['menu-manage', 'topbar-manage', 'widget-builder', 'other-settings'],
             'icon' => 'mdi mdi-folder-outline',
         ]);
 
@@ -2093,16 +2111,28 @@ class SidebarMenuHelper
         ]);
     }
 
-    private function tenant_general_settings_menus(MenuWithPermission $menu_instance) : void
+    private function tenant_general_settings_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('general-settings-menu-items', [
             'route' => '#',
             'label' => __('General Settings'),
             'parent' => null,
-            'permissions' => ['general-settings-page-settings','general-settings-site-identity','general-settings-basic-settings','general-settings-color-settings',
-                'general-settings-typography-settings','general-settings-seo-settings','general-settings-payment-settings','general-settings-third-party-script-settings',
-                'general-settings-smtp-settings','general-settings-custom-css-settings','general-settings-custom-js-settings','general-settings-database-upgrade-settings',
-                'general-settings-cache-clear-settings','general-settings-license-settings'],
+            'permissions' => [
+                'general-settings-page-settings',
+                'general-settings-site-identity',
+                'general-settings-basic-settings',
+                'general-settings-color-settings',
+                'general-settings-typography-settings',
+                'general-settings-seo-settings',
+                'general-settings-payment-settings',
+                'general-settings-third-party-script-settings',
+                'general-settings-smtp-settings',
+                'general-settings-custom-css-settings',
+                'general-settings-custom-js-settings',
+                'general-settings-database-upgrade-settings',
+                'general-settings-cache-clear-settings',
+                'general-settings-license-settings'
+            ],
             'icon' => 'mdi mdi-settings',
         ]);
         $menu_instance->add_menu_item('general-settings-reading-settings', [
@@ -2142,12 +2172,12 @@ class SidebarMenuHelper
             'parent' => 'general-settings-menu-items',
             'permissions' => ['general-settings-seo-settings'],
         ]);
-//        $menu_instance->add_menu_item('general-settings-payment-gateway-settings', [
-//            'route' => 'tenant.admin.general.payment.settings',
-//            'label' => __('Payment Settings'),
-//            'parent' => 'general-settings-menu-items',
-//            'permissions' => ['general-settings-payment-settings'],
-//        ]);
+        //        $menu_instance->add_menu_item('general-settings-payment-gateway-settings', [
+        //            'route' => 'tenant.admin.general.payment.settings',
+        //            'label' => __('Payment Settings'),
+        //            'parent' => 'general-settings-menu-items',
+        //            'permissions' => ['general-settings-payment-settings'],
+        //        ]);
         $menu_instance->add_menu_item('general-settings-third-party-script-settings', [
             'route' => 'tenant.admin.general.third.party.script.settings',
             'label' => __('Third Party Script'),
@@ -2177,7 +2207,7 @@ class SidebarMenuHelper
             'route' => 'tenant.admin.general.cache.settings',
             'label' => __('Cache Settings'),
             'parent' => 'general-settings-menu-items',
-            'permissions' => [ 'general-settings-cache-clear-settings'],
+            'permissions' => ['general-settings-cache-clear-settings'],
         ]);
         $menu_instance->add_menu_item('general-settings-gdpr-settings', [
             'route' => 'tenant.admin.general.gdpr.settings',
@@ -2193,7 +2223,7 @@ class SidebarMenuHelper
         ]);
     }
 
-    private function tenant_payment_gateway_manage_menus(MenuWithPermission $menu_instance) : void
+    private function tenant_payment_gateway_manage_menus(MenuWithPermission $menu_instance): void
     {
 
         $current_tenant_payment_data = tenant()->payment_log()?->first() ?? null;
@@ -2216,7 +2246,7 @@ class SidebarMenuHelper
             'permissions' => [],
         ]);
 
-        if (in_array('paypal',$check_all_feature)) {
+        if (in_array('paypal', $check_all_feature)) {
             $menu_instance->add_menu_item('paypal-settings-list-menu-items', [
                 'route' => 'tenant.admin.payment.paypal.settings',
                 'label' => __('Paypal'),
@@ -2225,7 +2255,7 @@ class SidebarMenuHelper
             ]);
         }
 
-        if (in_array('paytm',$check_all_feature)) {
+        if (in_array('paytm', $check_all_feature)) {
             $menu_instance->add_menu_item('paytm-settings-list-menu-items', [
                 'route' => 'tenant.admin.payment.paytm.settings',
                 'label' => __('Paytm'),
@@ -2234,7 +2264,7 @@ class SidebarMenuHelper
             ]);
         }
 
-        if (in_array('stripe',$check_all_feature)) {
+        if (in_array('stripe', $check_all_feature)) {
             $menu_instance->add_menu_item('stripe-settings-list-menu-items', [
                 'route' => 'tenant.admin.payment.stripe.settings',
                 'label' => __('Stripe'),
@@ -2243,7 +2273,7 @@ class SidebarMenuHelper
             ]);
         }
 
-        if (in_array('razorpay',$check_all_feature)) {
+        if (in_array('razorpay', $check_all_feature)) {
             $menu_instance->add_menu_item('razorpay-settings-list-menu-items', [
                 'route' => 'tenant.admin.payment.razorpay.settings',
                 'label' => __('Razorpay'),
@@ -2253,7 +2283,7 @@ class SidebarMenuHelper
         }
 
 
-        if (in_array('paystack',$check_all_feature)) {
+        if (in_array('paystack', $check_all_feature)) {
             $menu_instance->add_menu_item('paystack-settings-list-menu-items', [
                 'route' => 'tenant.admin.payment.paystack.settings',
                 'label' => __('Paystack'),
@@ -2263,7 +2293,7 @@ class SidebarMenuHelper
         }
 
 
-        if (in_array('mollie',$check_all_feature)) {
+        if (in_array('mollie', $check_all_feature)) {
             $menu_instance->add_menu_item('mollie-settings-list-menu-items', [
                 'route' => 'tenant.admin.payment.mollie.settings',
                 'label' => __('Mollie'),
@@ -2272,7 +2302,7 @@ class SidebarMenuHelper
             ]);
         }
 
-        if (in_array('payfast',$check_all_feature)) {
+        if (in_array('payfast', $check_all_feature)) {
             $menu_instance->add_menu_item('payfast-settings-list-menu-items', [
                 'route' => 'tenant.admin.payment.payfast.settings',
                 'label' => __('Payfast'),
@@ -2281,7 +2311,7 @@ class SidebarMenuHelper
             ]);
         }
 
-        if (in_array('midtrans',$check_all_feature)) {
+        if (in_array('midtrans', $check_all_feature)) {
             $menu_instance->add_menu_item('midtrans-settings-list-menu-items', [
                 'route' => 'tenant.admin.payment.midtrans.settings',
                 'label' => __('Midtrans'),
@@ -2290,7 +2320,7 @@ class SidebarMenuHelper
             ]);
         }
 
-        if (in_array('cashfree',$check_all_feature)) {
+        if (in_array('cashfree', $check_all_feature)) {
             $menu_instance->add_menu_item('cashfree-settings-list-menu-items', [
                 'route' => 'tenant.admin.payment.cashfree.settings',
                 'label' => __('Cashfree'),
@@ -2299,7 +2329,7 @@ class SidebarMenuHelper
             ]);
         }
 
-        if (in_array('instamojo',$check_all_feature)) {
+        if (in_array('instamojo', $check_all_feature)) {
             $menu_instance->add_menu_item('instamojo-settings-list-menu-items', [
                 'route' => 'tenant.admin.payment.instamojo.settings',
                 'label' => __('Instamojo'),
@@ -2308,7 +2338,7 @@ class SidebarMenuHelper
             ]);
         }
 
-        if (in_array('marcadopago',$check_all_feature)) {
+        if (in_array('marcadopago', $check_all_feature)) {
             $menu_instance->add_menu_item('marcadopago-settings-list-menu-items', [
                 'route' => 'tenant.admin.payment.marcadopago.settings',
                 'label' => __('Marcadopago'),
@@ -2317,7 +2347,7 @@ class SidebarMenuHelper
             ]);
         }
 
-        if (in_array('zitopay',$check_all_feature)) {
+        if (in_array('zitopay', $check_all_feature)) {
             $menu_instance->add_menu_item('zitopay-settings-list-menu-items', [
                 'route' => 'tenant.admin.payment.zitopay.settings',
                 'label' => __('Zitopay'),
@@ -2326,7 +2356,7 @@ class SidebarMenuHelper
             ]);
         }
 
-        if (in_array('squareup',$check_all_feature)) {
+        if (in_array('squareup', $check_all_feature)) {
             $menu_instance->add_menu_item('squareup-settings-list-menu-items', [
                 'route' => 'tenant.admin.payment.squareup.settings',
                 'label' => __('Squareup'),
@@ -2335,7 +2365,7 @@ class SidebarMenuHelper
             ]);
         }
 
-        if (in_array('cinetpay',$check_all_feature)) {
+        if (in_array('cinetpay', $check_all_feature)) {
             $menu_instance->add_menu_item('cinetpay-settings-list-menu-items', [
                 'route' => 'tenant.admin.payment.cinetpay.settings',
                 'label' => __('Cinetpay'),
@@ -2344,7 +2374,7 @@ class SidebarMenuHelper
             ]);
         }
 
-        if (in_array('paytabs',$check_all_feature)) {
+        if (in_array('paytabs', $check_all_feature)) {
             $menu_instance->add_menu_item('paytabs-settings-list-menu-items', [
                 'route' => 'tenant.admin.payment.paytabs.settings',
                 'label' => __('Paytabs'),
@@ -2353,7 +2383,7 @@ class SidebarMenuHelper
             ]);
         }
 
-        if (in_array('billplz',$check_all_feature)) {
+        if (in_array('billplz', $check_all_feature)) {
             $menu_instance->add_menu_item('billplz-settings-list-menu-items', [
                 'route' => 'tenant.admin.payment.billplz.settings',
                 'label' => __('Billplz'),
@@ -2362,7 +2392,7 @@ class SidebarMenuHelper
             ]);
         }
 
-        if (in_array('manual_payment_',$check_all_feature)) {
+        if (in_array('manual_payment_', $check_all_feature)) {
             $menu_instance->add_menu_item('manual_payment-settings-list-menu-items', [
                 'route' => 'tenant.admin.payment.manual_payment.settings',
                 'label' => __('Manual Payment'),
@@ -2371,7 +2401,7 @@ class SidebarMenuHelper
             ]);
         }
 
-        if (in_array('flutterwave',$check_all_feature)) {
+        if (in_array('flutterwave', $check_all_feature)) {
             $menu_instance->add_menu_item('flutterwave-settings-list-menu-items', [
                 'route' => 'tenant.admin.payment.flutterwave.settings',
                 'label' => __('Flutterwave'),
@@ -2380,7 +2410,7 @@ class SidebarMenuHelper
             ]);
         }
 
-        if (in_array('toyyibpay',$check_all_feature)) {
+        if (in_array('toyyibpay', $check_all_feature)) {
             $menu_instance->add_menu_item('toyyibpay-settings-list-menu-items', [
                 'route' => 'tenant.admin.payment.toyyibpay.settings',
                 'label' => __('Toyyibpay'),
@@ -2389,7 +2419,7 @@ class SidebarMenuHelper
             ]);
         }
 
-        if (in_array('pagali',$check_all_feature)) {
+        if (in_array('pagali', $check_all_feature)) {
             $menu_instance->add_menu_item('pagali-settings-list-menu-items', [
                 'route' => 'tenant.admin.payment.pagali.settings',
                 'label' => __('Pagali'),
@@ -2398,7 +2428,7 @@ class SidebarMenuHelper
             ]);
         }
 
-        if (in_array('authorizenet',$check_all_feature)) {
+        if (in_array('authorizenet', $check_all_feature)) {
             $menu_instance->add_menu_item('authorizenet-settings-list-menu-items', [
                 'route' => 'tenant.admin.payment.authorizenet.settings',
                 'label' => __('Authorizenet'),
@@ -2407,7 +2437,7 @@ class SidebarMenuHelper
             ]);
         }
 
-        if (in_array('sitesway',$check_all_feature)) {
+        if (in_array('sitesway', $check_all_feature)) {
             $menu_instance->add_menu_item('sitesway-settings-list-menu-items', [
                 'route' => 'tenant.admin.payment.sitesway.settings',
                 'label' => __('Sitesway'),
@@ -2416,7 +2446,7 @@ class SidebarMenuHelper
             ]);
         }
 
-        if (in_array('manual_payment_',$check_all_feature)) {
+        if (in_array('manual_payment_', $check_all_feature)) {
             $menu_instance->add_menu_item('manual_payment-settings-list-menu-items', [
                 'route' => 'tenant.admin.payment.manual_payment.settings',
                 'label' => __('Manual Payment'),
@@ -2425,7 +2455,7 @@ class SidebarMenuHelper
             ]);
         }
 
-        if (in_array('bank_transfer',$check_all_feature)) {
+        if (in_array('bank_transfer', $check_all_feature)) {
             $menu_instance->add_menu_item('bank-transfer-settings-list-menu-items', [
                 'route' => 'tenant.admin.payment.bank_transfer.settings',
                 'label' => __('Bank Transfer'),
@@ -2434,7 +2464,7 @@ class SidebarMenuHelper
             ]);
         }
 
-        if (in_array('kinetic',$check_all_feature)) {
+        if (in_array('kinetic', $check_all_feature)) {
             $menu_instance->add_menu_item('kinetic-settings-list-menu-items', [
                 'route' => 'tenant.admin.payment.kinetic.settings',
                 'label' => __('kinetic'),
@@ -2442,10 +2472,9 @@ class SidebarMenuHelper
                 'permissions' => [],
             ]);
         }
-
     }
 
-    private function tenant_users_manage_menus(MenuWithPermission $menu_instance) : void
+    private function tenant_users_manage_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('users-manage-settings-menu-items', [
             'route' => '#',
@@ -2468,7 +2497,7 @@ class SidebarMenuHelper
         ]);
     }
 
-    private function tenant_payment_manage_menus(MenuWithPermission $menu_instance) : void
+    private function tenant_payment_manage_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('tenant-payment-manage-settings-menu-items', [
             'route' => '#',
@@ -2485,7 +2514,7 @@ class SidebarMenuHelper
         ]);
     }
 
-    private function tenant_custom_domain_request_settings_menus(MenuWithPermission $menu_instance) : void
+    private function tenant_custom_domain_request_settings_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('custom-domain-request', [
             'route' => 'tenant.admin.custom.domain.requests',
@@ -2496,7 +2525,7 @@ class SidebarMenuHelper
         ]);
     }
 
-    private function tenant_admin_manage_menus(MenuWithPermission $menu_instance) : void
+    private function tenant_admin_manage_menus(MenuWithPermission $menu_instance): void
     {
         $menu_instance->add_menu_item('admin-manage-settings-menu-items', [
             'route' => '#',
@@ -2535,9 +2564,17 @@ class SidebarMenuHelper
             'route' => '#',
             'label' => __('Product Order Manage'),
             'parent' => null,
-            'permissions' => ['product-order-all-order', 'product-order-pending-order',
-                'product-progress-order', 'product-order-complete', 'product-order-success-page', 'product-order-cancel-page',
-                'product-order-page-manage', 'product-order-report', 'product-order-payment-logs', 'product-order-payment-report',
+            'permissions' => [
+                'product-order-all-order',
+                'product-order-pending-order',
+                'product-progress-order',
+                'product-order-complete',
+                'product-order-success-page',
+                'product-order-cancel-page',
+                'product-order-page-manage',
+                'product-order-report',
+                'product-order-payment-logs',
+                'product-order-payment-report',
                 'product-order-manage-settings'
             ],
             'icon' => 'mdi mdi-cart',
@@ -2575,7 +2612,10 @@ class SidebarMenuHelper
             'label' => __('Badge Manage'),
             'parent' => null,
             'permissions' => [
-                'badge-list', 'badge-create', 'badge-edit', 'badge-delete',
+                'badge-list',
+                'badge-create',
+                'badge-edit',
+                'badge-delete',
             ],
             'icon' => 'mdi mdi-label',
         ]);
@@ -2602,8 +2642,14 @@ class SidebarMenuHelper
             'label' => __('Country Manage'),
             'parent' => null,
             'permissions' => [
-                'country-list', 'country-create', 'country-edit', 'country-delete',
-                'state-list', 'state-create', 'state-edit', 'state-delete'
+                'country-list',
+                'country-create',
+                'country-edit',
+                'country-delete',
+                'state-list',
+                'state-create',
+                'state-edit',
+                'state-delete'
             ],
             'icon' => 'mdi mdi-map',
         ]);
@@ -2630,8 +2676,14 @@ class SidebarMenuHelper
             'label' => __('Tax Manage'),
             'parent' => null,
             'permissions' => [
-                'country-tax-list', 'country-tax-create', 'country-tax-edit', 'country-tax-delete',
-                'state-tax-list', 'state-tax-create', 'state-tax-edit', 'state-tax-delete'
+                'country-tax-list',
+                'country-tax-create',
+                'country-tax-edit',
+                'country-tax-delete',
+                'state-tax-list',
+                'state-tax-create',
+                'state-tax-edit',
+                'state-tax-delete'
             ],
             'icon' => 'mdi mdi-cash',
         ]);
@@ -2658,8 +2710,15 @@ class SidebarMenuHelper
             'label' => __('Shipping Manage'),
             'parent' => null,
             'permissions' => [
-                'shipping-method-list', 'shipping-method-create', 'shipping-method-edit', 'shipping-method-delete', 'shipping-method-make',
-                'shipping-zone-list', 'shipping-zone-create', 'shipping-zone-edit', 'shipping-zone-delete'
+                'shipping-method-list',
+                'shipping-method-create',
+                'shipping-method-edit',
+                'shipping-method-delete',
+                'shipping-method-make',
+                'shipping-zone-list',
+                'shipping-zone-create',
+                'shipping-zone-edit',
+                'shipping-zone-delete'
             ],
             'icon' => 'mdi mdi-truck',
         ]);
@@ -2686,7 +2745,10 @@ class SidebarMenuHelper
             'label' => __('Coupon Manage'),
             'parent' => null,
             'permissions' => [
-                'product-coupon-list', 'product-coupon-create', 'product-coupon-edit', 'product-coupon-delete',
+                'product-coupon-list',
+                'product-coupon-create',
+                'product-coupon-edit',
+                'product-coupon-delete',
             ],
             'icon' => 'mdi mdi-ticket-percent',
         ]);
@@ -2706,14 +2768,38 @@ class SidebarMenuHelper
             'label' => __('Attribute'),
             'parent' => null,
             'permissions' => [
-                'product-category-list', 'product-category-create', 'product-category-edit', 'product-category-delete',
-                'product-sub-category-list', 'product-sub-category-create', 'product-sub-category-edit', 'product-sub-category-delete',
-                'product-child-category-list', 'product-child-category-create', 'product-child-category-edit', 'product-child-category-delete',
-                'product-tag-list', 'product-tag-create', 'product-tag-edit', 'product-tag-delete',
-                'product-unit-list', 'product-unit-create', 'product-unit-edit', 'product-unit-delete',
-                'product-color-list', 'product-color-create', 'product-color-edit', 'product-color-delete',
-                'product-size-list', 'product-size-create', 'product-size-edit', 'product-size-delete',
-                'product-delivery-option-list', 'product-delivery-option-create', 'product-delivery-option-edit', 'product-delivery-option-delete'
+                'product-category-list',
+                'product-category-create',
+                'product-category-edit',
+                'product-category-delete',
+                'product-sub-category-list',
+                'product-sub-category-create',
+                'product-sub-category-edit',
+                'product-sub-category-delete',
+                'product-child-category-list',
+                'product-child-category-create',
+                'product-child-category-edit',
+                'product-child-category-delete',
+                'product-tag-list',
+                'product-tag-create',
+                'product-tag-edit',
+                'product-tag-delete',
+                'product-unit-list',
+                'product-unit-create',
+                'product-unit-edit',
+                'product-unit-delete',
+                'product-color-list',
+                'product-color-create',
+                'product-color-edit',
+                'product-color-delete',
+                'product-size-list',
+                'product-size-create',
+                'product-size-edit',
+                'product-size-delete',
+                'product-delivery-option-list',
+                'product-delivery-option-create',
+                'product-delivery-option-edit',
+                'product-delivery-option-delete'
             ],
             'icon' => 'mdi mdi-format-list-checks',
         ]);
@@ -2843,6 +2929,4 @@ class SidebarMenuHelper
             'permissions' => ['inventory-settings'],
         ]);
     }
-
-
 }

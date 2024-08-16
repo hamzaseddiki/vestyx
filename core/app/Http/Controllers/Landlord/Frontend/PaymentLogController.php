@@ -32,16 +32,16 @@ use App\Models\CouponLog;
 class PaymentLogController extends Controller
 {
     //for all Ipn methods
-      use PaymentLogIpn;
+    use PaymentLogIpn;
     //for all Ipn methods
     private const SUCCESS_ROUTE = 'landlord.frontend.order.payment.success';
     private const STATIC_CANCEL_ROUTE = 'landlord.frontend.order.payment.cancel.static';
 
     private static function go_home_page()
     {
-        if(session()->has('exception_tenant_id')){
+        if (session()->has('exception_tenant_id')) {
             $session_tenant_id = session()->get('exception_tenant_id');
-            if(TenantException::where('tenant_id',$session_tenant_id)->first()){
+            if (TenantException::where('tenant_id', $session_tenant_id)->first()) {
                 session()->forget('exception_tenant_id');
                 return redirect()->route('landlord.user.home')->with(FlashMsg::item_delete(__('Your website is not ready yet, It is in admin approval stage..! you will get notified via email soon..!')));
             }
@@ -63,50 +63,52 @@ class PaymentLogController extends Controller
         $theme_condition =  !is_null($quick_website) ? 'required' : 'nullable';
 
 
-        if(!is_null($quick_website)){
+        if (!is_null($quick_website)) {
             session(['website_create_type' => 'quick_website']);
         }
 
-        $request->validate([
-            'name' => 'nullable|string|max:191',
-            'email' => 'nullable|email|max:191',
-            'package_id' => 'required|string',
-            'payment_gateway' => $payment_condition,
-            'subdomain' => $condition_for_log_id_from_tenant_1,
-            'custom_subdomain' => $condition_for_log_id_from_tenant_2,
-            'theme_slug' => $theme_condition,
-            'manual_payment_attachment' => 'required_if:selected_payment_gateway,==,bank_transfer|mimes:jpg,jpeg,png,pdf',
-            'transaction_id' => 'required_if:selected_payment_gateway,==,manual_payment_'
-        ],
+        $request->validate(
+            [
+                'name' => 'nullable|string|max:191',
+                'email' => 'nullable|email|max:191',
+                'package_id' => 'required|string',
+                'payment_gateway' => $payment_condition,
+                'subdomain' => $condition_for_log_id_from_tenant_1,
+                'custom_subdomain' => $condition_for_log_id_from_tenant_2,
+                'theme_slug' => $theme_condition,
+                'manual_payment_attachment' => 'required_if:selected_payment_gateway,==,bank_transfer|mimes:jpg,jpeg,png,pdf',
+                'transaction_id' => 'required_if:selected_payment_gateway,==,manual_payment_'
+            ],
             [
                 "custom_subdomain.required_if" => "Custom Sub Domain Required",
                 "trasaction_id" => "Transaction ID Required",
                 "trasaction_attachment" => "Transaction Attachment Required",
                 "theme_slug.required" => "The theme selection is required",
                 "package_id.required" => "The package selection is required",
-            ]);
+            ]
+        );
 
 
         //package Details
         $package = PricePlan::find($request->package_id);
 
-        if (is_null($package)){
-            return back()->with(['msg' => __('your selected subscription package not found'),'type' => 'danger']);
+        if (is_null($package)) {
+            return back()->with(['msg' => __('your selected subscription package not found'), 'type' => 'danger']);
         }
 
         //If Quick website trial
-            if(!is_null($request->quick_trial_status) && $request->quick_trial_status == 'trial'){
-               unset($request['payment_gateway']);
-               return $this->user_trial_action($request,$request->package_id);
-            }
+        if (!is_null($request->quick_trial_status) && $request->quick_trial_status == 'trial') {
+            unset($request['payment_gateway']);
+            return $this->user_trial_action($request, $request->package_id);
+        }
         //If Quick website trial
 
         //todo:: work on website create
-//        $subdomain = TenantHelpers::init()->getTenantIdFromRequest();
-//
-//        if (is_null($subdomain)){
-//            return back()->with(['msg' => __('set subdomain to process further'),'type' => 'danger']);
-//        }
+        //        $subdomain = TenantHelpers::init()->getTenantIdFromRequest();
+        //
+        //        if (is_null($subdomain)){
+        //            return back()->with(['msg' => __('set subdomain to process further'),'type' => 'danger']);
+        //        }
 
         if (!is_null($log_id_from_tenant_admin)) {
             $subdomain = PaymentLogs::find($log_id_from_tenant_admin)->tenant_id;
@@ -118,8 +120,8 @@ class PaymentLogController extends Controller
             }
         }
 
-        if (is_null($subdomain)){
-            return back()->with(['msg' => __('set subdomain to process further'),'type' => 'danger']);
+        if (is_null($subdomain)) {
+            return back()->with(['msg' => __('set subdomain to process further'), 'type' => 'danger']);
         }
 
 
@@ -133,8 +135,8 @@ class PaymentLogController extends Controller
 
         $subdomain = $createNewWebsiteTenantHelper->getTenantIdFromRequest();
 
-        if (empty($request->theme_slug) && $createNewWebsiteTenantHelper->getIsRenew() === false){
-            return back()->with(['msg' => __('select a theme to create website'),'type' => 'danger']);
+        if (empty($request->theme_slug) && $createNewWebsiteTenantHelper->getIsRenew() === false) {
+            return back()->with(['msg' => __('select a theme to create website'), 'type' => 'danger']);
         }
 
         $custom_expire_date = $request->custom_expire_date;
@@ -146,22 +148,22 @@ class PaymentLogController extends Controller
             return redirect()->back()->with(FlashMsg::item_delete($e->getMessage()));
         }
         //todo check if subdomain is has record in payment log means it is renew or new website
-        if ($createNewWebsiteTenantHelper->getIsRenew() && $createNewWebsiteTenantHelper->getExistingPackageType() === 'lifetime'){
+        if ($createNewWebsiteTenantHelper->getIsRenew() && $createNewWebsiteTenantHelper->getExistingPackageType() === 'lifetime') {
             return back()->with(['type' => 'danger', 'msg' => __('You are already using a lifetime plan')]);
         }
 
-        if ($createNewWebsiteTenantHelper->isSubdomainUsed() && !$createNewWebsiteTenantHelper->getIsRenew()){
+        if ($createNewWebsiteTenantHelper->isSubdomainUsed() && !$createNewWebsiteTenantHelper->getIsRenew()) {
             return back()->with(['type' => 'danger', 'msg' => __('This subdomain is already in use, Try something different')]);
         }
 
         try {
             //checking if the free plan limit is over
             $createNewWebsiteTenantHelper->checkFreePlanLimitOver();
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return back()->with(['type' => 'danger', 'msg' =>  $e->getMessage()]);
         }
 
-      // todo set package startDate and ExpireDate
+        // todo set package startDate and ExpireDate
         $package_start_date = '';
         $package_expire_date = '';
 
@@ -169,7 +171,6 @@ class PaymentLogController extends Controller
             if ($package->type == 0) { //monthly
                 $package_start_date = Carbon::now()->format('d-m-Y h:i:s');
                 $package_expire_date = Carbon::now()->addMonth(1)->format('d-m-Y h:i:s');
-
             } elseif ($package->type == 1) { //yearly
                 $package_start_date = Carbon::now()->format('d-m-Y h:i:s');
                 $package_expire_date = Carbon::now()->addYear(1)->format('d-m-Y h:i:s');
@@ -187,13 +188,13 @@ class PaymentLogController extends Controller
         $amount_to_charge = $createNewWebsiteTenantHelper->getPackage()->price;
         try {
             $amount_to_charge = $createNewWebsiteTenantHelper->checkCouponFromResponse();
-        }catch (\Exception $e){
-            return response()->back(['msg' => $e->getMessage(),'type' => 'danger']);
+        } catch (\Exception $e) {
+            return response()->back(['msg' => $e->getMessage(), 'type' => 'danger']);
         }
-//        $selected_payment_gateway = $createNewWebsiteTenantHelper->getSelectedPaymentGatewayFromRequest($amount_to_charge);
+        //        $selected_payment_gateway = $createNewWebsiteTenantHelper->getSelectedPaymentGatewayFromRequest($amount_to_charge);
 
 
-       //start working
+        //start working
 
         $request_date_remove = $request;
         $selected_payment_gateway = '';
@@ -231,10 +232,11 @@ class PaymentLogController extends Controller
                 $createNewWebsiteTenantHelper->setPaymentLog($old_tenant_log);
 
                 // If Payment Renewing
-                if (!empty($old_tenant_log->package_id) == $request_pack_id && !empty($old_tenant_log->user_id)
+                if (
+                    !empty($old_tenant_log->package_id) == $request_pack_id && !empty($old_tenant_log->user_id)
                     && $old_tenant_log->user_id == $createNewWebsiteTenantHelper->getUser()->id
-                    && $old_tenant_log->payment_status == 'complete')
-                {
+                    && $old_tenant_log->payment_status == 'complete'
+                ) {
                     if ($package_expire_date != null) {
                         $new_package_expire_date = $createNewWebsiteTenantHelper->newPackageExpireDate($old_tenant_log->expire_date, $package_expire_date);
                     } else {
@@ -282,7 +284,6 @@ class PaymentLogController extends Controller
                         'start_date' => $old_tenant_log->status == 'trial' ? $old_tenant_log->start_date : $package_start_date,
                         'expire_date' => $old_tenant_log->status == 'trial' ? $new_package_expire_date : $package_expire_date
                     ]);
-
                 }
             } // New Tenant + Plan (New Payment)
             else {
@@ -310,7 +311,6 @@ class PaymentLogController extends Controller
                         'theme' => $request_theme_slug_or_default ?? 'donation',
                     ]);
                 }
-
             }
 
             //free package store history
@@ -324,7 +324,7 @@ class PaymentLogController extends Controller
             //free package store history
 
             //Coupon logs store
-            if(!empty($createNewWebsiteTenantHelper->getPaymentLog()->coupon_id)){
+            if (!empty($createNewWebsiteTenantHelper->getPaymentLog()->coupon_id)) {
                 $createNewWebsiteTenantHelper->createCouponLog();
             }
             //Coupon logs store
@@ -335,89 +335,79 @@ class PaymentLogController extends Controller
             return back()->with('msg', $message);
         }
 
-            if ($selected_payment_gateway == 'bank_transfer') {
-                if ($createNewWebsiteTenantHelper->getPackage()->price != 0) { //for free zero pack
+        if ($selected_payment_gateway == 'bank_transfer') {
+            if ($createNewWebsiteTenantHelper->getPackage()->price != 0) { //for free zero pack
 
-                    $fileName = $createNewWebsiteTenantHelper->saveManualPaymentAttachment();
-                    $createNewWebsiteTenantHelper->paymentLogUpdate([
-                        'manual_payment_attachment' => $fileName,
-                        'status' => $createNewWebsiteTenantHelper->getPaymentLog()->status,
-                        'payment_status' => $createNewWebsiteTenantHelper->getPaymentLog()->is_renew == 1 ? 'pending' : $createNewWebsiteTenantHelper->getPaymentLog()->payment_status,
-                    ]);
-                }
-
-                $createNewWebsiteTenantHelper->sendEmailToUserForOrderAdminApprovalNotice();
-
-                $order_id = XgPaymentGateway::wrapped_id(random_int(1,9).$createNewWebsiteTenantHelper->getPaymentLog()->id.random_int(1,9));
-                return redirect()->route(self::SUCCESS_ROUTE, $order_id);
-
-            }else if($selected_payment_gateway == 'free')
-            {
-                try {
-
-                    if(!empty(get_static_option_central('subscription_free_package_auto_approve_status'))){
-
-                        //todo
-                        $createNewWebsiteTenantHelper->paymentLogUpdate([
-                            'payment_status' => 'complete',
-                            'status' => 'complete',
-                            'start_date' => $createNewWebsiteTenantHelper->getPaymentLog()->is_renew == 1 ?  $createNewWebsiteTenantHelper->getPaymentLog()->start_date : $package_start_date,
-                            'expire_date' => $createNewWebsiteTenantHelper->getPaymentLog()->is_renew == 1 ?  $createNewWebsiteTenantHelper->getExpiredDate($package_expire_date) : $package_expire_date
-                        ],true);
-                        event(new TenantRegisterEvent($createNewWebsiteTenantHelper->getUser(), $createNewWebsiteTenantHelper->getTenantId()));
-                        $createNewWebsiteTenantHelper->sendCredentialsToTenant();
-                        $createNewWebsiteTenantHelper->tenantUpdate([
-                            'start_date' => $createNewWebsiteTenantHelper->getPaymentLog()->start_date,
-                            'expire_date' =>  $createNewWebsiteTenantHelper->getPaymentLog()->expire_date,
-                            'user_id' => $createNewWebsiteTenantHelper->getPaymentLog()->user_id,
-                            'theme_slug' => $createNewWebsiteTenantHelper->getPaymentLog()->theme
-                        ]);
-
-                        $user = $createNewWebsiteTenantHelper->getUser();
-                        $url = DB::table('domains')->where('tenant_id',$createNewWebsiteTenantHelper->getTenantId())->first()->domain;
-                        $url = tenant_url_with_protocol($url);
-                        $user->update(['has_subdomain' => 1]);
-
-                        $createNewWebsiteTenantHelper->sendThankYouMailToUserForFreePackageSuccess();
-
-                        return redirect()->to($url);
-
-                    }else{
-                        $createNewWebsiteTenantHelper->sendThankYouMailToUserForFreePackageSuccess();
-                        $createNewWebsiteTenantHelper->tenantUpdate([
-                            'start_date' => $createNewWebsiteTenantHelper->getPaymentLog()->start_date,
-                            'expire_date' =>  $createNewWebsiteTenantHelper->getPaymentLog()->expire_date,
-                            'user_id' => $createNewWebsiteTenantHelper->getPaymentLog()->user_id,
-                            'theme_slug' => $createNewWebsiteTenantHelper->getPaymentLog()->theme
-                        ]);
-
-                        $order_id = XgPaymentGateway::wrapped_id(random_int(1,9).$createNewWebsiteTenantHelper->getPaymentLog()->id.random_int(1,9));
-                        return redirect()->route(self::SUCCESS_ROUTE, $order_id);
-
-                    }
-
-                } catch (\Exception $e) {
-
-                }
-
-            }else if ($selected_payment_gateway == 'manual_payment_')
-            {
+                $fileName = $createNewWebsiteTenantHelper->saveManualPaymentAttachment();
                 $createNewWebsiteTenantHelper->paymentLogUpdate([
-                    'transaction_id' => $request->transaction_id,
+                    'manual_payment_attachment' => $fileName,
                     'status' => $createNewWebsiteTenantHelper->getPaymentLog()->status,
                     'payment_status' => $createNewWebsiteTenantHelper->getPaymentLog()->is_renew == 1 ? 'pending' : $createNewWebsiteTenantHelper->getPaymentLog()->payment_status,
-                ],true);
-
-                $createNewWebsiteTenantHelper->sendEmailToUserForOrderAdminApprovalNotice();
-                $order_id = XgPaymentGateway::wrapped_id(random_int(1,9).$createNewWebsiteTenantHelper->getPaymentLog()->id.random_int(1,9));
-                return redirect()->route(self::SUCCESS_ROUTE, $order_id);
-
-            }else{
-                return $this->payment_with_gateway($selected_payment_gateway, $amount_to_charge,$createNewWebsiteTenantHelper->getPaymentLog(),$request);
+                ]);
             }
 
-        return redirect()->route('landlord.homepage');
+            $createNewWebsiteTenantHelper->sendEmailToUserForOrderAdminApprovalNotice();
 
+            $order_id = XgPaymentGateway::wrapped_id(random_int(1, 9) . $createNewWebsiteTenantHelper->getPaymentLog()->id . random_int(1, 9));
+            return redirect()->route(self::SUCCESS_ROUTE, $order_id);
+        } else if ($selected_payment_gateway == 'free') {
+            try {
+
+                if (!empty(get_static_option_central('subscription_free_package_auto_approve_status'))) {
+
+                    //todo
+                    $createNewWebsiteTenantHelper->paymentLogUpdate([
+                        'payment_status' => 'complete',
+                        'status' => 'complete',
+                        'start_date' => $createNewWebsiteTenantHelper->getPaymentLog()->is_renew == 1 ?  $createNewWebsiteTenantHelper->getPaymentLog()->start_date : $package_start_date,
+                        'expire_date' => $createNewWebsiteTenantHelper->getPaymentLog()->is_renew == 1 ?  $createNewWebsiteTenantHelper->getExpiredDate($package_expire_date) : $package_expire_date
+                    ], true);
+                    event(new TenantRegisterEvent($createNewWebsiteTenantHelper->getUser(), $createNewWebsiteTenantHelper->getTenantId()));
+                    $createNewWebsiteTenantHelper->sendCredentialsToTenant();
+                    $createNewWebsiteTenantHelper->tenantUpdate([
+                        'start_date' => $createNewWebsiteTenantHelper->getPaymentLog()->start_date,
+                        'expire_date' =>  $createNewWebsiteTenantHelper->getPaymentLog()->expire_date,
+                        'user_id' => $createNewWebsiteTenantHelper->getPaymentLog()->user_id,
+                        'theme_slug' => $createNewWebsiteTenantHelper->getPaymentLog()->theme
+                    ]);
+
+                    $user = $createNewWebsiteTenantHelper->getUser();
+                    $url = DB::table('domains')->where('tenant_id', $createNewWebsiteTenantHelper->getTenantId())->first()->domain;
+                    $url = tenant_url_with_protocol($url);
+                    $user->update(['has_subdomain' => 1]);
+
+                    $createNewWebsiteTenantHelper->sendThankYouMailToUserForFreePackageSuccess();
+
+                    return redirect()->to($url);
+                } else {
+                    $createNewWebsiteTenantHelper->sendThankYouMailToUserForFreePackageSuccess();
+                    $createNewWebsiteTenantHelper->tenantUpdate([
+                        'start_date' => $createNewWebsiteTenantHelper->getPaymentLog()->start_date,
+                        'expire_date' =>  $createNewWebsiteTenantHelper->getPaymentLog()->expire_date,
+                        'user_id' => $createNewWebsiteTenantHelper->getPaymentLog()->user_id,
+                        'theme_slug' => $createNewWebsiteTenantHelper->getPaymentLog()->theme
+                    ]);
+
+                    $order_id = XgPaymentGateway::wrapped_id(random_int(1, 9) . $createNewWebsiteTenantHelper->getPaymentLog()->id . random_int(1, 9));
+                    return redirect()->route(self::SUCCESS_ROUTE, $order_id);
+                }
+            } catch (\Exception $e) {
+            }
+        } else if ($selected_payment_gateway == 'manual_payment_') {
+            $createNewWebsiteTenantHelper->paymentLogUpdate([
+                'transaction_id' => $request->transaction_id,
+                'status' => $createNewWebsiteTenantHelper->getPaymentLog()->status,
+                'payment_status' => $createNewWebsiteTenantHelper->getPaymentLog()->is_renew == 1 ? 'pending' : $createNewWebsiteTenantHelper->getPaymentLog()->payment_status,
+            ], true);
+
+            $createNewWebsiteTenantHelper->sendEmailToUserForOrderAdminApprovalNotice();
+            $order_id = XgPaymentGateway::wrapped_id(random_int(1, 9) . $createNewWebsiteTenantHelper->getPaymentLog()->id . random_int(1, 9));
+            return redirect()->route(self::SUCCESS_ROUTE, $order_id);
+        } else {
+            return $this->payment_with_gateway($selected_payment_gateway, $amount_to_charge, $createNewWebsiteTenantHelper->getPaymentLog(), $request);
+        }
+
+        return redirect()->route('landlord.homepage');
     }
 
 
@@ -426,8 +416,7 @@ class PaymentLogController extends Controller
 
         $gateway_function = 'get_' . $selected_payment_gateway . '_credential';
 
-        if (!method_exists((new PaymentGatewayCredential()), $gateway_function))
-        {
+        if (!method_exists((new PaymentGatewayCredential()), $gateway_function)) {
             $custom_data['request'] = $request;
             $custom_data['payment_details'] = $payment_details->toArray();
             $custom_data['total'] = $payment_details->package_price;
@@ -436,23 +425,21 @@ class PaymentLogController extends Controller
             $custom_data['payment_type'] = "price_plan";
             $custom_data['payment_for'] = "landlord";
             $custom_data['cancel_url'] = route(self::STATIC_CANCEL_ROUTE);
-            $custom_data['success_url'] = route(self::SUCCESS_ROUTE, random_int(111111,999999) . $payment_details->id . random_int(111111,999999));
+            $custom_data['success_url'] = route(self::SUCCESS_ROUTE, random_int(111111, 999999) . $payment_details->id . random_int(111111, 999999));
 
 
             $charge_customer_class_namespace = getChargeCustomerMethodNameByPaymentGatewayNameSpace($selected_payment_gateway);
             $charge_customer_method_name = getChargeCustomerMethodNameByPaymentGatewayName($selected_payment_gateway);
 
-
             $custom_charge_customer_class_object = "";
-            if (!empty($charge_customer_class_namespace) && class_exists(new $charge_customer_class_namespace)){
+            if (!empty($charge_customer_class_namespace) && class_exists($charge_customer_class_namespace)) {
                 $custom_charge_customer_class_object = new $charge_customer_class_namespace;
             }
 
-            if(class_exists($charge_customer_class_namespace) && method_exists($custom_charge_customer_class_object, $charge_customer_method_name))
-            {
+            if (class_exists($charge_customer_class_namespace) && method_exists($custom_charge_customer_class_object, $charge_customer_method_name)) {
                 try {
                     return $custom_charge_customer_class_object->$charge_customer_method_name($custom_data);
-                }catch (\Exception $e){
+                } catch (\Exception $e) {
                     return back()->with(FlashMsg::explain('danger', $e->getMessage()));
                 }
             } else {
@@ -467,17 +454,15 @@ class PaymentLogController extends Controller
                     $amount_to_charge,
                     $payment_details,
                     $request,
-                    route('landlord.frontend.'.$selected_payment_gateway.'.ipn')
+                    route('landlord.frontend.' . $selected_payment_gateway . '.ipn')
                 );
                 return $gateway->charge_customer($params);
             } catch (\Exception $e) {
                 return back()->with(['msg' => $e->getMessage(), 'type' => 'danger']);
             }
-
         }
-
     }
-    private function common_charge_customer_data($amount_to_charge,$payment_details,$request,$ipn_url) : array
+    private function common_charge_customer_data($amount_to_charge, $payment_details, $request, $ipn_url): array
     {
         $data = [
             'amount' => $amount_to_charge ?? 1,
@@ -502,13 +487,13 @@ class PaymentLogController extends Controller
         if (isset($payment_data['status']) && $payment_data['status'] === 'complete') {
 
             $log = [];
-            if(!empty($payment_data['order_id'])){
+            if (!empty($payment_data['order_id'])) {
                 $log = PaymentLogs::find($payment_data['order_id']);
             }
 
             try {
                 LandlordPricePlanAndTenantCreate::update_database($payment_data['order_id'], $payment_data['transaction_id']);
-            }catch (\Exception $e){
+            } catch (\Exception $e) {
                 return redirect()->back(FlashMsg::item_delete(__('Something went wrong...!')));
             }
 
@@ -516,70 +501,67 @@ class PaymentLogController extends Controller
             try {
                 LandlordPricePlanAndTenantCreate::tenant_create_event_with_credential_mail($payment_data['order_id']);
                 session()->forget('random_password_for_tenant');
-            }catch (\Exception $e){
+            } catch (\Exception $e) {
 
-              $message = $e->getMessage();
+                $message = $e->getMessage();
 
-              $admin_mail_message = sprintf(__('Database Crating failed for user id %1$s , please checkout admin panel and generate database for this user from admin panel manually'),$log->user_id);
-              $admin_mail_subject = sprintf(__('Database Crating failed for user id %1$s'),$log->user_id);
-              Mail::to(get_static_option('site_global_email'))->send(new BasicMail($admin_mail_message,$admin_mail_subject));
+                $admin_mail_message = sprintf(__('Database Crating failed for user id %1$s , please checkout admin panel and generate database for this user from admin panel manually'), $log->user_id);
+                $admin_mail_subject = sprintf(__('Database Crating failed for user id %1$s'), $log->user_id);
+                Mail::to(get_static_option('site_global_email'))->send(new BasicMail($admin_mail_message, $admin_mail_subject));
 
-                if(str_contains($message,'Access denied')){
-                     LandlordPricePlanAndTenantCreate::store_exception($log->tenant_id,'domain create failed',$message,0);
+                if (str_contains($message, 'Access denied')) {
+                    LandlordPricePlanAndTenantCreate::store_exception($log->tenant_id, 'domain create failed', $message, 0);
 
                     //Event Notification
-                       $event_data = ['id' => $log->id, 'title' => __('Database and domain create failed'), 'type' => 'new_subscription',];
-                       event(new TenantNotificationEvent($event_data));
+                    $event_data = ['id' => $log->id, 'title' => __('Database and domain create failed'), 'type' => 'new_subscription',];
+                    event(new TenantNotificationEvent($event_data));
                     //Event Notification
 
                     //Store tenant id in session
                     session(['exception_tenant_id' => $log->tenant_id]);
                 }
-
             }
 
 
-          if(DB::table('domains')->where('tenant_id',$log->tenant_id)->first()){
+            if (DB::table('domains')->where('tenant_id', $log->tenant_id)->first()) {
 
                 try {
                     LandlordPricePlanAndTenantCreate::update_tenant($payment_data);
-                }catch (\Exception $e){
+                } catch (\Exception $e) {
 
-                    LandlordPricePlanAndTenantCreate::store_exception($log->tenant_id,'database update',$e->getMessage(),1);
+                    LandlordPricePlanAndTenantCreate::store_exception($log->tenant_id, 'database update', $e->getMessage(), 1);
                 }
 
                 try {
                     LandlordPricePlanAndTenantCreate::send_order_mail($payment_data['order_id']);
-                }catch (\Exception $e){
-
+                } catch (\Exception $e) {
                 }
-          }
+            }
 
 
 
-         $order_id = wrap_random_number($payment_data['order_id']);
+            $order_id = wrap_random_number($payment_data['order_id']);
 
-          if(\session()->has('website_create_type')){
-              $url = DB::table('domains')->where('tenant_id',$log->tenant_id)->first()->domain;
-              $url = tenant_url_with_protocol($url);
-              \session()->forget('website_create_type');
+            if (\session()->has('website_create_type')) {
+                $url = DB::table('domains')->where('tenant_id', $log->tenant_id)->first()->domain;
+                $url = tenant_url_with_protocol($url);
+                \session()->forget('website_create_type');
 
-               return redirect()->to($url);
-          }
+                return redirect()->to($url);
+            }
 
-         return redirect()->route(self::SUCCESS_ROUTE, $order_id);
-
+            return redirect()->route(self::SUCCESS_ROUTE, $order_id);
         }
 
         return redirect()->route(self::STATIC_CANCEL_ROUTE);
     }
 
-    public function user_trial_action($request,$package_id)
+    public function user_trial_action($request, $package_id)
     {
         $request->validate([
             'subdomain' => 'required|unique:tenants,id',
             'theme' => 'required',
-        ],[
+        ], [
             'theme.required' => 'No theme is selected.'
         ]);
 
@@ -602,16 +584,16 @@ class PaymentLogController extends Controller
         $theme = $request->theme_slug;
         $theme_code = $request->theme_code;
         try {
-           $theme = $tenantHelper->isThemeAvailableForThisPlanFeature();
-            session()->put('theme',$theme);
+            $theme = $tenantHelper->isThemeAvailableForThisPlanFeature();
+            session()->put('theme', $theme);
         } catch (\Exception $e) {
             return redirect()->back()->with(FlashMsg::item_delete($e->getMessage()));
         }
 
         //test above code
-        if ($tenantHelper->checkTrialLimit()){
+        if ($tenantHelper->checkTrialLimit()) {
             return back()->with([
-                'msg' => __('Your trial limit is over! Please purchase a plan to continue').'<br>'.'<small>'.__('You can make trial once only..!').'</small>',
+                'msg' => __('Your trial limit is over! Please purchase a plan to continue') . '<br>' . '<small>' . __('You can make trial once only..!') . '</small>',
                 'type' => 'danger'
             ]);
         }
@@ -620,13 +602,13 @@ class PaymentLogController extends Controller
 
         $trial_expire_date = "";
         $plan_trial_days = $tenantHelper->getPackage()->trial_days;
-        if(!empty($tenantHelper->getPackage())){
+        if (!empty($tenantHelper->getPackage())) {
             $trial_expire_date = Carbon::now()->addDays($plan_trial_days)->format('d-m-Y h:i:s');
         }
-//end
+        //end
 
         $tenantHelper->createPaymentLog([
-            'package_name' => $package->getTranslation('title',get_user_lang()),
+            'package_name' => $package->getTranslation('title', get_user_lang()),
             'package_price' => 0,
             'status' => 'trial',
             'payment_status' => 'pending',
@@ -636,7 +618,7 @@ class PaymentLogController extends Controller
             'theme_code' => $theme_code,
         ]);
 
-       try{
+        try {
 
             TenantCreateEventWithMail::tenant_create_event_with_credential_mail($user, $subdomain);
             session()->forget('random_password_for_tenant');
@@ -646,26 +628,24 @@ class PaymentLogController extends Controller
                 'theme_slug' => $theme,
                 'renew_status' => 0,
                 'is_renew' => 0
-            ],true);
+            ], true);
+        } catch (\Exception $ex) {
 
-       }catch(\Exception $ex){
+            $message = $ex->getMessage();
+            $tenantHelper->sendWebsiteCreatingErrorMailToAdmin();
+            if (!tenant()) {
+                LandlordPricePlanAndTenantCreate::store_exception($subdomain, 'domain failed on trial', $message, 0);
+            }
 
-           $message = $ex->getMessage();
-           $tenantHelper->sendWebsiteCreatingErrorMailToAdmin();
-           if(!tenant()) {
-           LandlordPricePlanAndTenantCreate::store_exception($subdomain,'domain failed on trial',$message,0);
-           }
-
-           //Event Notification
-           $event_data = ['id' => $tenantHelper->getPaymentLog()->id, 'title' => __('Database and domain create failed on trial'), 'type' => 'trial',];
-           event(new TenantNotificationEvent($event_data));
-           //Event Notification
-           return back()->with(['msg' => __('Your trial website is not ready yet, we have notified to admin regarding your request, it is in admin approval stage..!, please try later..!'), 'type'=>'danger']);
-
-       }
+            //Event Notification
+            $event_data = ['id' => $tenantHelper->getPaymentLog()->id, 'title' => __('Database and domain create failed on trial'), 'type' => 'trial',];
+            event(new TenantNotificationEvent($event_data));
+            //Event Notification
+            return back()->with(['msg' => __('Your trial website is not ready yet, we have notified to admin regarding your request, it is in admin approval stage..!, please try later..!'), 'type' => 'danger']);
+        }
 
 
-        $url = DB::table('domains')->where('tenant_id',$subdomain)->first()->domain;
+        $url = DB::table('domains')->where('tenant_id', $subdomain)->first()->domain;
         $url = tenant_url_with_protocol($url);
         $user->update(['has_subdomain' => 1]);
 
@@ -676,6 +656,4 @@ class PaymentLogController extends Controller
 
         return redirect()->to($url);
     }
-
-
 }

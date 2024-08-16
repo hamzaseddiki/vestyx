@@ -8,10 +8,7 @@ use JetBrains\PhpStorm\Pure;
 
 class ThemeMetaData
 {
-    public function __construct(public ?string $themeSlug = null)
-    {
-
-    }
+    public function __construct(public ?string $themeSlug = null) {}
 
     public function getSelectedThemeData()
     {
@@ -151,7 +148,6 @@ class ThemeMetaData
                         $return_val .= \view($file_name)->render() . "\n";
                     }
                 }
-
             }
         }
 
@@ -205,18 +201,18 @@ class ThemeMetaData
      * @param array $data
      * @method renderThemeView
      */
-//    public function renderThemeView($view = '', $data = []): Application|Factory|View
-//    {
-//        $theme_slug = $this->getSelectedThemeSlug();
-//        return view('themes.' . $theme_slug . '.frontend.' . $view, $data);
-//    }
+    //    public function renderThemeView($view = '', $data = []): Application|Factory|View
+    //    {
+    //        $theme_slug = $this->getSelectedThemeSlug();
+    //        return view('themes.' . $theme_slug . '.frontend.' . $view, $data);
+    //    }
 
     public function renderThemeView($view = '', $data = []): Application|Factory|View
     {
         $theme_slug = $this->getSelectedThemeSlug();
-        $view_path = 'themes.'.$theme_slug.'.frontend.'.$view;
-        if(!view()->exists($view_path)){
-            $view_path = 'fallbacks.frontend.'.$view;
+        $view_path = 'themes.' . $theme_slug . '.frontend.' . $view;
+        if (!view()->exists($view_path)) {
+            $view_path = 'fallbacks.frontend.' . $view;
         }
 
         return view($view_path, $data);

@@ -2,6 +2,7 @@
 /*----------------------------------------------------------------------------------------------------------------------------
 |                                                      BACKEND ROUTES
 |----------------------------------------------------------------------------------------------------------------------------*/
+
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
@@ -30,39 +31,38 @@ Route::middleware([
     'tenantAdminPanelMailVerify',
     'setlang'
 
-])->prefix('admin-home')->group(function()
-{
+])->prefix('admin-home')->group(function () {
 
     //=========================  BACKEND APPOINTMENT DAY TYPES  ==========================
-    Route::controller(AppointmentDayTypeController::class)->prefix('appointment-day-types')->name('tenant.')->group(function(){
-        Route::get('/','index')->name('admin.appointment.day.types');
-        Route::post('/','store');
-        Route::post('/update','update')->name('admin.appointment.day.types.update');
-        Route::post('/destroy/{id}','destroy')->name('admin.appointment.day.types.delete');
+    Route::controller(AppointmentDayTypeController::class)->prefix('appointment-day-types')->name('tenant.')->group(function () {
+        Route::get('/', 'index')->name('admin.appointment.day.types');
+        Route::post('/', 'store');
+        Route::post('/update', 'update')->name('admin.appointment.day.types.update');
+        Route::post('/destroy/{id}', 'destroy')->name('admin.appointment.day.types.delete');
         Route::post('/bulk-action', 'bulk_action')->name('admin.appointment.day.types.bulk.action');
     });
 
     //=========================  BACKEND APPOINTMENT DAYS  ==========================
-        Route::controller(AppointmentDaysController::class)->prefix('appointment-days')->name('tenant.')->group(function(){
-            Route::get('/','index')->name('admin.appointment.days');
-            Route::post('/','store');
-            Route::post('/update','update')->name('admin.appointment.days.update');
-            Route::post('/destroy/{id}','destroy')->name('admin.appointment.days.delete');
-            Route::post('/bulk-action', 'bulk_action')->name('admin.appointment.days.bulk.action');
-        });
+    Route::controller(AppointmentDaysController::class)->prefix('appointment-days')->name('tenant.')->group(function () {
+        Route::get('/', 'index')->name('admin.appointment.days');
+        Route::post('/', 'store');
+        Route::post('/update', 'update')->name('admin.appointment.days.update');
+        Route::post('/destroy/{id}', 'destroy')->name('admin.appointment.days.delete');
+        Route::post('/bulk-action', 'bulk_action')->name('admin.appointment.days.bulk.action');
+    });
 
 
     //=========================  BACKEND APPOINTMENT SCHEDULE  ==========================
-    Route::controller(AppointmentScheduleController::class)->prefix('appointment-schedule')->name('tenant.')->group(function(){
-        Route::get('/','index')->name('admin.appointment.schedule');
-        Route::post('/','store');
-        Route::post('/update','update')->name('admin.appointment.schedule.update');
-        Route::post('/destroy/{id}','destroy')->name('admin.appointment.schedule.delete');
+    Route::controller(AppointmentScheduleController::class)->prefix('appointment-schedule')->name('tenant.')->group(function () {
+        Route::get('/', 'index')->name('admin.appointment.schedule');
+        Route::post('/', 'store');
+        Route::post('/update', 'update')->name('admin.appointment.schedule.update');
+        Route::post('/destroy/{id}', 'destroy')->name('admin.appointment.schedule.delete');
         Route::post('/bulk-action', 'bulk_action')->name('admin.appointment.schedule.bulk.action');
     });
 
 
-   Route::controller(SubAppointmentController::class)->prefix('sub-appointments')->name('tenant.')->group(function(){
+    Route::controller(SubAppointmentController::class)->prefix('sub-appointments')->name('tenant.')->group(function () {
         Route::get('/', 'index')->name('admin.sub.appointment');
         Route::get('/new', 'create')->name('admin.sub.appointment.new');
         Route::post('/new', 'store');
@@ -71,32 +71,32 @@ Route::middleware([
         Route::post('/delete/{id}', 'delete')->name('admin.sub.appointment.delete');
         Route::post('/clone', 'clone')->name('admin.sub.appointment.clone');
         Route::post('/bulk-action', 'bulk_action')->name('admin.sub.appointment.bulk.action');
-       //Appointment Comments Route
-       Route::get('/comments/view/{id}', 'view_comments')->name('admin.sub.appointment.comments.view');
-       Route::post('/comments/delete/all/lang/{id}', 'delete_all_comments')->name('admin.sub.appointment.comments.delete.all.lang');
-       Route::post('/comments/bulk-action', 'bulk_action_comments')->name('admin.sub.appointment.comments.bulk.action');
+        //Appointment Comments Route
+        Route::get('/comments/view/{id}', 'view_comments')->name('admin.sub.appointment.comments.view');
+        Route::post('/comments/delete/all/lang/{id}', 'delete_all_comments')->name('admin.sub.appointment.comments.delete.all.lang');
+        Route::post('/comments/bulk-action', 'bulk_action_comments')->name('admin.sub.appointment.comments.bulk.action');
     });
 
 
     //=========================  BACKEND APPOINTMENT CATEGORY  ==========================
-    Route::controller(AppointmentCategoryController::class)->prefix('appointment-category')->name('tenant.')->group(function(){
-        Route::get('/','index')->name('admin.appointment.category');
-        Route::post('/','store');
-        Route::post('/update','update')->name('admin.appointment.category.update');
-        Route::post('/destroy/{id}','destroy')->name('admin.appointment.category.delete');
+    Route::controller(AppointmentCategoryController::class)->prefix('appointment-category')->name('tenant.')->group(function () {
+        Route::get('/', 'index')->name('admin.appointment.category');
+        Route::post('/', 'store');
+        Route::post('/update', 'update')->name('admin.appointment.category.update');
+        Route::post('/destroy/{id}', 'destroy')->name('admin.appointment.category.delete');
         Route::post('/bulk-action', 'bulk_action')->name('admin.appointment.category.bulk.action');
     });
 
     //=========================  BACKEND APPOINTMENT SUB CATEGORY  ==========================
-    Route::controller(AppointmentSubCategoryController::class)->prefix('appointment-subcategory')->name('tenant.')->group(function(){
-        Route::get('/','index')->name('admin.appointment.sub.category');
-        Route::post('/','store');
-        Route::post('/update','update')->name('admin.appointment.sub.category.update');
-        Route::post('/destroy/{id}','destroy')->name('admin.appointment.sub.category.delete');
+    Route::controller(AppointmentSubCategoryController::class)->prefix('appointment-subcategory')->name('tenant.')->group(function () {
+        Route::get('/', 'index')->name('admin.appointment.sub.category');
+        Route::post('/', 'store');
+        Route::post('/update', 'update')->name('admin.appointment.sub.category.update');
+        Route::post('/destroy/{id}', 'destroy')->name('admin.appointment.sub.category.delete');
         Route::post('/bulk-action', 'bulk_action')->name('admin.appointment.sub.category.bulk.action');
     });
 
-    Route::controller(AppointmentController::class)->prefix('appointments')->name('tenant.')->group(function(){
+    Route::controller(AppointmentController::class)->prefix('appointments')->name('tenant.')->group(function () {
 
         Route::get('/', 'index')->name('admin.appointment');
         Route::get('/new', 'create')->name('admin.appointment.new');
@@ -118,17 +118,17 @@ Route::middleware([
     });
 
 
-      //Payment Data
-        Route::controller(AppointmentOrderManageController::class)->prefix('appointment-order')->name('tenant.')->group(function(){
-            Route::get('/payment-complete-logs', 'appointment_complete_payment_logs')->name('admin.appointment.complete.payment.logs');
-            Route::get('/payment-pending-logs', 'appointment_pending_payment_logs')->name('admin.appointment.pending.payment.logs');
-            Route::get('/payment-logs-report', 'appointment_payment_logs_report')->name('admin.appointment.payment.logs.report');
-            Route::post('/payment-log-delete/{id}', 'appointment_payment_log_delete')->name('admin.appointment.payment.log.delete');
-            Route::post('/payment-log-bulk-action', 'appointment_payment_log_bulk_action')->name('admin.appointment.payment.log.bulk.action');
-            Route::post('/invoice/generate', 'appointment_invoice')->name('admin.appointment.invoice.generate');
-            Route::post('/payment/accept/{id}', 'appointment_payment_accept')->name('admin.appointment.payment.accept');
-        });
-     //Payment Data
+    //Payment Data
+    Route::controller(AppointmentOrderManageController::class)->prefix('appointment-order')->name('tenant.')->group(function () {
+        Route::get('/payment-complete-logs', 'appointment_complete_payment_logs')->name('admin.appointment.complete.payment.logs');
+        Route::get('/payment-pending-logs', 'appointment_pending_payment_logs')->name('admin.appointment.pending.payment.logs');
+        Route::get('/payment-logs-report', 'appointment_payment_logs_report')->name('admin.appointment.payment.logs.report');
+        Route::post('/payment-log-delete/{id}', 'appointment_payment_log_delete')->name('admin.appointment.payment.log.delete');
+        Route::post('/payment-log-bulk-action', 'appointment_payment_log_bulk_action')->name('admin.appointment.payment.log.bulk.action');
+        Route::post('/invoice/generate', 'appointment_invoice')->name('admin.appointment.invoice.generate');
+        Route::post('/payment/accept/{id}', 'appointment_payment_accept')->name('admin.appointment.payment.accept');
+    });
+    //Payment Data
 });
 
 
@@ -164,7 +164,7 @@ Route::middleware([
         Route::post('/all/comment', 'load_more_comments')->name('frontend.load.sub.appointment.comment.data');
     });
 
-//    // Appointment Payment
+    //    // Appointment Payment
     Route::middleware('package_expire')->controller(AppointmentPaymentLogController::class)->prefix('appointment-payment')->name('tenant.')->group(function () {
         Route::post('/store', 'appointment_store')->name('frontend.appointment.payment.store');
         Route::post('/paypal-ipn', 'paypal_ipn')->name('frontend.appointment.paypal.ipn');
@@ -190,13 +190,5 @@ Route::middleware([
         Route::get('/authorizenet-ipn', 'authorizenet_ipn')->name('frontend.appointment.authorizenet.ipn');
         Route::get('/sitesway-ipn', 'sitesway_ipn')->name('frontend.appointment.sitesway.ipn');
         Route::post('/kinetic-ipn', 'kinetic_ipn')->name('frontend.appointment.kinetic.ipn')->excludedMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);
-
-
-
-
     });
 });
-
-
-
-

@@ -11,6 +11,7 @@ use Artesaos\SEOTools\Facades\TwitterCard;
 use Artesaos\SEOTools\OpenGraph;
 use Artesaos\SEOTools\SEOTools;
 use \Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Modules\Appointment\Entities\AppointmentTax;
 
@@ -67,7 +68,7 @@ function get_attachment_image_by_id($id, $size = null, $default = false): array
         $tenant_subdomain = '';
         if (tenant()) {
             $tenant_user = tenant()->user()->first() ?? null;
-            $tenant_subdomain = !is_null($tenant_user) ?tenant()->id . '/' : '';
+            $tenant_subdomain = !is_null($tenant_user) ? tenant()->id . '/' : '';
         }
 
         $path_prefix = is_null(tenant()) ? 'assets/landlord' : 'assets/tenant';
@@ -112,7 +113,7 @@ function get_attachment_image_by_id($id, $size = null, $default = false): array
 }
 
 
-function get_lnadlord_attachment_image_by_id_without_query($image_details,$id, $size = null, $default = false): array
+function get_lnadlord_attachment_image_by_id_without_query($image_details, $id, $size = null, $default = false): array
 {
 
     $return_val = [];
@@ -325,7 +326,7 @@ function render_image_markup_by_attachment_id($id, $class = null, $size = 'full'
     $image_details = get_attachment_image_by_id($id, $size, $default);
     if (!empty($image_details)) {
         $class_list = !empty($class) ? 'class="' . $class . '"' : '';
-        $output = '<img src="' . $image_details['img_url'] . '" ' . $class_list. 'alt="' . $image_details['img_alt'].'"'. 'data-animation="'.$data_animation.'"'. 'data-delay="'.$data_delay. '"/>';
+        $output = '<img src="' . $image_details['img_url'] . '" ' . $class_list . 'alt="' . $image_details['img_alt'] . '"' . 'data-animation="' . $data_animation . '"' . 'data-delay="' . $data_delay . '"/>';
     }
     return $output;
 }
@@ -388,7 +389,7 @@ function get_footer_copyright_text($lang_slug)
 function get_footer_copyright_text_tenant($lang_slug)
 {
     $footer_copyright_text = get_static_option('site_' . $lang_slug . '_footer_copyright_text');
-    $site_title = get_static_option('site_'.get_user_lang().'_title');
+    $site_title = get_static_option('site_' . get_user_lang() . '_title');
     $data = str_replace(array('{copy}', '{year}'), array('&copy;', date('Y')), $footer_copyright_text);
     $root = url('/');
 
@@ -398,7 +399,6 @@ function get_footer_copyright_text_tenant($lang_slug)
                 {$data}
             </p>
 TCOPYRIGHT;
-
 }
 
 function get_modified_title($title)
@@ -410,7 +410,6 @@ function get_modified_title($title)
 
         $highlighted_text = '<span class="color">' . $highlighted_word . '</span>';
         return $final_title = '<h2 class="tittle p-0">' . str_replace('{h}' . $highlighted_word . '{/h}', $highlighted_text, $title) . '</h2>';
-
     } else {
         return $final_title = '<h2 class="tittle p-0">' . $title . '</h2>';
     }
@@ -418,14 +417,13 @@ function get_modified_title($title)
 
 function get_modified_title_tenant($title)
 {
-    if (str_contains($title, '{h}') && str_contains($title, '{/h}'))
-    {
-        $text = explode('{h}',$title);
+    if (str_contains($title, '{h}') && str_contains($title, '{/h}')) {
+        $text = explode('{h}', $title);
         $highlighted_word = explode('{/h}', $text[1])[0];
-        $highlighted_text = '<span class="textColor">'. $highlighted_word .'</span>';
-        return $final_title = '<h1 class="tittle">'.str_replace('{h}'.$highlighted_word.'{/h}', $highlighted_text, $title).'</h1>';
+        $highlighted_text = '<span class="textColor">' . $highlighted_word . '</span>';
+        return $final_title = '<h1 class="tittle">' . str_replace('{h}' . $highlighted_word . '{/h}', $highlighted_text, $title) . '</h1>';
     } else {
-        return $final_title = '<h1 class="tittle">'. $title .'</h2>';
+        return $final_title = '<h1 class="tittle">' . $title . '</h2>';
     }
 }
 
@@ -435,23 +433,21 @@ function get_modified_title_tenant($title)
 function get_modified_title_tenant_event($title)
 {
 
-    if (str_contains($title, '{h}') && str_contains($title, '{/h}'))
-    {
-        $text = explode('{h}',$title);
+    if (str_contains($title, '{h}') && str_contains($title, '{/h}')) {
+        $text = explode('{h}', $title);
         $highlighted_word = explode('{/h}', $text[1])[0];
 
         $highlighted_text = '';
-        for ($i = 0; $i< strlen($highlighted_word); $i++){
-            $highlighted_text.= '<span class="single" style="--i:'.$i.'">'. $highlighted_word[$i] .'</span>';
+        for ($i = 0; $i < strlen($highlighted_word); $i++) {
+            $highlighted_text .= '<span class="single" style="--i:' . $i . '">' . $highlighted_word[$i] . '</span>';
         }
 
 
-        $higlight_word_markup = ' <span class="textFlip tittleBgOne wow ladeInRight" data-wow-delay="0.0s"> '.$highlighted_text. '</span>';
+        $higlight_word_markup = ' <span class="textFlip tittleBgOne wow ladeInRight" data-wow-delay="0.0s"> ' . $highlighted_text . '</span>';
 
-        return  '<h2 class="tittle"> '. str_replace('{h}'.$highlighted_word.'{/h}', $higlight_word_markup, $title). ' </h2>';
-
+        return  '<h2 class="tittle"> ' . str_replace('{h}' . $highlighted_word . '{/h}', $higlight_word_markup, $title) . ' </h2>';
     } else {
-        return '<h2 class="tittle"><span class="single">'. $title .'</span></h2>';
+        return '<h2 class="tittle"><span class="single">' . $title . '</span></h2>';
     }
 }
 
@@ -459,23 +455,21 @@ function get_modified_title_tenant_event($title)
 function get_modified_title_tenant_event_header($title)
 {
 
-    if (str_contains($title, '{h}') && str_contains($title, '{/h}'))
-    {
-        $text = explode('{h}',$title);
+    if (str_contains($title, '{h}') && str_contains($title, '{/h}')) {
+        $text = explode('{h}', $title);
         $highlighted_word = explode('{/h}', $text[1])[0];
 
         $highlighted_text = '';
-        for ($i = 0; $i< strlen($highlighted_word); $i++){
+        for ($i = 0; $i < strlen($highlighted_word); $i++) {
 
-            $highlighted_text.= '<span class="single" style="--i:'.$i.'">'. $highlighted_word[$i] .'</span>';
+            $highlighted_text .= '<span class="single" style="--i:' . $i . '">' . $highlighted_word[$i] . '</span>';
         }
 
-        $higlight_word_markup = ' <span class="textFlip tittleBgColor colorEffect2"> '.$highlighted_text. '</span>';
+        $higlight_word_markup = ' <span class="textFlip tittleBgColor colorEffect2"> ' . $highlighted_text . '</span>';
 
-        return  '<h1 class="tittle textEffect" data-animation="ladeInUp" data-delay="0.1s"> '. str_replace('{h}'.$highlighted_word.'{/h}', $higlight_word_markup, $title). ' </h1>';
-
+        return  '<h1 class="tittle textEffect" data-animation="ladeInUp" data-delay="0.1s"> ' . str_replace('{h}' . $highlighted_word . '{/h}', $higlight_word_markup, $title) . ' </h1>';
     } else {
-        return '<h1 class="tittle textEffect" data-animation="ladeInUp" data-delay="0.1s"><span class="single">'. $title .'</span></h1>';
+        return '<h1 class="tittle textEffect" data-animation="ladeInUp" data-delay="0.1s"><span class="single">' . $title . '</span></h1>';
     }
 }
 
@@ -489,7 +483,6 @@ function get_modified_title_knowledgebase($title)
 
         $highlighted_text = '<span class="circle">' . $highlighted_word . '</span>';
         return $final_title = '<h1 class="tittle wow fadeInUp" data-wow-delay="0.0s">' . str_replace('{h}' . $highlighted_word . '{/h}', $highlighted_text, $title) . '</h1>';
-
     } else {
         return $final_title = '<h1 class="tittle wow fadeInUp" data-wow-delay="0.0s">' . $title . '</h1>';
     }
@@ -505,7 +498,6 @@ function get_modified_title_ticket($title)
 
         $highlighted_text = '<span class="tittleBg">' . $highlighted_word . '</span>';
         return $final_title = '<h1 class="tittle wow fadeInUp" data-wow-delay="0.0s">' . str_replace('{h}' . $highlighted_word . '{/h}', $highlighted_text, $title) . '</h1>';
-
     } else {
         return $final_title = '<h1 class="tittle wow fadeInUp" data-wow-delay="0.0s">' . $title . '</h1>';
     }
@@ -520,9 +512,8 @@ function get_modified_title_agency($title)
 
         $highlighted_text = '<span class="title_style">' . $highlighted_word . '</span>';
         return '</span>' . str_replace('{h}' . $highlighted_word . '{/h}', $highlighted_text, $title) . '</span>';
-
-    }else{
-        return  '</span>' .$title ?? '';
+    } else {
+        return  '</span>' . $title ?? '';
     }
 }
 
@@ -537,9 +528,7 @@ function get_modified_title_agency_two($title)
 
         $highlighted_text = '<span class="title_style">' . $highlighted_word . '</span>';
 
-          return '<h2 class="title">' . str_replace('{h}' . purify_html($highlighted_word) . '{/h}', $highlighted_text, $title) . '</h2>';
-
-
+        return '<h2 class="title">' . str_replace('{h}' . purify_html($highlighted_word) . '{/h}', $highlighted_text, $title) . '</h2>';
     } else {
         return '<h2 class="title">' . $title . '</h2>';
     }
@@ -563,7 +552,8 @@ function get_trial_status($payment_log_create_date, $trial_days): string
     return $now_date->greaterThan($trial_expire_date) ? __('expired') : __('active');
 }
 
-function get_trial_days_left($tenant){
+function get_trial_days_left($tenant)
+{
     $trial_days = optional(optional($tenant->payment_log)->package)->trial_days;
     $will_expire = \Illuminate\Support\Carbon::parse($tenant->created_at)->addDays($trial_days);
     return Carbon::now()->diffInDays($will_expire, false);
@@ -838,17 +828,17 @@ function single_post_share($url, $title, $img_url)
     $twitter_share_link = 'https://twitter.com/intent/tweet?text=' . $post_title . '&amp;url=' . $encoded_url . '&amp;via=Crunchify';
     $linkedin_share_link = 'https://www.linkedin.com/shareArticle?mini=true&url=' . $encoded_url . '&amp;title=' . $post_title;
     $pinterest_share_link = 'https://pinterest.com/pin/create/button/?url=' . $encoded_url . '&amp;media=' . $img_url . '&amp;description=' . $post_title;
-    $whatsapp_share_link = 'https://api.whatsapp.com/send?text=*' . $post_title.' '.$encoded_url ;
-    $telegram_share_link = 'https://telegram.me/share/url?url=' .$encoded_url ;
+    $whatsapp_share_link = 'https://api.whatsapp.com/send?text=*' . $post_title . ' ' . $encoded_url;
+    $telegram_share_link = 'https://telegram.me/share/url?url=' . $encoded_url;
 
     $output = '
-        <li class="listItem"><a target="_blank" href="'.$facebook_share_link.'"><img src="'.global_asset('assets/tenant/frontend/themes/img/icon/donation-social-fb.svg').'" alt=""></a></li>
-        <li class="listItem"><a target="_blank" href="'.$linkedin_share_link.'"><img src="'.global_asset('assets/tenant/frontend/themes/img/icon/donation-social-Linkedin.svg').'" alt=""></a></li>
-        <li class="listItem"><a target="_blank" href="'.$pinterest_share_link.'"><img src="'.global_asset('assets/tenant/frontend/themes/img/icon/donation-social-Pinterest.svg').'" alt=""></a></li>
-        <li class="listItem"><a target="_blank" href="#"><img src="'.global_asset('assets/tenant/frontend/themes/img/icon/donation-social-Wattpad.svg').'" alt=""></a></li>
-        <li class="listItem"><a target="_blank" href="'.$whatsapp_share_link.'"><img src="'.global_asset('assets/tenant/frontend/themes/img/icon/donation-social-Whatsapp.svg').'" alt=""></a></li>
-        <li class="listItem"><a target="_blank" href="'.$twitter_share_link.'"><img src="'.global_asset('assets/tenant/frontend/themes/img/icon/donation-social-Twitter.svg').'" alt=""></a></li>
-        <li class="listItem"><a target="_blank" href="'.$linkedin_share_link.'"><img src="'.global_asset('assets/tenant/frontend/themes/img/icon/donation-social-Linkedin.svg').'" alt=""></a></li>
+        <li class="listItem"><a target="_blank" href="' . $facebook_share_link . '"><img src="' . global_asset('assets/tenant/frontend/themes/img/icon/donation-social-fb.svg') . '" alt=""></a></li>
+        <li class="listItem"><a target="_blank" href="' . $linkedin_share_link . '"><img src="' . global_asset('assets/tenant/frontend/themes/img/icon/donation-social-Linkedin.svg') . '" alt=""></a></li>
+        <li class="listItem"><a target="_blank" href="' . $pinterest_share_link . '"><img src="' . global_asset('assets/tenant/frontend/themes/img/icon/donation-social-Pinterest.svg') . '" alt=""></a></li>
+        <li class="listItem"><a target="_blank" href="#"><img src="' . global_asset('assets/tenant/frontend/themes/img/icon/donation-social-Wattpad.svg') . '" alt=""></a></li>
+        <li class="listItem"><a target="_blank" href="' . $whatsapp_share_link . '"><img src="' . global_asset('assets/tenant/frontend/themes/img/icon/donation-social-Whatsapp.svg') . '" alt=""></a></li>
+        <li class="listItem"><a target="_blank" href="' . $twitter_share_link . '"><img src="' . global_asset('assets/tenant/frontend/themes/img/icon/donation-social-Twitter.svg') . '" alt=""></a></li>
+        <li class="listItem"><a target="_blank" href="' . $linkedin_share_link . '"><img src="' . global_asset('assets/tenant/frontend/themes/img/icon/donation-social-Linkedin.svg') . '" alt=""></a></li>
     ';
 
     return $output;
@@ -868,13 +858,13 @@ function single_blog_post_share($url, $title, $img_url)
     $facebook_share_link = 'https://www.facebook.com/sharer/sharer.php?u=' . $encoded_url;
     $twitter_share_link = 'https://twitter.com/intent/tweet?text=' . $post_title . '&amp;url=' . $encoded_url . '&amp;via=Crunchify';
     $linkedin_share_link = 'https://www.linkedin.com/shareArticle?mini=true&url=' . $encoded_url . '&amp;title=' . $post_title;
-    $telegram_share_link = 'https://telegram.me/share/url?url=' .$encoded_url ;
+    $telegram_share_link = 'https://telegram.me/share/url?url=' . $encoded_url;
 
     $output = '
-        <a href="'.$facebook_share_link.'" class="wow ladeInUp social animated" data-wow-delay="0.0s"><i class="fab fa-facebook-f icon"></i></a>
-        <a href="'.$telegram_share_link.'" class="wow ladeInUp social animated" data-wow-delay="0.1s"><i class="fab fa-instagram icon"></i></a>
-        <a href="'.$linkedin_share_link.'" class="wow ladeInUp social animated" data-wow-delay="0.2s"><i class="fab fa-linkedin-in icon"></i></a>
-        <a href="'.$twitter_share_link.'" class="wow ladeInUp social animated" data-wow-delay="0.3s"><i class="fab fa-twitter icon"></i></a>
+        <a href="' . $facebook_share_link . '" class="wow ladeInUp social animated" data-wow-delay="0.0s"><i class="fab fa-facebook-f icon"></i></a>
+        <a href="' . $telegram_share_link . '" class="wow ladeInUp social animated" data-wow-delay="0.1s"><i class="fab fa-instagram icon"></i></a>
+        <a href="' . $linkedin_share_link . '" class="wow ladeInUp social animated" data-wow-delay="0.2s"><i class="fab fa-linkedin-in icon"></i></a>
+        <a href="' . $twitter_share_link . '" class="wow ladeInUp social animated" data-wow-delay="0.3s"><i class="fab fa-twitter icon"></i></a>
     ';
 
     return $output;
@@ -920,7 +910,6 @@ function get_navbar_style()
     } elseif (request()->routeIs('homepage')) {
         $page_info = \App\Models\Page::find(get_static_option('home_page'));
         return !is_null($page_info) ? $page_info->navbar_variant : $fallback;
-
     } elseif (request()->is('/')) {
         $page_info = \App\Models\Page::find(get_static_option('home_page'));
         return !is_null($page_info) ? $page_info->navbar_variant : $fallback;
@@ -941,7 +930,6 @@ function get_footer_style()
 
         $page_info = \App\Models\Page::find(get_static_option('home_page'));
         return !is_null($page_info) ? $page_info->footer_variant : $fallback;
-
     } elseif (request()->is('/')) {
 
         $page_info = \App\Models\Page::find(get_static_option('home_page'));
@@ -970,11 +958,9 @@ function get_user_lang_direction_bool()
 
     $bool = !empty(session()->get('lang')) ? ($user_direction?->direction == 1) : ($default?->direction == 1);
 
-    if($bool)
-    {
+    if ($bool) {
         return 'true';
-    }else
-    {
+    } else {
         return 'false';
     }
 }
@@ -1033,7 +1019,6 @@ function render_page_meta_data($blog_post)
        <meta name="twitter:description" content="$twitter_meta_description">
        <meta name="twitter:image" content="{$twitter_meta_image}">
 HTML;
-
 }
 
 function script_currency_list()
@@ -1045,19 +1030,149 @@ function site_currency_symbol($text = false)
 {
     //custom symbol
     $custom_symbol = get_static_option('site_custom_currency_symbol');
-    if(!empty($custom_symbol)){
-         return $custom_symbol;
+    if (!empty($custom_symbol)) {
+        return $custom_symbol;
     }
 
     $all_currency = [
-        'USD' => '$', 'EUR' => '€', 'INR' => '₹', 'IDR' => 'Rp', 'AUD' => 'A$', 'SGD' => 'S$', 'JPY' => '¥', 'GBP' => '£', 'MYR' => 'RM', 'PHP' => '₱', 'THB' => '฿', 'KRW' => '₩', 'NGN' => '₦', 'GHS' => 'GH₵', 'BRL' => 'R$',
-        'BIF' => 'FBu', 'CAD' => 'C$', 'CDF' => 'FC', 'CVE' => 'Esc', 'GHP' => 'GH₵', 'GMD' => 'D', 'GNF' => 'FG', 'KES' => 'K', 'LRD' => 'L$', 'MWK' => 'MK', 'MZN' => 'MT', 'RWF' => 'R₣', 'SLL' => 'Le', 'STD' => 'Db', 'TZS' => 'TSh', 'UGX' => 'USh', 'XAF' => 'FCFA', 'XOF' => 'CFA', 'ZMK' => 'ZK', 'ZMW' => 'ZK', 'ZWD' => 'Z$',
-        'AED' => 'د.إ', 'AFN' => '؋', 'ALL' => 'L', 'AMD' => '֏', 'ANG' => 'NAf', 'AOA' => 'Kz', 'ARS' => '$', 'AWG' => 'ƒ', 'AZN' => '₼', 'BAM' => 'KM', 'BBD' => 'Bds$', 'BDT' => '৳', 'BGN' => 'Лв', 'BMD' => '$', 'BND' => 'B$', 'BOB' => 'Bs', 'BSD' => 'B$', 'BWP' => 'P', 'BZD' => '$',
-        'CHF' => 'CHf', 'CNY' => '¥', 'CLP' => '$', 'COP' => '$', 'CRC' => '₡', 'CZK' => 'Kč', 'DJF' => 'Fdj', 'DKK' => 'Kr', 'DOP' => 'RD$', 'DZD' => 'دج', 'EGP' => 'E£', 'ETB' => 'ብር', 'FJD' => 'FJ$', 'FKP' => '£', 'GEL' => 'ლ', 'GIP' => '£', 'GTQ' => 'Q',
-        'GYD' => 'G$', 'HKD' => 'HK$', 'HNL' => 'L', 'HRK' => 'kn', 'HTG' => 'G', 'HUF' => 'Ft', 'ILS' => '₪', 'ISK' => 'kr', 'JMD' => '$', 'KGS' => 'Лв', 'KHR' => '៛', 'KMF' => 'CF', 'KYD' => '$', 'KZT' => '₸', 'LAK' => '₭', 'LBP' => 'ل.ل.', 'LKR' => 'ரூ', 'LSL' => 'L',
-        'MAD' => 'MAD', 'MDL' => 'L', 'MGA' => 'Ar', 'MKD' => 'Ден', 'MMK' => 'K', 'MNT' => '₮', 'MOP' => 'MOP$', 'MRO' => 'MRU', 'MUR' => '₨', 'MVR' => 'Rf', 'MXN' => 'Mex$', 'NAD' => 'N$', 'NIO' => 'C$', 'NOK' => 'kr', 'NPR' => 'रू', 'NZD' => '$', 'PAB' => 'B/.', 'PEN' => 'S/', 'PGK' => 'K',
-        'PKR' => '₨', 'PLN' => 'zł', 'PYG' => '₲', 'QAR' => 'QR', 'RON' => 'lei', 'RSD' => 'din', 'RUB' => '₽', 'SAR' => 'SR', 'SBD' => 'Si$', 'SCR' => 'SR', 'SEK' => 'kr', 'SHP' => '£', 'SOS' => 'Sh.so.', 'SRD' => '$', 'SZL' => 'E', 'TJS' => 'ЅM',
-        'TRY' => '₺', 'TTD' => 'TT$', 'TWD' => 'NT$', 'UAH' => '₴', 'UYU' => '$U', 'UZS' => 'so\'m', 'VND' => '₫', 'VUV' => 'VT', 'WST' => 'WS$', 'XCD' => '$', 'XPF' => '₣', 'YER' => '﷼', 'ZAR' => 'R'
+        'USD' => '$',
+        'EUR' => '€',
+        'INR' => '₹',
+        'IDR' => 'Rp',
+        'AUD' => 'A$',
+        'SGD' => 'S$',
+        'JPY' => '¥',
+        'GBP' => '£',
+        'MYR' => 'RM',
+        'PHP' => '₱',
+        'THB' => '฿',
+        'KRW' => '₩',
+        'NGN' => '₦',
+        'GHS' => 'GH₵',
+        'BRL' => 'R$',
+        'BIF' => 'FBu',
+        'CAD' => 'C$',
+        'CDF' => 'FC',
+        'CVE' => 'Esc',
+        'GHP' => 'GH₵',
+        'GMD' => 'D',
+        'GNF' => 'FG',
+        'KES' => 'K',
+        'LRD' => 'L$',
+        'MWK' => 'MK',
+        'MZN' => 'MT',
+        'RWF' => 'R₣',
+        'SLL' => 'Le',
+        'STD' => 'Db',
+        'TZS' => 'TSh',
+        'UGX' => 'USh',
+        'XAF' => 'FCFA',
+        'XOF' => 'CFA',
+        'ZMK' => 'ZK',
+        'ZMW' => 'ZK',
+        'ZWD' => 'Z$',
+        'AED' => 'د.إ',
+        'AFN' => '؋',
+        'ALL' => 'L',
+        'AMD' => '֏',
+        'ANG' => 'NAf',
+        'AOA' => 'Kz',
+        'ARS' => '$',
+        'AWG' => 'ƒ',
+        'AZN' => '₼',
+        'BAM' => 'KM',
+        'BBD' => 'Bds$',
+        'BDT' => '৳',
+        'BGN' => 'Лв',
+        'BMD' => '$',
+        'BND' => 'B$',
+        'BOB' => 'Bs',
+        'BSD' => 'B$',
+        'BWP' => 'P',
+        'BZD' => '$',
+        'CHF' => 'CHf',
+        'CNY' => '¥',
+        'CLP' => '$',
+        'COP' => '$',
+        'CRC' => '₡',
+        'CZK' => 'Kč',
+        'DJF' => 'Fdj',
+        'DKK' => 'Kr',
+        'DOP' => 'RD$',
+        'DZD' => 'دج',
+        'EGP' => 'E£',
+        'ETB' => 'ብር',
+        'FJD' => 'FJ$',
+        'FKP' => '£',
+        'GEL' => 'ლ',
+        'GIP' => '£',
+        'GTQ' => 'Q',
+        'GYD' => 'G$',
+        'HKD' => 'HK$',
+        'HNL' => 'L',
+        'HRK' => 'kn',
+        'HTG' => 'G',
+        'HUF' => 'Ft',
+        'ILS' => '₪',
+        'ISK' => 'kr',
+        'JMD' => '$',
+        'KGS' => 'Лв',
+        'KHR' => '៛',
+        'KMF' => 'CF',
+        'KYD' => '$',
+        'KZT' => '₸',
+        'LAK' => '₭',
+        'LBP' => 'ل.ل.',
+        'LKR' => 'ரூ',
+        'LSL' => 'L',
+        'MAD' => 'MAD',
+        'MDL' => 'L',
+        'MGA' => 'Ar',
+        'MKD' => 'Ден',
+        'MMK' => 'K',
+        'MNT' => '₮',
+        'MOP' => 'MOP$',
+        'MRO' => 'MRU',
+        'MUR' => '₨',
+        'MVR' => 'Rf',
+        'MXN' => 'Mex$',
+        'NAD' => 'N$',
+        'NIO' => 'C$',
+        'NOK' => 'kr',
+        'NPR' => 'रू',
+        'NZD' => '$',
+        'PAB' => 'B/.',
+        'PEN' => 'S/',
+        'PGK' => 'K',
+        'PKR' => '₨',
+        'PLN' => 'zł',
+        'PYG' => '₲',
+        'QAR' => 'QR',
+        'RON' => 'lei',
+        'RSD' => 'din',
+        'RUB' => '₽',
+        'SAR' => 'SR',
+        'SBD' => 'Si$',
+        'SCR' => 'SR',
+        'SEK' => 'kr',
+        'SHP' => '£',
+        'SOS' => 'Sh.so.',
+        'SRD' => '$',
+        'SZL' => 'E',
+        'TJS' => 'ЅM',
+        'TRY' => '₺',
+        'TTD' => 'TT$',
+        'TWD' => 'NT$',
+        'UAH' => '₴',
+        'UYU' => '$U',
+        'UZS' => 'so\'m',
+        'VND' => '₫',
+        'VUV' => 'VT',
+        'WST' => 'WS$',
+        'XCD' => '$',
+        'XPF' => '₣',
+        'YER' => '﷼',
+        'ZAR' => 'R'
     ];
 
     $symbol = '$';
@@ -1114,12 +1229,12 @@ function render_form_field_for_frontend($form_content)
 
 function module_dir($moduleName)
 {
-    return 'core/Modules/'.$moduleName.'/';
+    return 'core/Modules/' . $moduleName . '/';
 }
 
 function get_module_view($moduleName, $fileName)
 {
-    return strtolower($moduleName).'::payment-gateway-view.'.$fileName;
+    return strtolower($moduleName) . '::payment-gateway-view.' . $fileName;
 }
 
 function render_payment_gateway_for_form($cash_on_delivery = false)
@@ -1137,46 +1252,48 @@ function render_payment_gateway_for_form($cash_on_delivery = false)
 
     $output .= '<ul class="payment-gateway-list">';
     foreach ($all_gateway_with_custom as $gateway) {
-        if ($gateway['status'] == true) {
+
+        if (array_key_exists('module', $gateway) or ($gateway['status'] ?? false) == true) {
             $selected = (get_static_option('site_default_payment_gateway') == $gateway['name']) ? 'selected' : '';
             $output .= '<li data-gateway="' . $gateway['name'] . '" class="single-gateway-item ' . $selected . '">';
 
 
-            if (array_key_exists('module', $gateway))
-            {
-                $output .= '<img src="'.loadPaymentGatewayLogo(moduleName: $gateway['module'], gatewayName: $gateway['name']).'"';
+            if (array_key_exists('module', $gateway)) {
+                $output .= '<img src="' . loadPaymentGatewayLogo(moduleName: $gateway['module'], gatewayName: $gateway['name']) . '"';
             } else {
                 $output .= render_image_markup_by_attachment_id($gateway['image']);
             }
 
             $output .= '</li>';
+        } else {
+            Log::error("Invalid Payment Gatewway" . json_encode($gateway));
         }
     }
     $output .= '</ul>';
 
 
-    $conditon = in_array(get_static_option('site_default_payment_gateway'),['manual_payment_','manual_payment']) ? 'd-block' : 'd-none';
+    $conditon = in_array(get_static_option('site_default_payment_gateway'), ['manual_payment_', 'manual_payment']) ? 'd-block' : 'd-none';
     $conditon_2 = get_static_option('site_default_payment_gateway') == 'bank_transfer' ? 'd-block' : 'd-none';
     $conditon_3 = get_static_option('site_default_payment_gateway') == 'kinetic' ? 'd-block' : 'd-none';
 
-       //manual payment markup passing
-        $output .= ' <div class="form-group manual_payment_transaction_field '.$conditon.'">
-                        <div class="label">'.__('Enter Manual Payment Transaction ID').'</div>
+    //manual payment markup passing
+    $output .= ' <div class="form-group manual_payment_transaction_field ' . $conditon . '">
+                        <div class="label">' . __('Enter Manual Payment Transaction ID') . '</div>
                         <input class="form-control btn-sm mb-3 py-3 p-3" type="text" name="transaction_id">
-                        <p class="help-info">'.get_manual_payment_description().'</p>
+                        <p class="help-info">' . get_manual_payment_description() . '</p>
                     </div>';
 
-        //bank payment markup passing
-        $output .= ' <div class="form-group bank_payment_field '.$conditon_2.'">
-                            <div class="label">'.__('Upload Bank Transfer Document').'</div>
+    //bank payment markup passing
+    $output .= ' <div class="form-group bank_payment_field ' . $conditon_2 . '">
+                            <div class="label">' . __('Upload Bank Transfer Document') . '</div>
                             <input class="form-control btn-sm mb-3 py-3 p-3" type="file" name="manual_payment_attachment">
-                            <p class="help-info my-3">'.get_bank_payment_description().'</p>
+                            <p class="help-info my-3">' . get_bank_payment_description() . '</p>
                         </div>';
 
-        //add extra markup for kinetic payment
-    $output .= ' <div class="form-group kinetic_payment_field '.$conditon_3.'">
+    //add extra markup for kinetic payment
+    $output .= ' <div class="form-group kinetic_payment_field ' . $conditon_3 . '">
 
-                            <div class="label">'.__('Choose Payment Method').'</div>
+                            <div class="label">' . __('Choose Payment Method') . '</div>
                             <select name="kineticpay_bank" id="kineticpay_bank" class="select " data-allow_clear="true" data-placeholder="Select Bank">
                                 <option value="" selected="selected">Select Bank</option>
                                 <option value="ABMB0212">Alliance Bank Malaysia Berhad</option>
@@ -1202,13 +1319,12 @@ function render_payment_gateway_for_form($cash_on_delivery = false)
                         </div>';
 
     //extra field data for payment gateway
-   $output.= '<div class="payment_gateway_extra_field_information_wrap">';
+    $output .= '<div class="payment_gateway_extra_field_information_wrap">';
     $output .= renderAllPaymentGatewayExtraInfoBlade();
 
     $output .= '</div>';
     $output .= '</div>';
     return $output;
-
 }
 
 function get_user_name_by_id($id)
@@ -1240,7 +1356,7 @@ function set_seo_data($request)
 
 function canonical_url()
 {
-    if(get_static_option('site_canonical_settings') == 0){
+    if (get_static_option('site_canonical_settings') == 0) {
         return url()->current();
     }
 
@@ -1264,9 +1380,9 @@ function get_typography_suffix_by_theme($theme)
 {
     $suffix = 'donation';
 
-    if(!empty($theme)){
+    if (!empty($theme)) {
 
-        switch ($theme){
+        switch ($theme) {
             case 'donation':
                 $suffix = 'theme_donation';
                 break;
@@ -1355,7 +1471,7 @@ function load_google_fonts_landlord()
     }
 
 
-    $fonts_url .= $load_body_font_family . ':' . $body_italic . 'wght@' . str_replace('regular','400',$load_body_font_variant);
+    $fonts_url .= $load_body_font_family . ':' . $body_italic . 'wght@' . str_replace('regular', '400', $load_body_font_variant);
     $load_heading_font_family = str_replace(' ', '+', $heading_font_family);
     $heading_font_variant = get_static_option('heading_font_variant');
     $heading_font_variant_selected_arr = !empty($heading_font_variant) ? unserialize($heading_font_variant, ['class' => false]) : ['400'];
@@ -1371,7 +1487,7 @@ function load_google_fonts_landlord()
             $load_heading_font_variant = str_replace('0,', '', $load_heading_font_variant);
         }
 
-        $fonts_url .= '&family=' . $load_heading_font_family . ':' . $heading_italic . 'wght@' . str_replace('regular','400',$load_heading_font_variant);
+        $fonts_url .= '&family=' . $load_heading_font_family . ':' . $heading_italic . 'wght@' . str_replace('regular', '400', $load_heading_font_variant);
     }
 
     return sprintf('<link rel="preconnect" href="https://fonts.gstatic.com"> <link href="%1$s&display=swap" rel="stylesheet">', $fonts_url);
@@ -1387,11 +1503,11 @@ function load_google_fonts()
 
     $theme_suffix = get_typography_suffix_by_theme(get_static_option('tenant_default_theme'));
 
-    $body_font_family = get_static_option('body_font_family_'.$theme_suffix) ?? 'Open Sans';
-    $heading_font_family = get_static_option('heading_font_family_'.$theme_suffix) ?? 'Montserrat';
+    $body_font_family = get_static_option('body_font_family_' . $theme_suffix) ?? 'Open Sans';
+    $heading_font_family = get_static_option('heading_font_family_' . $theme_suffix) ?? 'Montserrat';
 
     $load_body_font_family = str_replace(' ', '+', $body_font_family);
-    $body_font_variant = get_static_option('body_font_variant_'.$theme_suffix);
+    $body_font_variant = get_static_option('body_font_variant_' . $theme_suffix);
     $body_font_variant_selected_arr = !empty($body_font_variant) ? unserialize($body_font_variant, ['class' => false]) : ['400'];
     $load_body_font_variant = is_array($body_font_variant_selected_arr) ? implode(';', $body_font_variant_selected_arr) : '400';
 
@@ -1403,13 +1519,13 @@ function load_google_fonts()
         $load_body_font_variant = str_replace('0,', '', $load_body_font_variant);
     }
 
-    $fonts_url .= $load_body_font_family . ':' . $body_italic . 'wght@' . str_replace('regular','400',$load_body_font_variant);
+    $fonts_url .= $load_body_font_family . ':' . $body_italic . 'wght@' . str_replace('regular', '400', $load_body_font_variant);
     $load_heading_font_family = str_replace(' ', '+', $heading_font_family);
-    $heading_font_variant = get_static_option('heading_font_variant_'.$theme_suffix);
+    $heading_font_variant = get_static_option('heading_font_variant_' . $theme_suffix);
     $heading_font_variant_selected_arr = !empty($heading_font_variant) ? unserialize($heading_font_variant, ['class' => false]) : ['400'];
     $load_heading_font_variant = is_array($heading_font_variant_selected_arr) ? implode(';', $heading_font_variant_selected_arr) : '400';
 
-    if (!empty(get_static_option('heading_font_'.$theme_suffix)) && $heading_font_family != $body_font_family) {
+    if (!empty(get_static_option('heading_font_' . $theme_suffix)) && $heading_font_family != $body_font_family) {
 
         $heading_italic = '';
         preg_match('/1,/', $load_heading_font_variant, $match);
@@ -1419,7 +1535,7 @@ function load_google_fonts()
             $load_heading_font_variant = str_replace('0,', '', $load_heading_font_variant);
         }
 
-        $fonts_url .= '&family=' . $load_heading_font_family . ':' . $heading_italic . 'wght@' . str_replace('regular','400',$load_heading_font_variant);
+        $fonts_url .= '&family=' . $load_heading_font_family . ':' . $heading_italic . 'wght@' . str_replace('regular', '400', $load_heading_font_variant);
     }
 
     return sprintf('<link rel="preconnect" href="https://fonts.gstatic.com"> <link href="%1$s&display=swap" rel="stylesheet">', $fonts_url);
@@ -1435,21 +1551,21 @@ function purify_html($html)
     return strip_tags(\Mews\Purifier\Facades\Purifier::clean($html));
 }
 
-function tenant_url_with_protocol($url){
-    if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on'){
+function tenant_url_with_protocol($url)
+{
+    if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
         $protocol = "https://";
-    }else{
+    } else {
         $protocol = "http://";
     }
 
-    return $protocol.$url;
+    return $protocol . $url;
 }
 
 function create_slug($sluggable_text, $model_name, $is_module = false, $module_name = null, $column_name = 'slug')  // Idea from Suzon extended by Md Zahid
 {
-    if ($is_module)
-    {
-        $model_path = 'Modules\\'.ucwords($module_name).'\Entities\\' . ucwords($model_name);
+    if ($is_module) {
+        $model_path = 'Modules\\' . ucwords($module_name) . '\Entities\\' . ucwords($model_name);
     } else {
         $model_path = '\App\Models\\' . ucwords($model_name);
     }
@@ -1457,8 +1573,8 @@ function create_slug($sluggable_text, $model_name, $is_module = false, $module_n
     $slug = \Illuminate\Support\Str::slug($sluggable_text);
     $check = true;
 
-    do{
-        $old_category = (new $model_path)->where($column_name, $slug)->orderBy('id','desc')->first();
+    do {
+        $old_category = (new $model_path)->where($column_name, $slug)->orderBy('id', 'desc')->first();
 
         if ($old_category != null) {
             $old_category_name = $old_category->slug;
@@ -1467,21 +1583,20 @@ function create_slug($sluggable_text, $model_name, $is_module = false, $module_n
             if (array_key_exists(1, $exploded)) {
                 $number = end($exploded);
 
-                if (is_numeric($number) == true)
-                {
+                if (is_numeric($number) == true) {
                     $number = (int)$number;
                     array_pop($exploded);
 
                     $final_array = array_merge($exploded, Arr::wrap(++$number));
 
-                    $slug = implode('-',$final_array);
+                    $slug = implode('-', $final_array);
                 } else {
                     $slug .= '-1';
                 }
             } else {
                 $slug .= '-1';
             }
-        }else{
+        } else {
             $check = false;
         }
     } while ($check);
@@ -1490,45 +1605,46 @@ function create_slug($sluggable_text, $model_name, $is_module = false, $module_n
 }
 
 
-function get_all_main_feature_create_permission($order_details){
+function get_all_main_feature_create_permission($order_details)
+{
 
-    $check_image = '<img src="'.asset('assets/landlord/frontend/img/icon/check.svg').'" class="icon" alt="image">';
+    $check_image = '<img src="' . asset('assets/landlord/frontend/img/icon/check.svg') . '" class="icon" alt="image">';
     $output = '';
 
-    if(!empty($order_details->page_permission_feature)):
-    $output.=  '<li class="single"> '.$check_image.' '.__('Page').$order_details->page_permission_feature.'</li>';
+    if (!empty($order_details->page_permission_feature)):
+        $output .=  '<li class="single"> ' . $check_image . ' ' . __('Page') . $order_details->page_permission_feature . '</li>';
     endif;
 
-      if(!empty($order_details->blog_permission_feature)):
-          $output.=  '<li class="single"> '.$check_image.''.__('Blog').$order_details->blog_permission_feature .'</li>';
+    if (!empty($order_details->blog_permission_feature)):
+        $output .=  '<li class="single"> ' . $check_image . '' . __('Blog') . $order_details->blog_permission_feature . '</li>';
     endif;
 
-     if(!empty($order_details->product_permission_feature)):
-         $output.=  '<li class="single"> '.$check_image.''.__('Product').$order_details->product_permission_feature .'</li>';
-      endif;
-
-    if(!empty($order_details->service_permission_feature)):
-        $output.=   '  <li class="single"> '.$check_image.''.__('Service').$order_details->service_permission_feature .'</li>';
+    if (!empty($order_details->product_permission_feature)):
+        $output .=  '<li class="single"> ' . $check_image . '' . __('Product') . $order_details->product_permission_feature . '</li>';
     endif;
 
-    if(!empty($order_details->donation_permission_feature)):
-        $output.=  '  <li class="single"> '.$check_image.''.__('Donation').$order_details->donation_permission_feature .'</li>';
+    if (!empty($order_details->service_permission_feature)):
+        $output .=   '  <li class="single"> ' . $check_image . '' . __('Service') . $order_details->service_permission_feature . '</li>';
     endif;
 
-    if(!empty($order_details->job_permission_feature)):
-        $output.=   '  <li class="single"> '.$check_image.''.__('Job').$order_details->job_permission_feature .'</li>';
+    if (!empty($order_details->donation_permission_feature)):
+        $output .=  '  <li class="single"> ' . $check_image . '' . __('Donation') . $order_details->donation_permission_feature . '</li>';
     endif;
 
-    if(!empty($order_details->event_permission_feature)):
-        $output.=  '  <li class="single"> '.$check_image.''.__('Event').$order_details->event_permission_feature .'</li>';
+    if (!empty($order_details->job_permission_feature)):
+        $output .=   '  <li class="single"> ' . $check_image . '' . __('Job') . $order_details->job_permission_feature . '</li>';
     endif;
 
-    if(!empty($order_details->knowledgebase_permission_feature)):
-        $output.= '  <li class="single"> '.$check_image.''.__('Article').$order_details->knowledgebase_permission_feature .'</li>';
+    if (!empty($order_details->event_permission_feature)):
+        $output .=  '  <li class="single"> ' . $check_image . '' . __('Event') . $order_details->event_permission_feature . '</li>';
     endif;
 
-    if(!empty($order_details->portfolio_permission_feature)):
-        $output.= '  <li class="single"> '.$check_image.''.__('Portfolio').$order_details->portfolio_permission_feature .'</li>';
+    if (!empty($order_details->knowledgebase_permission_feature)):
+        $output .= '  <li class="single"> ' . $check_image . '' . __('Article') . $order_details->knowledgebase_permission_feature . '</li>';
+    endif;
+
+    if (!empty($order_details->portfolio_permission_feature)):
+        $output .= '  <li class="single"> ' . $check_image . '' . __('Portfolio') . $order_details->portfolio_permission_feature . '</li>';
     endif;
 
     return $output;
@@ -1537,10 +1653,10 @@ function get_all_main_feature_create_permission($order_details){
 
 function get_manual_payment_description()
 {
-    $data = \App\Models\PaymentGateway::where('name','manual_payment_')->first();
+    $data = \App\Models\PaymentGateway::where('name', 'manual_payment_')->first();
     $manual_payment_description = '';
 
-    if(!empty($data)){
+    if (!empty($data)) {
         $decoded = json_decode($data->credentials);
         $manual_payment_description = $decoded->description;
         $manual_payment_description = str_replace(array('https://{url}', 'http://{url}'), array(url('/'), url('/')), $manual_payment_description);
@@ -1551,10 +1667,10 @@ function get_manual_payment_description()
 
 function get_bank_payment_description()
 {
-    $data = \App\Models\PaymentGateway::where('name','bank_transfer')->first();
+    $data = \App\Models\PaymentGateway::where('name', 'bank_transfer')->first();
     $manual_payment_description = '';
 
-    if(!empty($data)){
+    if (!empty($data)) {
         $decoded = json_decode($data->credentials);
         $manual_payment_description = $decoded->description;
         $manual_payment_description = str_replace(array('https://{url}', 'http://{url}'), array(url('/'), url('/')), $manual_payment_description);
@@ -1571,7 +1687,7 @@ function default_lang()
 function default_lang_name()
 {
     $lang =  \App\Facades\GlobalLanguage::default_slug();
-    return \App\Models\Language::where('slug',$lang)->first()?->name ?? '';
+    return \App\Models\Language::where('slug', $lang)->first()?->name ?? '';
 }
 
 function render_img_url_data_attr($id, $attr)
@@ -1585,11 +1701,11 @@ function render_img_url_data_attr($id, $attr)
 function custom_file_upload($file)
 {
     $file_name = '';
-    if (isset($file)){
+    if (isset($file)) {
         $uploaded_file = $file;
         $file_extension = $uploaded_file->getClientOriginalExtension();
-        $file_name =  pathinfo($uploaded_file->getClientOriginalName(),PATHINFO_FILENAME).time().'.'.$file_extension;
-        $uploaded_file->move('assets/uploads/custom-file',$file_name);
+        $file_name =  pathinfo($uploaded_file->getClientOriginalName(), PATHINFO_FILENAME) . time() . '.' . $file_extension;
+        $uploaded_file->move('assets/uploads/custom-file', $file_name);
     }
 
     return $file_name;
@@ -1599,8 +1715,8 @@ function custom_file_upload($file)
 function get_blog_created_user_image($admin_id)
 {
     $admin = null;
-    if(!empty($admin_id)){
-         $admin = \App\Models\Admin::find($admin_id)->image ?? [];
+    if (!empty($admin_id)) {
+        $admin = \App\Models\Admin::find($admin_id)->image ?? [];
     }
     return $admin;
 }
@@ -1616,7 +1732,7 @@ function get_percentage($amount, $numb)
 function get_dynamic_page_name_by_id($id)
 {
     $name = '';
-    if(!empty($id)){
+    if (!empty($id)) {
         $name = \App\Models\Page::find($id)?->slug;
     }
     return $name ?? "x";
@@ -1633,7 +1749,6 @@ function get_plan_left_days($package_id, $tenant_expire_date)
         if ($order_details->type == 0) { //monthly
             $package_start_date = Carbon::now()->format('d-m-Y h:i:s');
             $package_expire_date = Carbon::now()->addMonth(1)->format('d-m-Y h:i:s');
-
         } elseif ($order_details->type == 1) { //yearly
             $package_start_date = Carbon::now()->format('d-m-Y h:i:s');
             $package_expire_date = Carbon::now()->addYear(1)->format('d-m-Y h:i:s');
@@ -1665,51 +1780,50 @@ function get_plan_left_days($package_id, $tenant_expire_date)
 
 function moduleExists($name): bool
 {
-    $module_status = json_decode(file_get_contents(__DIR__.'/../../modules_statuses.json'));
-    return property_exists($module_status,$name) ? $module_status->$name : false;
+    $module_status = json_decode(file_get_contents(__DIR__ . '/../../modules_statuses.json'));
+    return property_exists($module_status, $name) ? $module_status->$name : false;
 }
 
- function sohan_custom_charecter_or_word_length_count(string $source, string $subject) : int
- {
+function sohan_custom_charecter_or_word_length_count(string $source, string $subject): int
+{
 
-    if(!empty($subject) && strlen($subject) < 2){
+    if (!empty($subject) && strlen($subject) < 2) {
         $count = 0;
-        for ($i=0; $i < strlen($source); $i++) {
+        for ($i = 0; $i < strlen($source); $i++) {
             if ($source[$i] == $subject) {
                 $count += 1;
             }
         }
 
         return $count;
-
-    }else{
-       return substr_count($source,$subject);
+    } else {
+        return substr_count($source, $subject);
     }
 }
 
-function get_string_line_breaker($string, $number){
+function get_string_line_breaker($string, $number)
+{
 
-    if(!empty($string)){
+    if (!empty($string)) {
 
-        $explode = explode(' ',$string);
-        $take_data = array_slice($explode,0,$number);
+        $explode = explode(' ', $string);
+        $take_data = array_slice($explode, 0, $number);
 
-        $new_data = implode(' ',$take_data) . PHP_EOL;
+        $new_data = implode(' ', $take_data) . PHP_EOL;
 
-        $final_data = array_diff($explode,$take_data);
-        $result =  $new_data . '<span class="lineBreak"></span>'. implode(' ',$final_data);
+        $final_data = array_diff($explode, $take_data);
+        $result =  $new_data . '<span class="lineBreak"></span>' . implode(' ', $final_data);
 
         return $result;
     }
-
 }
 
 function get_product_dynamic_price($product_object)
 {
     $is_expired = 0;
     $campaign_name = null;
-    (double)$regular_price = $product_object->price;
-    (double)$sale_price = $product_object->sale_price;
+    (float)$regular_price = $product_object->price;
+    (float)$sale_price = $product_object->sale_price;
     $discount = null;
 
     if (!is_null($product_object?->campaign_product)) {
@@ -1719,8 +1833,8 @@ function get_product_dynamic_price($product_object)
 
             if ($start_date->lessThanOrEqualTo(now()) && $end_date->greaterThanOrEqualTo(now())) {
                 (string)$campaign_name = $product_object?->campaign_product?->campaign?->title;
-                (double)$sale_price = $product_object?->campaign_product?->campaign_price;
-                (double)$regular_price = $product_object->sale_price;
+                (float)$sale_price = $product_object?->campaign_product?->campaign_price;
+                (float)$regular_price = $product_object->sale_price;
 
                 $discount = 100 - round(($sale_price / $regular_price) * 100);
                 $is_expired = 1;
@@ -1780,10 +1894,10 @@ function product_prices($product_object, $class = '')
         $regular_price = $product_object->price;
 
 
-//        $markup = '<div class="productPrice"><strong class="regularPrice ' . $class . '">' . amount_with_currency_symbol($regular_price) . '</strong>';
-//        $markup .= '<span class="offerPrice">' . amount_with_currency_symbol($sale_price) . '</span></div>';
+        //        $markup = '<div class="productPrice"><strong class="regularPrice ' . $class . '">' . amount_with_currency_symbol($regular_price) . '</strong>';
+        //        $markup .= '<span class="offerPrice">' . amount_with_currency_symbol($sale_price) . '</span></div>';
 
-       //  todo here offerPrice class displayed regular price in related product list
+        //  todo here offerPrice class displayed regular price in related product list
         $markup = '<div class="productPrice"><strong class="regularPrice ' . $class . '">' . amount_with_currency_symbol($sale_price) . '</strong>';
         $markup .= '<span class="offerPrice">' . amount_with_currency_symbol($regular_price) . '</span></div>';
 
@@ -1821,8 +1935,9 @@ function get_product_shipping_tax_data($billing_info)
     return $data;
 }
 
-function tenant_module_migrations_file_path($moduleName){
-    return str_replace('database','',database_path()).'Modules/'.$moduleName.'/Database/Migrations';
+function tenant_module_migrations_file_path($moduleName)
+{
+    return str_replace('database', '', database_path()) . 'Modules/' . $moduleName . '/Database/Migrations';
 }
 
 function get_tenant_storage_info($format = 'kb')
@@ -1850,7 +1965,8 @@ function get_tenant_storage_info($format = 'kb')
     return $file_size;
 }
 
-function get_slider_language_deriection(){
+function get_slider_language_deriection()
+{
     return get_user_lang_direction() == 1 ? 'true' : 'false';
 }
 
@@ -1858,26 +1974,25 @@ function get_consultancy_subtitle_line_breaker($subtitle)
 {
 
     $main_subtitle = $subtitle ?? '';
-    $explode = explode(' ',$main_subtitle) ?? [];
+    $explode = explode(' ', $main_subtitle) ?? [];
 
-    $first_three_words = count($explode) > 3 ? array_slice($explode,0,4) : current($explode);
-    $last_words = count($explode) > 3 ? array_diff($explode,$first_three_words) : end($explode);
+    $first_three_words = count($explode) > 3 ? array_slice($explode, 0, 4) : current($explode);
+    $last_words = count($explode) > 3 ? array_diff($explode, $first_three_words) : end($explode);
 
     $final_first = !empty($first_three_words) ? is_string($first_three_words) ? $first_three_words :  implode(' ', $first_three_words) : '';
-    $final_last = !empty($last_words) ? is_string($last_words) ? $last_words :  implode(' ',$last_words) : '';
+    $final_last = !empty($last_words) ? is_string($last_words) ? $last_words :  implode(' ', $last_words) : '';
 
-        return '<h2 class="title">
+    return '<h2 class="title">
                 <span class="title__top">
-                    '.$final_first.'
+                    ' . $final_first . '
                     <span class="title__top__shape">
-                        <img src="'.global_asset('assets/tenant/frontend/themes/img/consultancy/banner/consulting_banner_title_shape.svg').'" alt="">
+                        <img src="' . global_asset('assets/tenant/frontend/themes/img/consultancy/banner/consulting_banner_title_shape.svg') . '" alt="">
                     </span>
                 </span>
                 <span class="title__bottom">
-                    '.$final_last.'
+                    ' . $final_last . '
                 </span>
             </h2>';
-
 }
 
 
@@ -1904,7 +2019,7 @@ function float_amount_with_currency_symbol($amount, $text = false): string
     return $return_val;
 }
 
-function get_tenant_package_features() : array
+function get_tenant_package_features(): array
 {
     $package = tenant()->user()->first()?->payment_log()->first()?->package()->first() ?? [];
     $all_features = $package->plan_features ?? [];
@@ -1913,15 +2028,15 @@ function get_tenant_package_features() : array
     return $check_feature_name;
 }
 
-function get_amount_after_landlord_coupon_apply($package_price,$coupon_code)
+function get_amount_after_landlord_coupon_apply($package_price, $coupon_code)
 {
     $amount = 0;
-    $coupon = Coupon::where('code',$coupon_code)->first();
+    $coupon = Coupon::where('code', $coupon_code)->first();
 
-    if(!empty($coupon)){
-        if($coupon->discount_type == 'percentage'){
+    if (!empty($coupon)) {
+        if ($coupon->discount_type == 'percentage') {
             $amount = $package_price - ($coupon->discount_amount / 100) * $package_price;
-        }else{
+        } else {
             $amount = $package_price - $coupon->discount_amount;
         }
     }
@@ -1929,15 +2044,15 @@ function get_amount_after_landlord_coupon_apply($package_price,$coupon_code)
     return $amount;
 }
 
-function get_amount_after_landlord_coupon_apply_discount($package_price,$coupon_code)
+function get_amount_after_landlord_coupon_apply_discount($package_price, $coupon_code)
 {
     $amount = 0;
-    $coupon = Coupon::where('code',$coupon_code)->first();
+    $coupon = Coupon::where('code', $coupon_code)->first();
 
-    if(!empty($coupon)){
-        if($coupon->discount_type == 'percentage'){
+    if (!empty($coupon)) {
+        if ($coupon->discount_type == 'percentage') {
             $amount = ($coupon->discount_amount / 100) * $package_price;
-        }else{
+        } else {
             $amount = $coupon->discount_amount;
         }
     }
@@ -1949,23 +2064,22 @@ function get_modified_title_photography($title)
 {
     $arrow_image_path = global_asset('assets/tenant/frontend/themes/img/photography/photography_section_titleShape.svg');
 
-    if(!empty($title)){
+    if (!empty($title)) {
 
         $main_title = $title;
-        $explode = explode(' ',$main_title) ?? [];
-        $last_word = array_slice($explode,-1) ?? [];
-        $first_words = array_diff($explode,$last_word) ?? [];
+        $explode = explode(' ', $main_title) ?? [];
+        $last_word = array_slice($explode, -1) ?? [];
+        $first_words = array_diff($explode, $last_word) ?? [];
 
         $final_first = !empty($first_words) ? implode(' ', $first_words) : ' ';
-        $final_last = !empty($last_word) ? implode(' ',$last_word) : '';
+        $final_last = !empty($last_word) ? implode(' ', $last_word) : '';
 
-        return '<h2 class="title">'.$final_first.'
-                <span class="title__shapes"> '.$final_last.'
-                    <img src="'. $arrow_image_path.'" alt="">
+        return '<h2 class="title">' . $final_first . '
+                <span class="title__shapes"> ' . $final_last . '
+                    <img src="' . $arrow_image_path . '" alt="">
                 </span>
             </h2>';
     }
-
 }
 
 function get_modified_title_portfolio($title)
@@ -1977,7 +2091,6 @@ function get_modified_title_portfolio($title)
 
         $highlighted_text = '<span class="title__style">' . $highlighted_word . '</span>';
         return $final_title = '<h2 class="title">' . str_replace('{h}' . $highlighted_word . '{/h}', $highlighted_text, $title) . '</h2>';
-
     } else {
         return $final_title = '<h2 class="title">' . $title . '</h2>';
     }
@@ -1992,7 +2105,6 @@ function get_modified_title_barber($title)
 
         $highlighted_text = '<span class="barberShop_banner__titleColor">' . $highlighted_word . '</span>';
         return $final_title = '<h1 class="barberShop_banner__title">' . str_replace('{h}' . $highlighted_word . '{/h}', $highlighted_text, $title) . '</h1>';
-
     } else {
         return $final_title = '<h1 class="barberShop_banner__title">' . $title . '</h1>';
     }
@@ -2007,7 +2119,6 @@ function get_modified_title_barber_two($title)
 
         $highlighted_text = '<span class="titleColor">' . $highlighted_word . '</span>';
         return $final_title = '<h1 class="title">' . str_replace('{h}' . $highlighted_word . '{/h}', $highlighted_text, $title) . '</h1>';
-
     } else {
         return $final_title = '<h1 class="title">' . $title . '</h1>';
     }
@@ -2022,7 +2133,6 @@ function get_modified_title_barber_three($title)
 
         $highlighted_text = '<span class="barberShop_banner__titleColor">' . $highlighted_word . '</span>';
         return $final_title = '<h2 class="barberShop_banner__title">' . str_replace('{h}' . $highlighted_word . '{/h}', $highlighted_text, $title) . '</h2>';
-
     } else {
         return $final_title = '<h2 class="barberShop_banner__title">' . $title . '</h2>';
     }
@@ -2074,7 +2184,7 @@ function themeView($view, $data = [])
 
 function externalAddonImagepath($moduleName)
 {
-    return 'core/Modules/'.$moduleName.'/assets/addon-image/'; // 'assets/plugins/PageBuilder/images'
+    return 'core/Modules/' . $moduleName . '/assets/addon-image/'; // 'assets/plugins/PageBuilder/images'
 }
 
 function getSelectedThemeSlug()
@@ -2114,17 +2224,17 @@ function renderFooterHookBladeFile()
 
 function theme_custom_name($theme_data)
 {
-    return !empty(get_static_option_central($theme_data->slug.'_theme_name')) ? get_static_option_central($theme_data->slug.'_theme_name') : $theme_data->name;
+    return !empty(get_static_option_central($theme_data->slug . '_theme_name')) ? get_static_option_central($theme_data->slug . '_theme_name') : $theme_data->name;
 }
 
 function get_data_without_extra_space_or_new_line($string)
 {
-    return trim(preg_replace('/\s\s+/', ' ',$string));
+    return trim(preg_replace('/\s\s+/', ' ', $string));
 }
 
 function replace_rgb_from_css_variable($key)
 {
-    return str_replace(['rgb(',')'],'',$key);
+    return str_replace(['rgb(', ')'], '', $key);
 }
 
 function get_landlord_modified_title($title)
@@ -2132,16 +2242,15 @@ function get_landlord_modified_title($title)
     $condition_of_extra = get_static_option('section_title_extra_design_status');
     $title_class_condition = !empty($condition_of_extra) ? 'tittle' : 'title';
 
-    if (str_contains($title, '{h}') && str_contains($title, '{/h}'))
-    {
-        $text = explode('{h}',$title);
+    if (str_contains($title, '{h}') && str_contains($title, '{/h}')) {
+        $text = explode('{h}', $title);
 
         $highlighted_word = explode('{/h}', $text[1])[0];
 
-        $highlighted_text = '<span class="color">'. $highlighted_word .'</span>';
-        $final_title = '<h1 class="'.$title_class_condition.' wow fadeInUp" data-wow-delay="0.0s">'.str_replace('{h}'.$highlighted_word.'{/h}', $highlighted_text, $title).'</h2>';
+        $highlighted_text = '<span class="color">' . $highlighted_word . '</span>';
+        $final_title = '<h1 class="' . $title_class_condition . ' wow fadeInUp" data-wow-delay="0.0s">' . str_replace('{h}' . $highlighted_word . '{/h}', $highlighted_text, $title) . '</h2>';
     } else {
-        $final_title = '<h1 class="'.$title_class_condition.' wow fadeInUp" data-wow-delay="0.0s">'. $title .'</h2>';
+        $final_title = '<h1 class="' . $title_class_condition . ' wow fadeInUp" data-wow-delay="0.0s">' . $title . '</h2>';
     }
 
     return $final_title;
@@ -2153,17 +2262,14 @@ function get_date_by_format($date = null)
 
     $admin_set_style = get_static_option('date_display_style');
 
-    if($admin_set_style == 'style_one'){
-        $formated_date = date('d-m-Y',strtotime($date));
-
-    }else if($admin_set_style == 'style_two'){
-        $formated_date = date('d M, Y',strtotime($date));
-
-    }else if($admin_set_style == 'style_three'){
-        $formated_date = date('Y/m/d',strtotime($date));
-
-    }else if($admin_set_style == 'style_four'){
-        $formated_date = date('Y-m-d',strtotime($date));
+    if ($admin_set_style == 'style_one') {
+        $formated_date = date('d-m-Y', strtotime($date));
+    } else if ($admin_set_style == 'style_two') {
+        $formated_date = date('d M, Y', strtotime($date));
+    } else if ($admin_set_style == 'style_three') {
+        $formated_date = date('Y/m/d', strtotime($date));
+    } else if ($admin_set_style == 'style_four') {
+        $formated_date = date('Y-m-d', strtotime($date));
     }
 
     return $formated_date;
@@ -2174,77 +2280,56 @@ function toFixed($number, $decimals = 2): string
     return number_format($number, $decimals, '.', "");
 }
 
-function get_page_builder_addon_preview_image( string $dir_name, string $image_name )
+function get_page_builder_addon_preview_image(string $dir_name, string $image_name)
 {
-    return url('assets/plugins/PageBuilder/images/Tenant/'.$dir_name.'/'.$image_name);
+    return url('assets/plugins/PageBuilder/images/Tenant/' . $dir_name . '/' . $image_name);
 }
 
 function replace_instruction_url($data)
 {
     $redirect_path = '#!';
 
-    if(!empty($data)) {
+    if (!empty($data)) {
 
-        $check_for_other = str_contains($data,'@url');
+        $check_for_other = str_contains($data, '@url');
 
         if ($check_for_other == true) {
-            $redirect_path = str_replace(['@url','@url/'],[
+            $redirect_path = str_replace(['@url', '@url/'], [
                 url('/'),
-                url('/'). '/',
+                url('/') . '/',
 
-            ],$data);
+            ], $data);
 
-         //   $redirect_path = url('/') . '/' . $redirect_path;
+            //   $redirect_path = url('/') . '/' . $redirect_path;
 
 
         } else if ($data == '@color_settings') {
             $redirect_path = 'admin-home/general-settings/color-settings';
-
         } else if ($data == '@logo_settings') {
             $redirect_path = 'admin-home/general-settings/site-identity';
-
-
         } else if ($data == '@basic_settings') {
             $redirect_path = 'admin-home/general-settings/basic-settings';
-
-
         } else if ($data == '@email_settings') {
             $redirect_path = 'admin-home/general-settings/email-settings';
-
-
         } else if ($data == '@edit_forms') {
             $redirect_path = 'admin-home/custom-form-builder/all';
-
         } else if ($data == '@edit_pages') {
             $redirect_path = 'admin-home/pages';
-
         } else if ($data == '@customize_menu') {
             $redirect_path = 'admin-home/menu/menu-edit/1';
-
-
         } else if ($data == '@customize_footer') {
             $redirect_path = 'admin-home/tenant/widgets';
-
-
         } else if ($data == '@connect_domain') {
             $redirect_path = 'admin-home/custom-domain/custom-domain-request';
-
-
         } else if ($data == '@edit_seo') {
             $redirect_path = 'admin-home/general-settings/seo-settings';
-
-
         } else if ($data == '@edit_profile') {
             $redirect_path = 'admin-home/edit-profile';
-
-
         } else if ($data == '@set_language') {
             $redirect_path = 'admin-home/languages';
-
         } else if ($data == '@page_settings') {
             $redirect_path = 'admin-home/general-settings/page-settings';
         }
-
     }
 
 
@@ -2256,34 +2341,32 @@ function get_appointment_tax_amount($appointment_id, $subtotal)
 
     $tax_amount = 0;
 
-    if(!empty($appointment_id)){
-        $tax_info = AppointmentTax::where('appointment_id',$appointment_id)->first();
+    if (!empty($appointment_id)) {
+        $tax_info = AppointmentTax::where('appointment_id', $appointment_id)->first();
 
-        if(!empty($tax_info)){
+        if (!empty($tax_info)) {
             $tax_amount = $tax_info->tax_type == 'exclusive' ? $subtotal * $tax_info->tax_amount / 100 : 0;
         }
     }
 
     return $tax_amount;
-
 }
 
 function get_appointment_tax_amount_percentage($appointment_id)
 {
     $percentage = 0;
 
-    if(!empty($appointment_id)){
-        $percentage = AppointmentTax::where('appointment_id',$appointment_id)->first();
-        $percentage = !empty($percentage->tax_amount) ? '<small class="text-success">('.$percentage->tax_amount . '%)'.'</small>' : '';
-
+    if (!empty($appointment_id)) {
+        $percentage = AppointmentTax::where('appointment_id', $appointment_id)->first();
+        $percentage = !empty($percentage->tax_amount) ? '<small class="text-success">(' . $percentage->tax_amount . '%)' . '</small>' : '';
     }
 
     return $percentage;
-
 }
 
-function SMTP_test(){
-    try{
+function SMTP_test()
+{
+    try {
         $transport = \Illuminate\Support\Facades\Mail::newInstance('smtp.exemple.com', '465', 'ssl');
         $transport->setUsername('username@exemple.com');
         $transport->setPassword('supersecret');

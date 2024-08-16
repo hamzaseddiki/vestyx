@@ -11,6 +11,7 @@ use App\Mail\BasicMail;
 use App\Models\PaymentGateway;
 use App\Models\User;
 use App\Traits\ManualPaymentGatewayHelper;
+use Exception;
 use FontLib\Table\Type\name;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -66,12 +67,14 @@ class BuyerWalletController extends Controller
             'amount' => 'required|integer|min:10|max:5000',
         ]);
         if ($request->selected_payment_gateway === 'manual_payment_') {
-            $request->validate([
-                'manual_payment_image' => 'required|mimes:jpg,jpeg,png,svg,pdf'
-            ],
+            $request->validate(
+                [
+                    'manual_payment_image' => 'required|mimes:jpg,jpeg,png,svg,pdf'
+                ],
                 [
                     'The manual payment image must be a file of type - jpg, jpeg, png, svg and pdf.'
-                ]);
+                ]
+            );
 
             $file_extention = $request->manual_payment_image->getClientOriginalExtension();
             $imageTypes = ['jpeg', 'png', 'jpg', 'svg', 'pdf'];
@@ -112,8 +115,8 @@ class BuyerWalletController extends Controller
 
 
         //Notification Event
-            $event_data = ['id' =>  $deposit->id, 'title' =>  __('Wallet deposited'), 'type' =>  'wallet_deposit',];
-            event(new TenantNotificationEvent($event_data));
+        $event_data = ['id' =>  $deposit->id, 'title' =>  __('Wallet deposited'), 'type' =>  'wallet_deposit',];
+        event(new TenantNotificationEvent($event_data));
         //Notification Event
 
         $this->last_deposit_id = $deposit->id;
@@ -146,7 +149,6 @@ class BuyerWalletController extends Controller
             }
 
             return back()->with(['type' => 'success', 'msg' => 'Manual deposit success. Your wallet will credited after admin approval']);
-
         } else {
             return $this->payment_with_gateway($request->selected_payment_gateway);
         }
@@ -156,14 +158,15 @@ class BuyerWalletController extends Controller
     {
         try {
             $gateway_function = 'get_' . $payment_gateway_name . '_credential';
-            $gateway = PaymentGatewayCredential::$gateway_function();
-
-            $redirect_url = $gateway->charge_customer(
-                $this->common_charge_customer_data($payment_gateway_name)
-            );
-
-            session()->put('order_id', $this->last_deposit_id);
-            return $redirect_url;
+            if (method_exists(PaymentGatewayCredential::class, $gateway_function)) {
+                $gateway = PaymentGatewayCredential::$gateway_function();
+                $redirect_url = $gateway->charge_customer(
+                    $this->common_charge_customer_data($payment_gateway_name)
+                );
+                session()->put('order_id', $this->last_deposit_id);
+                return $redirect_url;
+            }
+            throw new Exception("Payment method does not supports wallet deposit");
         } catch (\Exception $e) {
             return back()->with(['msg' => $e->getMessage(), 'type' => 'danger']);
         }
@@ -224,8 +227,7 @@ class BuyerWalletController extends Controller
             );
 
             $tenant_list = WalletTenantList::where('user_id', $user->id)->get();
-            if (count($tenant_list) > 0)
-            {
+            if (count($tenant_list) > 0) {
                 WalletTenantList::where('user_id', $user->id)->delete();
             }
 
@@ -240,8 +242,7 @@ class BuyerWalletController extends Controller
 
             \DB::commit();
             return back()->with(FlashMsg::update_succeed('Wallet Settings'));
-        } catch (\Exception $exception)
-        {
+        } catch (\Exception $exception) {
             \DB::rollBack();
             return back()->with($exception->getMessage());
         }

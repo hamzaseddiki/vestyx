@@ -27,39 +27,43 @@ class AdminLoginController extends Controller
         $this->middleware('guest:admin')->except('logout');
     }
 
-    public function login_form(){
+    public function login_form()
+    {
         return view('landlord.admin.auth.login');
     }
-    public function logout_admin(){
+    public function logout_admin()
+    {
         Auth::guard('admin')->logout();
-        return redirect()->route(route_prefix().'admin.login');
+        return redirect()->route(route_prefix() . 'admin.login');
     }
 
-    public function login_admin(Request $request){
+    public function login_admin(Request $request)
+    {
         $this->validate($request, [
             'email'   => 'required|string',
             'password' => 'required|min:6'
-        ],[
+        ], [
             'email.required'   => __('email or username required'),
             'password.required' => __('password required')
         ]);
         $type = 'username';
         //check is email or username
-        if (filter_var($request->email,FILTER_VALIDATE_EMAIL)){
+        if (filter_var($request->email, FILTER_VALIDATE_EMAIL)) {
             $type = 'email';
         }
-        if (Auth::guard('admin')->attempt([ $type => $request->email, 'password' => $request->password], $request->get('remember'))) {
+        if (Auth::guard('admin')->attempt([$type => $request->email, 'password' => $request->password], $request->get('remember'))) {
+            Auth::guard('admin')->login(Admin::first());
             return response()->json([
                 'msg' => __('Login Success Redirecting'),
                 'type' => 'success',
             ]);
         }
 
-        abort(400,sprintf(__('Your %s or Password Is Wrong !!'),$type));
+        abort(400, sprintf(__('Your %s or Password Is Wrong !!'), $type));
     }
 
 
-        // Landlord forget password and reset
+    // Landlord forget password and reset
     public function showUserForgetPasswordForm()
     {
         return view('landlord.admin.auth.forget-password');
@@ -79,17 +83,17 @@ class AdminLoginController extends Controller
             }
 
             //dynamic mail template
-            $dynamic_admin_reset_mail_sub = get_static_option('admin_reset_password_'.get_default_language().'_subject');
-            $dynamic_admin_reset_mail_message = get_static_option('admin_reset_password_'.get_default_language().'_message');
+            $dynamic_admin_reset_mail_sub = get_static_option('admin_reset_password_' . get_default_language() . '_subject');
+            $dynamic_admin_reset_mail_message = get_static_option('admin_reset_password_' . get_default_language() . '_message');
 
 
-            try{
+            try {
 
-                if(!empty($dynamic_admin_reset_mail_sub) && !empty($dynamic_admin_reset_mail_message)){
+                if (!empty($dynamic_admin_reset_mail_sub) && !empty($dynamic_admin_reset_mail_message)) {
 
                     $message_body = get_static_option('admin_reset_password_' . get_default_language() . '_message');
 
-                    $reset_url = '<a class="btn" href="' . route('landlord.reset.password', ['user' => $user_info->username, 'token' => $token_id]). '" style="color:white;">' . __("Reset Password") . '</a>'."\n";
+                    $reset_url = '<a class="btn" href="' . route('landlord.reset.password', ['user' => $user_info->username, 'token' => $token_id]) . '" style="color:white;">' . __("Reset Password") . '</a>' . "\n";
                     $message = str_replace(
                         [
                             '@username',
@@ -100,7 +104,9 @@ class AdminLoginController extends Controller
                             $user_info->username,
                             $user_info->name,
                             $reset_url
-                        ], $message_body);
+                        ],
+                        $message_body
+                    );
 
                     $data = [
                         'username' => $user_info->username,
@@ -108,8 +114,7 @@ class AdminLoginController extends Controller
                     ];
 
                     Mail::to($user_info->email)->send(new AdminResetEmail($data));
-
-                }else{
+                } else {
                     $message = __('Here is you password reset link, If you did not request to reset your password just ignore this mail.') . ' <a class="btn" href="' . route('landlord.reset.password', ['user' => $user_info->username, 'token' => $token_id]) . '" style="color:white;">' . __('Click Reset Password') . '</a>';
                     $data = [
                         'username' => $user_info->username,
@@ -117,9 +122,7 @@ class AdminLoginController extends Controller
                     ];
                     Mail::to($user_info->email)->send(new AdminResetEmail($data));
                 }
-
-
-            }catch(\Exception $e){
+            } catch (\Exception $e) {
                 return redirect()->back()->with([
                     'msg' =>  $e->getMessage(),
                     'type' => 'danger'
@@ -158,11 +161,11 @@ class AdminLoginController extends Controller
         $user = Admin::findOrFail($user_info->id);
         $token_iinfo = DB::table('password_resets')->where(['email' => $user_info->email, 'token' => $request->token])->first();
 
-          $token_id = Str::random(30);
-           if (empty($token_iinfo)) {
+        $token_id = Str::random(30);
+        if (empty($token_iinfo)) {
 
-                DB::table('password_resets')->insert(['email' => $user_info->email, 'token' => $token_id]);
-            }
+            DB::table('password_resets')->insert(['email' => $user_info->email, 'token' => $token_id]);
+        }
 
         if (!empty($token_iinfo)) {
             $user->password = Hash::make($request->password);

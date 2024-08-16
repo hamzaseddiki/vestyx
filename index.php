@@ -6,20 +6,19 @@ use Illuminate\Http\Request;
 define('LARAVEL_START', microtime(true));
 
 
-if(!file_exists('core/.env')){
+if (!file_exists('core/.env')) {
     echo 'Please install the script first, by yourdomain.com/install wizard <br>';
-   if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on'){
+    if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
         $url = "https://";
-
-   }else{
+    } else {
         $url = "http://";
-   }
-   // Append the host(domain name, ip) to the URL.
-   $url.= $_SERVER['HTTP_HOST'];
-   // Append the requested resource location to the URL
-   $url.= $_SERVER['REQUEST_URI'];
-   header("Location: ".$url.'/install/index.php');  
-   exit;
+    }
+    // Append the host(domain name, ip) to the URL.
+    $url .= $_SERVER['HTTP_HOST'];
+    // Append the requested resource location to the URL
+    $url .= $_SERVER['REQUEST_URI'];
+    header("Location: " . $url . '/install/index.php');
+    exit;
 }
 
 
@@ -34,8 +33,8 @@ if(!file_exists('core/.env')){
 |
 */
 
-if (file_exists(__DIR__.'/core/storage/framework/maintenance.php')) {
-    require __DIR__.'/core/storage/framework/maintenance.php';
+if (file_exists(__DIR__ . '/core/storage/framework/maintenance.php')) {
+    require __DIR__ . '/core/storage/framework/maintenance.php';
 }
 
 /*
@@ -49,7 +48,15 @@ if (file_exists(__DIR__.'/core/storage/framework/maintenance.php')) {
 |
 */
 
-require __DIR__.'/core/vendor/autoload.php';
+////
+//// Load Chargily Pay Helper Classes
+////
+require  __DIR__ . "/vendor/autoload.php";
+////
+//// Load  Main
+////
+require __DIR__ . '/core/vendor/autoload.php';
+
 
 /*
 |--------------------------------------------------------------------------
@@ -62,7 +69,7 @@ require __DIR__.'/core/vendor/autoload.php';
 |
 */
 
-$app = require_once __DIR__.'/core/bootstrap/app.php';
+$app = require_once __DIR__ . '/core/bootstrap/app.php';
 
 $kernel = $app->make(Kernel::class);
 

@@ -7,7 +7,33 @@
     "providers": [
         "Modules\\ChargilyPayPaymentMethod\\Providers\\ChargilyPayPaymentMethodServiceProvider"
     ],
+    "status": true,
     "aliases": {},
     "files": [],
-    "requires": []
+    "requires": [],
+    "nazmartMetaData": {
+        "paymentGateway": {
+            "name": "ChargilyPay",
+            "slug": "chargilypay",
+            "tenant": true,
+            "chargeCustomerMethodNameSpace": "Modules\\ChargilyPayPaymentMethod\\Http\\Controllers\\ChargilyPayPaymentMethodController",
+            "chargeCustomerMethodName": "chargeCustomer",
+            "test_mode": true,
+            "status": false,
+            "extraInfoMarkupBlade": "chargilypay-extra-info",
+            "logo_file": "chargilypay.png",
+            "admin_settings": {
+                "show_admin_landlord": true,
+                "show_admin_tenant": true,
+                "menu_item": [
+                    {
+                        "id": "chargilypay-settings-menu",
+                        "label": "Chargily Pay Settings",
+                        "route": "chargilypaypaymentmethod.landlord.admin.settings",
+                        "tenantRoute": "chargilypaypaymentmethod.tenant.admin.settings"
+                    }
+                ]
+            }
+        }
+    }
 }
